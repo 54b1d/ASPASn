@@ -9,13 +9,14 @@ import android.widget.Button;
 import android.widget.Toast;
 import android.database.Cursor;
 import android.app.AlertDialog;
+import android.content.Intent;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         final EditText name, contact,  dob;
-        Button insert, update, delete, view;
+        Button insert, update, delete, view, btnActivityCalc;
         final DBHelper DB;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -36,7 +37,15 @@ public class MainActivity extends AppCompatActivity {
         update = findViewById(R.id.btn_update);
         delete = findViewById(R.id.btn_delete);
         view = findViewById(R.id.btn_view);
+        btnActivityCalc = findViewById(R.id.btnActivityCalc);
         DB = new DBHelper(this);
+        
+        btnActivityCalc.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                openCalculatorActivity();
+            }
+        });
 
         insert.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -106,6 +115,10 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
+    }
+    public void openCalculatorActivity(){
+        Intent intent = new Intent(this, CalculatorActivity.class);
+        startActivity(intent);
     }
 
 }
