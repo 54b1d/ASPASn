@@ -14,24 +14,21 @@
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name"
-            >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
-            android:name=".CalculatorActivity"
-        />
+            android:name=".CalculatorActivity"/>
         <activity
-            android:name=".CreateAccountActivity"
-        />
-        
-      <meta-data
-          android:name="android.max_aspect"
-          android:value="4.0"/>
+            android:name=".CreateAccountActivity"/>
+
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="4.0"/>
 
     </application>
-	
+
 </manifest>

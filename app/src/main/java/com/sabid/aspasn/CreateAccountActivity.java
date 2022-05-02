@@ -32,8 +32,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         mobile = findViewById(R.id.editMobile);
 
         confirmAddAccount = findViewById(R.id.btnConfirmAddAccount);
-        viewAccounts = findViewById(R.id.btnConfirmAddAccount);
-        
+        viewAccounts = findViewById(R.id.btnViewAccounts);
+
         DB = new DBHelper(this);
 
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
@@ -45,7 +45,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                     Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT);
                     if (checkinsertdata) {
-                        Toast.makeText(CreateAccountActivity.this, "New Entry Inserted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateAccountActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(CreateAccountActivity.this, "Not Inserted", Toast.LENGTH_SHORT).show();
                     }
@@ -56,18 +56,18 @@ public class CreateAccountActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     Cursor res = DB.getdata();
                     if (res.getCount() == 0) {
-                        Toast.makeText(CreateAccountActivity.this, "No Entry Exists", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateAccountActivity.this, "No Account Exists", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     StringBuffer buffer = new StringBuffer();
                     while (res.moveToNext()) {
                         buffer.append("Name: " + res.getString(0) + "\n");
-                        buffer.append("Contact: " + res.getString(1) + "\n");
-                        buffer.append("Date of Birth: " + res.getString(2) + "\n\n");
+                        buffer.append("Address: " + res.getString(1) + "\n");
+                        buffer.append("Mobile: " + res.getString(2) + "\n\n");
                     }
                     AlertDialog.Builder builder = new AlertDialog.Builder(CreateAccountActivity.this);
                     builder.setCancelable(true);
-                    builder.setTitle("user Entries");
+                    builder.setTitle("Account List");
                     builder.setMessage(buffer.toString());
                     builder.show();
                 }
