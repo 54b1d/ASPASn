@@ -24,6 +24,8 @@
             android:name=".CalculatorActivity"/>
         <activity
             android:name=".CreateAccountActivity"/>
+        <activity
+            android:name=".AddCashTransactionActivity"/>
 
         <meta-data
             android:name="android.max_aspect"

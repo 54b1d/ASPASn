@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button btnActivityCalc, btnActivityCreateAccount;
+        Button btnActivityCalc, btnActivityCreateAccount, btnActivityAddCashTransaction;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar=findViewById(R.id.toolbar);
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         btnActivityCalc = findViewById(R.id.btnActivityCalc);
         btnActivityCreateAccount = findViewById(R.id.btnActivityCreateAccount);
+        btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
         
         
         btnActivityCalc.setOnClickListener(new View.OnClickListener(){
@@ -40,6 +41,12 @@ public class MainActivity extends AppCompatActivity {
                     openCreateAccountActivity();
                 }
             });
+        btnActivityAddCashTransaction.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    openActivityAddCashTransaction();
+                }
+            });
 
         
 
@@ -50,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void openCreateAccountActivity(){
         Intent intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(intent);
+    }
+    public void openActivityAddCashTransaction(){
+        Intent intent = new Intent(this, AddCashTransactionActivity.class);
         startActivity(intent);
     }
 

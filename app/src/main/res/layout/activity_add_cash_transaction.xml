@@ -5,7 +5,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="com.sabid.aspasn.MainActivity">
+	tools:context="com.sabid.aspasn.AddCashTransactionActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/appBar"
@@ -30,37 +30,52 @@
 
 		<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:padding="10dp">
 
 			<TextView
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:text="Please enter the details below"
 				android:textSize="24dp"
-				android:id="@+id/txt_title"
+				android:id="@+id/txtTitle"
 				android:layout_marginTop="20dp"
 				android:layout_below="@+id/appBar"/>
 
-			<Button
+			<DatePicker
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Add Account"
-				android:layout_below="@id/txt_title"
-				android:id="@+id/btnActivityCreateAccount"/>
+				android:layout_below="@id/txtTitle"
+				android:id="@+id/datePicker"/>
+
+			<AutoCompleteTextView
+				android:id="@+id/editAutoName"
+				android:layout_below="@+id/datePicker"
+				android:layout_height="wrap_content"
+				android:layout_width="match_parent"/>
+
+			<EditText
+				android:layout_width="wrap_content"
+				android:inputType="number"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:layout_below="@id/editAutoName"
+				android:id="@+id/editAmount"/>
 
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Calculator"
-				android:layout_below="@id/btnActivityCreateAccount"
-				android:id="@+id/btnActivityCalc"/>
+				android:text="Receipt"
+				android:id="@+id/btnConfirmCashReceiptTransaction"
+				android:layout_below="@id/editAmount"/>
 
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Add Cash Transaction"
-				android:layout_below="@id/btnActivityCalc"
-				android:id="@+id/btnActivityAddCashTransaction"/>
+				android:text="Payment"
+				android:id="@+id/btnConfirmPaymentTransaction"
+				android:layout_below="@id/editAmount"
+				android:layout_toEndOf="@id/btnConfirmCashReceiptTransaction"/>
 
 		</RelativeLayout>
 
