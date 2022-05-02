@@ -21,91 +21,43 @@
 			app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
 	</com.google.android.material.appbar.AppBarLayout>
-    <ScrollView 
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fillViewport="true"
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:fillViewport="true"
 		android:layout_below="@+id/appBar">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Please enter the details below"
-                android:textSize="24dp"
-                android:id="@+id/txt_title"
-                android:layout_marginTop="20dp"
-                android:layout_below="@+id/appBar"/>
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_name"
-                android:hint="Name"
-                android:textSize="24dp"
-                android:inputType="textPersonName"
-                android:layout_below="@+id/txt_title"/>
+			<TextView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:text="Please enter the details below"
+				android:textSize="24dp"
+				android:id="@+id/txt_title"
+				android:layout_marginTop="20dp"
+				android:layout_below="@+id/appBar"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_contact"
-                android:hint="Contact"
-                android:textSize="24dp"
-                android:inputType="textPersonName"
-                android:layout_below="@+id/edit_name"/>
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Add Account"
+				android:layout_below="@id/txt_title"
+				android:id="@+id/btnActivityCreateAccount"/>
 
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/edit_dob"
-                android:hint="Date of Birth"
-                android:textSize="24dp"
-                android:inputType="textPersonName"
-                android:layout_below="@+id/edit_contact"/>
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Calculator"
+				android:layout_below="@id/btnActivityCreateAccount"
+				android:id="@+id/btnActivityCalc"/>
 
-            <Button
-                android:id="@+id/btn_insert"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:layout_marginTop="30dp"
-                android:layout_below="@id/edit_dob"
-                android:text="Insert New Data"/>
+		</RelativeLayout>
 
-            <Button
-                android:id="@+id/btn_update"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:layout_below="@id/btn_insert"
-                android:text="Update Data"/>
+	</ScrollView>
 
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:layout_below="@id/btn_update"
-                android:text="Delete Data"/>
-
-            <Button
-                android:id="@+id/btn_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:layout_below="@id/btn_delete"
-                android:text="View Data"/>
-
-            <Button
-                android:id="@+id/btnActivityCalc"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Calculator"
-                android:layout_below="@id/btn_view"/>
-        </RelativeLayout>
-    </ScrollView>
 </RelativeLayout>
 

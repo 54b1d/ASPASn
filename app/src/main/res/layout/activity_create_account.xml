@@ -5,7 +5,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="com.sabid.aspasn.CalculatorActivity">
+	tools:context="com.sabid.aspasn.CreateAccountActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/appBar"
@@ -30,7 +30,8 @@
 
 		<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:padding="10dp">
 
 			<TextView
 				android:layout_width="match_parent"
@@ -41,35 +42,54 @@
 				android:layout_marginTop="20dp"
 				android:layout_below="@+id/appBar"/>
 
-			<EditText
-				android:layout_width="wrap_content"
-				android:inputType="number"
+			<Spinner
+				android:id="@+id/spinnerAccountType"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:ems="10"
-				android:layout_below="@id/txtTitle"
-				android:id="@+id/editPrice1"/>
+				android:layout_below="@id/txtTitle"/>
 
 			<EditText
-				android:layout_width="wrap_content"
-				android:ems="10"
+				android:layout_width="match_parent"
+				android:inputType="textPersonName"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editPrice1"
-				android:id="@+id/editPrice2"/>
+				android:ems="10"
+				android:layout_below="@+id/spinnerAccountType"
+				android:id="@+id/editName"
+				android:hint="Name"/>
 
 			<EditText
-				android:layout_width="wrap_content"
-				android:ems="10"
+				android:layout_width="match_parent"
+				android:inputType="textPostalAddress"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editPrice2"
-				android:id="@+id/editPrice3"/>
+				android:ems="10"
+				android:layout_below="@id/editName"
+				android:id="@+id/editAddress"
+				android:hint="Address"/>
 
 			<EditText
-				android:layout_width="wrap_content"
-				android:inputType="number"
+				android:layout_width="match_parent"
+				android:inputType="phone"
 				android:layout_height="wrap_content"
 				android:ems="10"
-				android:layout_toRightOf="@id/editPrice1"
-                android:layout_below="@+id/txtTitle"/>
+				android:layout_below="@id/editAddress"
+				android:hint="Mobile"
+				android:id="@+id/editMobile"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Submit"
+				android:layout_below="@id/editMobile"
+				android:id="@+id/btnConfirmAddAccount"
+				android:layout_centerInParent="true"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="View Accounts"
+				android:layout_below="@id/btnConfirmAddAccount"
+				android:id="@+id/btnViewAccounts"
+				android:layout_centerInParent="true"/>
 
 		</RelativeLayout>
 
