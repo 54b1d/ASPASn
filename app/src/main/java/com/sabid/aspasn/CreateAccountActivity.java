@@ -9,10 +9,12 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.text.util.FindAddress;
+import android.content.Intent;
 
 public class CreateAccountActivity extends AppCompatActivity {
     EditText name, address, mobile;
-    Button confirmAddAccount, viewAccounts;
+    Button confirmAddAccount, viewAccounts, btnAddAccountCategory;
     DBHelper DB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         confirmAddAccount = findViewById(R.id.btnConfirmAddAccount);
         viewAccounts = findViewById(R.id.btnViewAccounts);
+        btnAddAccountCategory = findViewById(R.id.btnAddAccountCategory);
 
         DB = new DBHelper(this);
 
@@ -73,6 +76,17 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             });
 
+        btnAddAccountCategory.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v) {
+                    openAddAccountCategoryActivity();
+                }
+            });
+
+    }
+    public void openAddAccountCategoryActivity() {
+        Intent i = new Intent(this, AddAccountCategoryActivity.class);
+        startActivity(i);
     }
 
 }

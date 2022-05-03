@@ -62,6 +62,13 @@
 				android:layout_below="@id/btnActivityCalc"
 				android:id="@+id/btnActivityAddCashTransaction"/>
 
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Add Inventory Item"
+				android:layout_below="@id/btnActivityAddCashTransaction"
+				android:id="@+id/btnActivityAddInventoryItem"/>
+
 		</RelativeLayout>
 
 	</ScrollView>
