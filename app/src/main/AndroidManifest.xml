@@ -26,6 +26,9 @@
             android:name=".AccountsActivity"
             android:exported="false" />
         <activity
+            android:name=".DebugButtonsActivity"
+            />
+        <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>

@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Button btnActivityCalc, btnActivityCreateAccount, btnActivityAddCashTransaction;
+        Button btnActivityDebugButtons;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar=findViewById(R.id.toolbar);
@@ -24,44 +24,25 @@ public class MainActivity extends AppCompatActivity {
                 }});*/
 
 
-        btnActivityCalc = findViewById(R.id.btnActivityCalc);
-        btnActivityCreateAccount = findViewById(R.id.btnActivityCreateAccount);
-        btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
+        btnActivityDebugButtons = findViewById(R.id.btnActivityDebugButtons);
+        
+        btnActivityDebugButtons.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    openDebugButtonsActivity();
+                }
+            });
         
         
-        btnActivityCalc.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    openCalculatorActivity();
-                }
-            });
-        btnActivityCreateAccount.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    openCreateAccountActivity();
-                }
-            });
-        btnActivityAddCashTransaction.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    openActivityAddCashTransaction();
-                }
-            });
 
         
 
     }
-    public void openCalculatorActivity(){
-        Intent intent = new Intent(this, CalculatorActivity.class);
+    
+    public void openDebugButtonsActivity(){
+        Intent intent = new Intent(this, DebugButtonsActivity.class);
         startActivity(intent);
     }
-    public void openCreateAccountActivity(){
-        Intent intent = new Intent(this, CreateAccountActivity.class);
-        startActivity(intent);
-    }
-    public void openActivityAddCashTransaction(){
-        Intent intent = new Intent(this, AddCashTransactionActivity.class);
-        startActivity(intent);
-    }
+    
 
 }

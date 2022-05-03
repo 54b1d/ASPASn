@@ -5,7 +5,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="com.sabid.aspasn.MainActivity">
+	tools:context="com.sabid.aspasn.DebugButtonsActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/appBar"
@@ -30,7 +30,8 @@
 
 		<RelativeLayout
 			android:layout_width="match_parent"
-			android:layout_height="match_parent">
+			android:layout_height="match_parent"
+			android:gravity="bottom">
 
 			<TextView
 				android:layout_width="match_parent"
@@ -44,9 +45,30 @@
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Open Debug Buttons"
+				android:text="Add Account"
 				android:layout_below="@id/txt_title"
-				android:id="@+id/btnActivityDebugButtons"/>
+				android:id="@+id/btnActivityCreateAccount"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Calculator"
+				android:layout_below="@id/btnActivityCreateAccount"
+				android:id="@+id/btnActivityCalc"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Add Cash Transaction"
+				android:layout_below="@id/btnActivityCalc"
+				android:id="@+id/btnActivityAddCashTransaction"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Add Inventory Item"
+				android:layout_below="@id/btnActivityAddCashTransaction"
+				android:id="@+id/btnActivityAddInventoryItem"/>
 
 		</RelativeLayout>
 
