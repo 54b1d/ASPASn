@@ -21,6 +21,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
         Toolbar toolbar=findViewById(R.id.toolbar);
+        toolbar.setTitle("Create Account");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
