@@ -1,37 +1,47 @@
-<?xml version='1.0' encoding='utf-8'?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.sabid.aspasn">
 
     <application
         android:allowBackup="true"
+        android:exported="true"
         android:icon="@mipmap/ic_launcher"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme"
         android:resizeableActivity="true"
-        android:exported="true">
-
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".AddDirectTransactionActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InventoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TransactionsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AccountsActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".CalculatorActivity"/>
-        <activity
-            android:name=".CreateAccountActivity"/>
-        <activity
-            android:name=".AddCashTransactionActivity"/>
-        <activity
-            android:name=".AddAccountCategoryActivity"/>
+        <activity android:name=".CalculatorActivity" />
+        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".AddCashTransactionActivity" />
+        <activity android:name=".AddAccountCategoryActivity" />
+
         <meta-data
             android:name="android.max_aspect"
-            android:value="4.0"/>
-
+            android:value="4.0" />
     </application>
 
 </manifest>

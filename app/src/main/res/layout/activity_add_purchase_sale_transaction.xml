@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context="com.sabid.aspasn.AddPurchaseSaleTransactionActivity">
@@ -18,15 +17,15 @@
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			android:background="?attr/colorPrimary"
-			app:popupTheme="@style/AppTheme.PopupOverlay"/>
+			app:popupTheme="@style/AppTheme.PopupOverlay" />
 
 	</com.google.android.material.appbar.AppBarLayout>
 
 	<ScrollView
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:fillViewport="true"
-		android:layout_below="@+id/appBar">
+		android:layout_below="@+id/appBar"
+		android:fillViewport="true">
 
 		<RelativeLayout
 			android:layout_width="match_parent"
@@ -34,20 +33,20 @@
 			android:padding="10dp">
 
 			<TextView
+				android:id="@+id/txtTitle"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:text="Please enter the details below"
-				android:textSize="24dp"
-				android:id="@+id/txtTitle"
+				android:layout_below="@+id/appBar"
 				android:layout_marginTop="20dp"
-				android:layout_below="@+id/appBar"/>
+				android:text="Please enter the details below"
+				android:textSize="24dp" />
 
 			<EditText
+				android:id="@+id/editDate"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/txtTitle"
-				android:id="@+id/editDate"
-				android:hint="Date"/>
+				android:hint="Date" />
 
 			<RadioGroup
 				android:id="@+id/radioGroupInventoryItems"
@@ -58,69 +57,69 @@
 				<RadioButton
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
-					android:text="Radio 1"/>
+					android:text="Radio 1" />
 
 			</RadioGroup>
 
 			<AutoCompleteTextView
 				android:id="@+id/editAutoName"
-				android:layout_below="@id/radioGroupInventoryItems"
-				android:layout_height="wrap_content"
 				android:layout_width="match_parent"
-				android:hint="Search Names"/>
+				android:layout_height="wrap_content"
+				android:layout_below="@id/radioGroupInventoryItems"
+				android:hint="Search Names" />
 
 			<EditText
 				android:id="@+id/editQuantity"
-				android:hint="Quantity"
 				android:layout_width="match_parent"
-				android:inputType="numberDecimal"
 				android:layout_height="wrap_content"
+				android:layout_below="@id/editAutoName"
 				android:ems="10"
-				android:layout_below="@id/editAutoName"/>
+				android:hint="Quantity"
+				android:inputType="numberDecimal" />
 
 			<EditText
 				android:id="@+id/editRateAmount"
-				android:hint="Rate"
 				android:layout_width="match_parent"
-				android:inputType="numberDecimal"
 				android:layout_height="wrap_content"
+				android:layout_below="@id/editQuantity"
 				android:ems="10"
-				android:layout_below="@id/editQuantity"/>
+				android:hint="Rate"
+				android:inputType="numberDecimal" />
 
 			<EditText
-				android:layout_width="match_parent"
-				android:inputType="number"
-				android:layout_height="wrap_content"
-				android:ems="10"
-				android:layout_below="@id/editRateAmount"
 				android:id="@+id/editAmount"
-				android:hint="Amount"/>
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/editRateAmount"
+				android:ems="10"
+				android:hint="Amount"
+				android:inputType="number" />
 
 			<EditText
 				android:id="@+id/editComment"
 				android:layout_width="match_parent"
-				android:inputType="textMultiLine"
 				android:layout_height="wrap_content"
-				android:ems="10"
 				android:layout_below="@id/editAmount"
-				android:hint="Comment"/>
+				android:ems="10"
+				android:hint="Comment"
+				android:inputType="textMultiLine" />
 
 			<Button
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="Purchase"
 				android:id="@+id/btnConfirmCashReceiptTransaction"
-				android:layout_below="@id/editComment"
-				android:background="#FF45CA54"/>
-
-			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Sale"
+				android:layout_below="@id/editComment"
+				android:background="#FF45CA54"
+				android:text="Purchase" />
+
+			<Button
 				android:id="@+id/btnConfirmPaymentTransaction"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
 				android:layout_below="@id/editComment"
 				android:layout_toEndOf="@id/btnConfirmCashReceiptTransaction"
-				android:background="#FFFF5050"/>
+				android:background="#FFFF5050"
+				android:text="Sale" />
 
 		</RelativeLayout>
 

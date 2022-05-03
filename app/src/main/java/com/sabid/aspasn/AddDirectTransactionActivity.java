@@ -6,14 +6,14 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class CalculatorActivity extends AppCompatActivity {
+public class AddDirectTransactionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_calculator);
-        Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("Calculator");
+        setContentView(R.layout.activity_add_direct_transaction);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar.setTitle("Direct Transaction");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -23,7 +23,5 @@ public class CalculatorActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
-
     }
-    
 }
