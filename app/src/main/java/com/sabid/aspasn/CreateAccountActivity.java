@@ -11,10 +11,16 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import android.widget.Spinner;
+import java.util.ArrayList;
+import android.widget.ArrayAdapter;
 
 public class CreateAccountActivity extends AppCompatActivity {
     EditText name, address, mobile;
     Button confirmAddAccount, viewAccounts, btnAddAccountCategory;
+    Spinner spinnerAccountType;
+    ArrayList categories;
+    ArrayAdapter adapter;
     DBHelper DB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +39,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         name = findViewById(R.id.editName);
         address = findViewById(R.id.editAddress);
         mobile = findViewById(R.id.editMobile);
+        spinnerAccountType = findViewById(R.id.spinnerAccountType);
 
         confirmAddAccount = findViewById(R.id.btnConfirmAddAccount);
         viewAccounts = findViewById(R.id.btnViewAccounts);
@@ -40,18 +47,24 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         DB = new DBHelper(this);
 
+
+        loadSpinnerAccountType();
+        
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    String nameTXT = name.getText().toString();
-                    String addressTXT = address.getText().toString();
-                    String mobileTXT = mobile.getText().toString();
-
-                    Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT);
-                    if (checkinsertdata) {
-                        Toast.makeText(CreateAccountActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
+                    String nameTXT = name.getText().toString().trim();
+                    String addressTXT = address.getText().toString().trim();
+                    String mobileTXT = mobile.getText().toString().trim();
+                    if(!nameTXT.isEmpty()){
+                        Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT);
+                        if (checkinsertdata) {
+                            Toast.makeText(CreateAccountActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(CreateAccountActivity.this, "Not Inserted", Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(CreateAccountActivity.this, "Not Inserted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CreateAccountActivity.this, "Enter Name", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -85,6 +98,28 @@ public class CreateAccountActivity extends AppCompatActivity {
             });
 
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadSpinnerAccountType();
+    }
+
+    public void loadSpinnerAccountType() {
+        categories = new ArrayList<String>();
+        Cursor res = DB.getAccountCategories();
+        if (res.getCount() == 0) {
+            categories.add("Add Categories");
+        } else {
+            while (res.moveToNext()) {
+                //take category name only from 2nd(1) column
+                categories.add(res.getString(1));
+            }
+        }
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        spinnerAccountType.setAdapter(adapter);
+    }
+
     public void openAddAccountCategoryActivity() {
         Intent i = new Intent(this, AddAccountCategoryActivity.class);
         startActivity(i);

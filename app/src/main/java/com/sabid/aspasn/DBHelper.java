@@ -21,14 +21,14 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("create Table Userdetails(name TEXT primary key, contact TEXT, dob TEXT)");
         // Setup Database
         DB.execSQL("CREATE TABLE accountGroups (id INTEGER primary key UNIQUE," +
-                "groupName TEXT NOT NULL UNIQUE);");
+                   "groupName TEXT NOT NULL UNIQUE);");
         DB.execSQL("CREATE TABLE accounts (id INTEGER primary key UNIQUE, name TEXT NOT NULL UNIQUE," +
-                "address	TEXT DEFAULT 'NA', mobile	NUMERIC DEFAULT 0);");
+                   "address	TEXT DEFAULT 'NA', mobile	NUMERIC DEFAULT 0);");
 
         DB.execSQL("CREATE TABLE transactions(id INTEGER primary key UNIQUE, date	TEXT NOT NULL," +
-                "accountId	INTEGER NOT NULL, invoiceId INTEGER DEFAULT 0," +
-                        "lineItemId	INTEGER DEFAULT 0, purchaseSale TEXT DEFAULT 'NA'," +
-                        "quantity	NUMERIC DEFAULT 0, debit	NUMERIC DEFAULT 0, credit	NUMERIC DEFAULT 0);");
+                   "accountId	INTEGER NOT NULL, invoiceId INTEGER DEFAULT 0," +
+                   "lineItemId	INTEGER DEFAULT 0, purchaseSale TEXT DEFAULT 'NA'," +
+                   "quantity	NUMERIC DEFAULT 0, debit	NUMERIC DEFAULT 0, credit	NUMERIC DEFAULT 0);");
         DB.execSQL("CREATE TABLE invoices (id	INTEGER primary key UNIQUE);");
 
     }
@@ -37,7 +37,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
         DB.execSQL("drop Table if exists Userdetails");
     }
-    public Boolean insertuserdata(String name, String contact, String dob){
+    public Boolean insertuserdata(String name, String contact, String dob) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
@@ -50,12 +50,12 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    
-    public Boolean insertAccountCategory(String Categoryname){
+
+    public Boolean insertAccountCategory(String Categoryname) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("groupName", Categoryname);
-        
+
         long result = DB.insert("accountGroups", null, contentValues);
         if (result == -1) {
             return false;
@@ -63,15 +63,15 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    
-    public Boolean updateuserdata(String name, String contact, String dob){
+
+    public Boolean updateuserdata(String name, String contact, String dob) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("contact", contact);
         contentValues.put("dob", dob);
         Cursor cursor = DB.rawQuery("Select * from Userdetails where name=?", new String[] {name});
-        if (cursor.getCount()>0){
+        if (cursor.getCount() > 0) {
             long result = DB.update("Userdetails", contentValues, "name=?", new String[] {name});
             if (result == -1) {
                 return false;
@@ -83,10 +83,10 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Boolean deletedata(String name){
+    public Boolean deletedata(String name) {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("Select * from Userdetails where name=?", new String[] {name});
-        if (cursor.getCount()>0){
+        if (cursor.getCount() > 0) {
             long result = DB.delete("Userdetails", "name=?", new String[] {name});
             if (result == -1) {
                 return false;
@@ -97,14 +97,14 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
         }
     }
-    
-    public Cursor getAccountCategories(){
+
+    public Cursor getAccountCategories() {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor Cursor = DB.rawQuery("select * from accountGroups", null);
         return Cursor;
     }
 
-    public Cursor getdata(){
+    public Cursor getdata() {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("Select * from Userdetails", null);
         return cursor;
