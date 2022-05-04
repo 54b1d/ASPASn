@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class AccountsActivity extends AppCompatActivity {
     Button btnActivityCreateAccount;
     ListView listAccounts;
-    ArrayList categories;
+    ArrayList accounts;
     ArrayAdapter adapter;
     DBHelper DB;
 
@@ -50,17 +50,17 @@ public class AccountsActivity extends AppCompatActivity {
     }
 
     public void loadListAccounts() {
-        categories = new ArrayList<String>();
+        accounts = new ArrayList<String>();
         Cursor res = DB.getAccounts();
         if (res.getCount() == 0) {
-            categories.add("No Account Found");
+            accounts.add("No Account Found");
         } else {
             while (res.moveToNext()) {
                 //take category name only from 2nd(1) column
-                categories.add(res.getString(0));
+                accounts.add(res.getString(0));
             }
         }
-        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, accounts);
         listAccounts.setAdapter(adapter);
     }
 
