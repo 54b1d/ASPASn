@@ -43,7 +43,8 @@
                 android:id="@+id/btnActivityCreateAccount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight=".3" />
+                android:layout_weight=".3"
+                android:text="Add New Account" />
 
         </LinearLayout>
 

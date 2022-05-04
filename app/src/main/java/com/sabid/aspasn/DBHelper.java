@@ -102,6 +102,12 @@ public class DBHelper extends SQLiteOpenHelper {
         return Cursor;
     }
 
+    public Cursor getAccounts() {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select accounts.name from accounts", null);
+        return Cursor;
+    }
+
     public Cursor getdata() {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor cursor = DB.rawQuery("Select * from Userdetails", null);

@@ -1,15 +1,25 @@
 package com.sabid.aspasn;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+
 public class AccountsActivity extends AppCompatActivity {
     Button btnActivityCreateAccount;
+    ListView listAccounts;
+    ArrayList categories;
+    ArrayAdapter adapter;
+    DBHelper DB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,13 +35,33 @@ public class AccountsActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         btnActivityCreateAccount = findViewById(R.id.btnActivityCreateAccount);
+        listAccounts = findViewById(R.id.listAccounts);
+
+        loadListAccounts();
+
         btnActivityCreateAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openCreateAccountActivity();
             }
         });
+    }
+
+    public void loadListAccounts() {
+        categories = new ArrayList<String>();
+        Cursor res = DB.getAccounts();
+        if (res.getCount() == 0) {
+            categories.add("No Account Found");
+        } else {
+            while (res.moveToNext()) {
+                //take category name only from 2nd(1) column
+                categories.add(res.getString(0));
+            }
+        }
+        adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories);
+        listAccounts.setAdapter(adapter);
     }
 
     public void openCreateAccountActivity() {
