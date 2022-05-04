@@ -17,8 +17,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
-        //TODO Remove old Table UserDetails sql after correct implementation
-        DB.execSQL("create Table Userdetails(name TEXT primary key, contact TEXT, dob TEXT)");
         // Setup Database
         DB.execSQL("CREATE TABLE accountGroups (id INTEGER primary key UNIQUE," +
                    "groupName TEXT NOT NULL UNIQUE);");
@@ -35,8 +33,8 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
-        DB.execSQL("drop Table if exists Userdetails");
     }
+
     public Boolean insertuserdata(String name, String contact, String dob) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
