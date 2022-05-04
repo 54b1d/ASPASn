@@ -21,7 +21,7 @@ public class DBHelper extends SQLiteOpenHelper {
         DB.execSQL("CREATE TABLE accountGroups (id INTEGER primary key UNIQUE," +
                    "groupName TEXT NOT NULL UNIQUE);");
         DB.execSQL("CREATE TABLE accounts (id INTEGER primary key UNIQUE, name TEXT NOT NULL UNIQUE," +
-                   "address	TEXT DEFAULT 'NA', mobile	NUMERIC DEFAULT 0);");
+                   "address	TEXT DEFAULT 'NA', mobile TEXT DEFAULT 0, accountGroup TEXT NOT NULL);");
 
         DB.execSQL("CREATE TABLE transactions(id INTEGER primary key UNIQUE, date	TEXT NOT NULL," +
                    "accountId	INTEGER NOT NULL, invoiceId INTEGER DEFAULT 0," +
@@ -35,13 +35,14 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
     }
 
-    public Boolean insertuserdata(String name, String contact, String dob) {
+    public Boolean insertuserdata(String name, String address, String mobile, String accountGroup) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
-        contentValues.put("contact", contact);
-        contentValues.put("dob", dob);
-        long result = DB.insert("Userdetails", null, contentValues);
+        contentValues.put("address", address);
+        contentValues.put("mobile", mobile);
+        contentValues.put("accountGroup", accountGroup);
+        long result = DB.insert("accounts", null, contentValues);
         if (result == -1) {
             return false;
         } else {

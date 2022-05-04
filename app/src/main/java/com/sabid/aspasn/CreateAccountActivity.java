@@ -53,11 +53,12 @@ public class CreateAccountActivity extends AppCompatActivity {
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    String accountGroupTXT = spinnerAccountType.getSelectedItem().toString();
                     String nameTXT = name.getText().toString().trim();
                     String addressTXT = address.getText().toString().trim();
                     String mobileTXT = mobile.getText().toString().trim();
                     if(!nameTXT.isEmpty()){
-                        Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT);
+                        Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT, accountGroupTXT);
                         if (checkinsertdata) {
                             Toast.makeText(CreateAccountActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
                         } else {
