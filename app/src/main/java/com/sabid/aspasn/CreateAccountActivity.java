@@ -4,16 +4,16 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import android.widget.Spinner;
+
 import java.util.ArrayList;
-import android.widget.ArrayAdapter;
 
 public class CreateAccountActivity extends AppCompatActivity {
     EditText name, address, mobile;
@@ -71,22 +71,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         viewAccounts.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    Cursor res = DB.getdata();
-                    if (res.getCount() == 0) {
-                        Toast.makeText(CreateAccountActivity.this, "No Account Exists", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    StringBuffer buffer = new StringBuffer();
-                    while (res.moveToNext()) {
-                        buffer.append("Name: " + res.getString(0) + "\n");
-                        buffer.append("Address: " + res.getString(1) + "\n");
-                        buffer.append("Mobile: " + res.getString(2) + "\n\n");
-                    }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CreateAccountActivity.this);
-                    builder.setCancelable(true);
-                    builder.setTitle("Account List");
-                    builder.setMessage(buffer.toString());
-                    builder.show();
+                    openActivityAddCashTransaction();
                 }
             });
 
@@ -118,6 +103,11 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
         adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, categories);
         spinnerAccountType.setAdapter(adapter);
+    }
+
+    public void openActivityAddCashTransaction() {
+        Intent intent = new Intent(this, AccountsActivity.class);
+        startActivity(intent);
     }
 
     public void openAddAccountCategoryActivity() {
