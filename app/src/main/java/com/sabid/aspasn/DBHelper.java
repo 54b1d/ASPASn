@@ -17,7 +17,20 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
+        //TODO Remove old Table UserDetails sql after correct implementation
         DB.execSQL("create Table Userdetails(name TEXT primary key, contact TEXT, dob TEXT)");
+        // Setup Database
+        DB.execSQL("CREATE TABLE accountGroups (id INTEGER primary key UNIQUE," +
+                "groupName TEXT NOT NULL UNIQUE);");
+        DB.execSQL("CREATE TABLE accounts (id INTEGER primary key UNIQUE, name TEXT NOT NULL UNIQUE," +
+                "address	TEXT DEFAULT 'NA', mobile	NUMERIC DEFAULT 0);");
+
+        DB.execSQL("CREATE TABLE transactions(id INTEGER primary key UNIQUE, date	TEXT NOT NULL," +
+                "accountId	INTEGER NOT NULL, invoiceId INTEGER DEFAULT 0," +
+                        "lineItemId	INTEGER DEFAULT 0, purchaseSale TEXT DEFAULT 'NA'," +
+                        "quantity	NUMERIC DEFAULT 0, debit	NUMERIC DEFAULT 0, credit	NUMERIC DEFAULT 0);");
+        DB.execSQL("CREATE TABLE invoices (id	INTEGER primary key UNIQUE);");
+
     }
 
     @Override
@@ -37,6 +50,20 @@ public class DBHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    
+    public Boolean insertAccountCategory(String Categoryname){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("groupName", Categoryname);
+        
+        long result = DB.insert("accountGroups", null, contentValues);
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+    
     public Boolean updateuserdata(String name, String contact, String dob){
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
