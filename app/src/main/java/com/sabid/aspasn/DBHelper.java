@@ -97,6 +97,12 @@ public class DBHelper extends SQLiteOpenHelper {
             return false;
         }
     }
+    
+    public Cursor getAccountCategories(){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select * from accountGroups", null);
+        return Cursor;
+    }
 
     public Cursor getdata(){
         SQLiteDatabase DB = this.getWritableDatabase();
