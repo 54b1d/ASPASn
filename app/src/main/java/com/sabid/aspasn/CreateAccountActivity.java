@@ -53,6 +53,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
+                    //todo get groupId instead of name
                     String accountGroupTXT = spinnerAccountType.getSelectedItem().toString();
                     String nameTXT = name.getText().toString().trim();
                     String addressTXT = address.getText().toString().trim();

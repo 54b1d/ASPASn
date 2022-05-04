@@ -30,23 +30,23 @@ public class AccountsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+                @Override
+                public void onClick(View _v) {
+                    onBackPressed();
+                }
+            });
 
         btnActivityCreateAccount = findViewById(R.id.btnActivityCreateAccount);
         listAccounts = findViewById(R.id.listAccounts);
-
+        DB = new DBHelper(this);
         loadListAccounts();
 
         btnActivityCreateAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openCreateAccountActivity();
-            }
-        });
+                @Override
+                public void onClick(View view) {
+                    openCreateAccountActivity();
+                }
+            });
     }
 
     public void loadListAccounts() {
@@ -56,8 +56,9 @@ public class AccountsActivity extends AppCompatActivity {
             accounts.add("No Account Found");
         } else {
             while (res.moveToNext()) {
-                //take category name only from 2nd(1) column
-                accounts.add(res.getString(0));
+                
+                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3)+ ", " + res.getString(4);
+                accounts.add(a);
             }
         }
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, accounts);
