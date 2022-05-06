@@ -1,16 +1,17 @@
 package com.sabid.aspasn;
 
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import android.view.View;
-import android.widget.EditText;
-import android.widget.Button;
-import android.widget.Toast;
-import android.widget.ListView;
-import android.widget.ArrayAdapter;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ListView;
+import android.widget.Toast;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
+import android.util.Log;
 
 public class AddAccountCategoryActivity extends AppCompatActivity {
     EditText editCategoryName;
@@ -35,44 +36,45 @@ public class AddAccountCategoryActivity extends AppCompatActivity {
         btnConfirmAddAccountCategory = findViewById(R.id.btnConfirmAddAccountCategory);
         listAccountCategory = findViewById(R.id.listAccountCategory);
         DB = new DBHelper(this);
-        
+
         loadCategoryList();
-        
+
         btnConfirmAddAccountCategory.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
                     String categoryNameTXT = editCategoryName.getText().toString().trim();
-                    if (!categoryNameTXT.isEmpty()){
+                    if (!categoryNameTXT.isEmpty()) {
                         Boolean checkinsertdata = DB.insertAccountCategory(categoryNameTXT);
                         if (checkinsertdata) {
-                            Toast.makeText(AddAccountCategoryActivity.this, "New Account Created", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(AddAccountCategoryActivity.this, "New Category Created", Toast.LENGTH_SHORT).show();
+                            editCategoryName.setText("");
                             // Refresh List after new cr
                             loadCategoryList();
                         } else {
                             Toast.makeText(AddAccountCategoryActivity.this, "Not Inserted", Toast.LENGTH_SHORT).show();}
-                    } else{
+                    } else {
                         Toast.makeText(AddAccountCategoryActivity.this, "Type Category Name", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
     }
-    
-    public void loadCategoryList(){
+
+    public void loadCategoryList() {
         categories = new ArrayList<String>();
         Cursor res = DB.getAccountCategories();
-        if (res.getCount()==0){
+        if (res.getCount() == 0) {
             categories.add("Add Categories");
         } else {
-            while(res.moveToNext()){
+            while (res.moveToNext()) {
                 //take category name only from 2nd(1) column
                 categories.add(res.getString(1));
             }
         }
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1,categories);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, categories);
         listAccountCategory.setAdapter(adapter);
-        
+
     }
-    
-    
-    
+
+
+
 }

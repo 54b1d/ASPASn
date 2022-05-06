@@ -35,13 +35,13 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
     }
 
-    public Boolean insertuserdata(String name, String address, String mobile, String accountGroup) {
+    public Boolean insertuserdata(String name, String address, String mobile, int accountGroupId) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("name", name);
         contentValues.put("address", address);
         contentValues.put("mobile", mobile);
-        contentValues.put("accountGroup", accountGroup);
+        contentValues.put("accountGroup", accountGroupId);
         long result = DB.insert("accounts", null, contentValues);
         if (result == -1) {
             return false;
@@ -109,9 +109,9 @@ public class DBHelper extends SQLiteOpenHelper {
         return Cursor;
     }
 
-    public Cursor getdata() {
+    public Cursor getGroupId(String groupName) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select * from Userdetails", null);
+        Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[] {groupName});
         return cursor;
     }
 }
