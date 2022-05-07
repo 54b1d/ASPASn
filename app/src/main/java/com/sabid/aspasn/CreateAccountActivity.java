@@ -79,6 +79,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplicationContext(), "Enter Name", Toast.LENGTH_SHORT).show();
                         }}
+                    res.close();
                 }
             });
         viewAccounts.setOnClickListener(new View.OnClickListener(){
@@ -116,6 +117,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         }
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categories);
         spinnerAccountType.setAdapter(adapter);
+        res.close();
     }
 
     public void openActivityAddCashTransaction() {
