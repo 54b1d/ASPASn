@@ -1,22 +1,21 @@
 package com.sabid.aspasn;
 
 import android.app.DatePickerDialog;
+import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.database.Cursor;
-import android.widget.DatePicker;
-import android.widget.EditText;
-
 import java.util.ArrayList;
-import android.widget.Button;
-import android.widget.Toast;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
     String date, name, amount;
@@ -26,6 +25,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
     ArrayList accounts;
     Boolean isReceipt, isPayment;
     DBHelper DB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,11 +36,11 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View _v) {
-                    onBackPressed();
-                }
-            });
+            @Override
+            public void onClick(View _v) {
+                onBackPressed();
+            }
+        });
 
         editAutoName = findViewById(R.id.editAutoName);
         editDate = findViewById(R.id.editDate);
@@ -57,40 +57,40 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
 
         editDate.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    DatePickerDialog datePickerDialog = new DatePickerDialog(AddCashTransactionActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, int month, int day) {
-                                month = month + 1;
-                                String date = day + "/" + month + "/" + year;
-                                editDate.setText(date);
-                            }
-                        }, year, month, day);
-
-                    datePickerDialog.show();
-                }
-            });
-        
-        btnConfirmCashReceiptTransaction.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
+            public void onClick(View view) {
+                DatePickerDialog datePickerDialog = new DatePickerDialog(AddCashTransactionActivity.this, R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int day) {
+                        month = month + 1;
+                        String date = day + "/" + month + "/" + year;
+                        editDate.setText(date);
+                    }
+                }, year, month, day);
+
+                datePickerDialog.show();
+            }
+        });
+
+        btnConfirmCashReceiptTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 date = editDate.getText().toString();
                 name = editAutoName.getText().toString();
                 amount = editAmount.getText().toString();
                 cashTransactionConfirmed(isReceipt, date, name, amount);
             }
         });
-        
-        btnConfirmCashPaymentTransaction.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v){
-                    date = editDate.getText().toString();
-                    name = editAutoName.getText().toString();
-                    amount = editAmount.getText().toString();
-                    cashTransactionConfirmed(isPayment, date, name, amount);
-                }
-            });
+
+        btnConfirmCashPaymentTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                date = editDate.getText().toString();
+                name = editAutoName.getText().toString();
+                amount = editAmount.getText().toString();
+                cashTransactionConfirmed(isPayment, date, name, amount);
+            }
+        });
 
 
     }
@@ -107,18 +107,18 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 
             }
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>  
-        (this, android.R.layout.select_dialog_item, accounts);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>
+                (this, android.R.layout.select_dialog_item, accounts);
         editAutoName.setThreshold(1);
         editAutoName.setAdapter(adapter);
         res.close();
     }
-    
-    public void cashTransactionConfirmed(Boolean isReceipt, String date,String name,String amount){
-        if(isReceipt){
-            Toast.makeText(this,"Received " + amount +"Tk From "+ name, Toast.LENGTH_SHORT).show();
-        } else if(isPayment){
-            Toast.makeText(this,"Paid " + amount +"Tk To "+ name, Toast.LENGTH_SHORT).show();
+
+    public void cashTransactionConfirmed(Boolean isReceipt, String date, String name, String amount) {
+        if (!isReceipt) {
+            Toast.makeText(this, "Paid " + amount + "Tk To " + name, Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "Received " + amount + "Tk From " + name, Toast.LENGTH_SHORT).show();
         }
     }
 
