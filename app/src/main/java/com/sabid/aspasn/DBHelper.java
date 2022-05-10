@@ -114,5 +114,30 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[] {groupName});
         return cursor;
     }
+
+    public Cursor getAccountId(String accountName) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[]{accountName});
+        return cursor;
+    }
+
+    public boolean insertTransaction(String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, int quantity, int debit, int credit) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("date", date);
+        contentValues.put("accountId", accountId);
+        contentValues.put("invoiceId", invoiceId);
+        contentValues.put("lineItemId", lineItemId);
+        contentValues.put("purchaseSale", purchaseSale);
+        contentValues.put("quantity", quantity);
+        contentValues.put("debit", debit);
+        contentValues.put("credit", credit);
+        long result = DB.insert("transactions", null, contentValues);
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
 
