@@ -15,11 +15,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import java.util.ArrayList;
+import android.widget.Button;
+import android.widget.Toast;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
+    String date, name, amount;
     AutoCompleteTextView editAutoName;
-    EditText editDate;
+    EditText editDate, editAmount;
+    Button btnConfirmCashReceiptTransaction, btnConfirmCashPaymentTransaction;
     ArrayList accounts;
+    Boolean isReceipt, isPayment;
     DBHelper DB;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +44,9 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 
         editAutoName = findViewById(R.id.editAutoName);
         editDate = findViewById(R.id.editDate);
+        editAmount = findViewById(R.id.editAmount);
+        btnConfirmCashReceiptTransaction = findViewById(R.id.btnConfirmCashReceiptTransaction);
+        btnConfirmCashPaymentTransaction = findViewById(R.id.btnConfirmPaymentTransaction);
 
         DB = new DBHelper(this);
         loadEditAutoName();
@@ -63,6 +71,26 @@ public class AddCashTransactionActivity extends AppCompatActivity {
                     datePickerDialog.show();
                 }
             });
+        
+        btnConfirmCashReceiptTransaction.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                date = editDate.getText().toString();
+                name = editAutoName.getText().toString();
+                amount = editAmount.getText().toString();
+                cashTransactionConfirmed(isReceipt, date, name, amount);
+            }
+        });
+        
+        btnConfirmCashPaymentTransaction.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View v){
+                    date = editDate.getText().toString();
+                    name = editAutoName.getText().toString();
+                    amount = editAmount.getText().toString();
+                    cashTransactionConfirmed(isPayment, date, name, amount);
+                }
+            });
 
 
     }
@@ -84,6 +112,14 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         editAutoName.setThreshold(1);
         editAutoName.setAdapter(adapter);
         res.close();
+    }
+    
+    public void cashTransactionConfirmed(Boolean isReceipt, String date,String name,String amount){
+        if(isReceipt){
+            Toast.makeText(this,"Received " + amount +"Tk From "+ name, Toast.LENGTH_SHORT).show();
+        } else if(isPayment){
+            Toast.makeText(this,"Paid " + amount +"Tk To "+ name, Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
