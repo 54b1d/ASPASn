@@ -19,7 +19,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase DB) {
         // Setup Database
         DB.execSQL("CREATE TABLE accountGroups (id INTEGER primary key UNIQUE," +
-                   "groupName TEXT NOT NULL UNIQUE);");
+                "groupName TEXT NOT NULL UNIQUE);");
         DB.execSQL("CREATE TABLE accounts (id INTEGER primary key UNIQUE, name TEXT NOT NULL UNIQUE," +
                    "address	TEXT DEFAULT 'NA', mobile TEXT DEFAULT 0, accountGroup TEXT NOT NULL);");
 
@@ -43,11 +43,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("mobile", mobile);
         contentValues.put("accountGroup", accountGroupId);
         long result = DB.insert("accounts", null, contentValues);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public Boolean insertAccountCategory(String Categoryname) {
@@ -56,11 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("groupName", Categoryname);
 
         long result = DB.insert("accountGroups", null, contentValues);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     public Boolean updateuserdata(String name, String contact, String dob) {
@@ -72,11 +64,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select * from Userdetails where name=?", new String[] {name});
         if (cursor.getCount() > 0) {
             long result = DB.update("Userdetails", contentValues, "name=?", new String[] {name});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
+            return result != -1;
         } else {
             return false;
         }
@@ -87,11 +75,7 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select * from Userdetails where name=?", new String[] {name});
         if (cursor.getCount() > 0) {
             long result = DB.delete("Userdetails", "name=?", new String[] {name});
-            if (result == -1) {
-                return false;
-            } else {
-                return true;
-            }
+            return result != -1;
         } else {
             return false;
         }
@@ -111,7 +95,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public Cursor getGroupId(String groupName) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[] {groupName});
+        Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[]{groupName});
         return cursor;
     }
 
@@ -133,11 +117,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("debit", debit);
         contentValues.put("credit", credit);
         long result = DB.insert("transactions", null, contentValues);
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 }
 

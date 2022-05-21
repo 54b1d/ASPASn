@@ -47,13 +47,13 @@
 				android:layout_height="wrap_content"
 				android:text="Add Account"
 				android:layout_below="@id/txt_title"
-				android:id="@+id/btnActivityCreateAccount"/>
+                android:id="@+id/btnActivityCreateAccount" />
 
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Calculator"
-				android:layout_below="@id/btnActivityCreateAccount"
+                android:layout_below="@id/btnActivityCreateAccount"
 				android:id="@+id/btnActivityCalc"/>
 
 			<Button

@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
 
 public class CreateAccountActivity extends AppCompatActivity {
@@ -52,9 +54,9 @@ public class CreateAccountActivity extends AppCompatActivity {
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    
+
                     String accountGroupTXT = spinnerAccountType.getSelectedItem().toString();
-                    
+
                     Cursor res = DB.getGroupId(accountGroupTXT);
                     if (res.getCount() == 0) {
                         Log.d("CreateAccount", "No data in getGroupId cursor");
@@ -68,7 +70,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                         if (!nameTXT.isEmpty()) {
                             Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT, accountGroupId);
                             if (checkinsertdata) {
-                                Toast.makeText(getApplicationContext(), nameTXT+" Account Created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), nameTXT + " Account Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
                                 name.setText("");
                                 address.setText("");
@@ -89,7 +91,7 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             });
 
-        btnAddAccountCategory.setOnClickListener(new View.OnClickListener(){
+        btnAddAccountCategory.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openAddAccountCategoryActivity();

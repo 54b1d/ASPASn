@@ -56,7 +56,7 @@ public class AccountsActivity extends AppCompatActivity {
             accounts.add("No Account Found");
         } else {
             while (res.moveToNext()) {
-                
+
                 String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3)+ ", " + res.getString(4);
                 accounts.add(a);
             }

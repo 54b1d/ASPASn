@@ -8,10 +8,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
-import android.util.Log;
 
 public class AddAccountCategoryActivity extends AppCompatActivity {
     EditText editCategoryName;
@@ -20,18 +21,21 @@ public class AddAccountCategoryActivity extends AppCompatActivity {
     ArrayAdapter adapter;
     ArrayList<String> categories;
     DBHelper DB;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account_category);
-        Toolbar toolbar=findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View _v) {
-                    onBackPressed();
-                }});
+            @Override
+            public void onClick(View _v) {
+                onBackPressed();
+            }
+        });
         editCategoryName = findViewById(R.id.editCategoryName);
         btnConfirmAddAccountCategory = findViewById(R.id.btnConfirmAddAccountCategory);
         listAccountCategory = findViewById(R.id.listAccountCategory);
@@ -39,24 +43,25 @@ public class AddAccountCategoryActivity extends AppCompatActivity {
 
         loadCategoryList();
 
-        btnConfirmAddAccountCategory.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    String categoryNameTXT = editCategoryName.getText().toString().trim();
-                    if (!categoryNameTXT.isEmpty()) {
-                        Boolean checkinsertdata = DB.insertAccountCategory(categoryNameTXT);
-                        if (checkinsertdata) {
-                            Toast.makeText(AddAccountCategoryActivity.this, "New Category Created", Toast.LENGTH_SHORT).show();
-                            editCategoryName.setText("");
-                            // Refresh List after new cr
-                            loadCategoryList();
-                        } else {
-                            Toast.makeText(AddAccountCategoryActivity.this, "Not Inserted", Toast.LENGTH_SHORT).show();}
+        btnConfirmAddAccountCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String categoryNameTXT = editCategoryName.getText().toString().trim();
+                if (!categoryNameTXT.isEmpty()) {
+                    Boolean checkinsertdata = DB.insertAccountCategory(categoryNameTXT);
+                    if (checkinsertdata) {
+                        Toast.makeText(AddAccountCategoryActivity.this, "New Category Created", Toast.LENGTH_SHORT).show();
+                        editCategoryName.setText("");
+                        // Refresh List after new cr
+                        loadCategoryList();
                     } else {
-                        Toast.makeText(AddAccountCategoryActivity.this, "Type Category Name", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AddAccountCategoryActivity.this, "Not Inserted", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toast.makeText(AddAccountCategoryActivity.this, "Type Category Name", Toast.LENGTH_SHORT).show();
                 }
-            });
+            }
+        });
     }
 
     public void loadCategoryList() {
@@ -74,7 +79,6 @@ public class AddAccountCategoryActivity extends AppCompatActivity {
         listAccountCategory.setAdapter(adapter);
         res.close();
     }
-
 
 
 }
