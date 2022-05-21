@@ -16,9 +16,9 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class CreateAccountActivity extends AppCompatActivity {
+public class AddAccountActivity extends AppCompatActivity {
     EditText name, address, mobile;
-    Button confirmAddAccount, viewAccounts, btnAddAccountCategory;
+    Button confirmAddAccount, viewAccounts, btnAddAccountType;
     Spinner spinnerAccountType;
     ArrayList categories;
     ArrayAdapter adapter;
@@ -26,9 +26,9 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_account);
+        setContentView(R.layout.activity_add_account);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("Create Account");
+        toolbar.setTitle("Add New Account");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -44,7 +44,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         confirmAddAccount = findViewById(R.id.btnConfirmAddAccount);
         viewAccounts = findViewById(R.id.btnViewAccounts);
-        btnAddAccountCategory = findViewById(R.id.btnAddAccountCategory);
+        btnAddAccountType = findViewById(R.id.btnAddAccountType);
 
         DB = new DBHelper(this);
 
@@ -55,22 +55,22 @@ public class CreateAccountActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
 
-                    String accountGroupTXT = spinnerAccountType.getSelectedItem().toString();
+                    String accountTypeNameText = spinnerAccountType.getSelectedItem().toString();
 
-                    Cursor res = DB.getGroupId(accountGroupTXT);
+                    Cursor res = DB.getAccountTypeId(accountTypeNameText);
                     if (res.getCount() == 0) {
-                        Log.d("CreateAccount", "No data in getGroupId cursor");
+                        Log.v("AddClientData", "No data in getAccountTypeId cursor");
                         Toast.makeText(getApplicationContext(), "Invalid Group Name Selected", Toast.LENGTH_SHORT).show();
                     } else {
                         res.moveToNext();
-                        int accountGroupId = res.getInt(0);
-                        String nameTXT = name.getText().toString().trim();
-                        String addressTXT = address.getText().toString().trim();
-                        String mobileTXT = mobile.getText().toString().trim();
-                        if (!nameTXT.isEmpty()) {
-                            Boolean checkinsertdata = DB.insertuserdata(nameTXT, addressTXT, mobileTXT, accountGroupId);
-                            if (checkinsertdata) {
-                                Toast.makeText(getApplicationContext(), nameTXT + " Account Created", Toast.LENGTH_SHORT).show();
+                        int accountTypeId = res.getInt(0);
+                        String nameText = name.getText().toString().trim();
+                        String addressText = address.getText().toString().trim();
+                        String mobileText = mobile.getText().toString().trim();
+                        if (!nameText.isEmpty()) {
+                            Boolean checkInsertData = DB.insertClientData(nameText, addressText, mobileText, accountTypeId);
+                            if (checkInsertData) {
+                                Toast.makeText(getApplicationContext(), nameText + " Client Account Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
                                 name.setText("");
                                 address.setText("");
@@ -91,10 +91,10 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             });
 
-        btnAddAccountCategory.setOnClickListener(new View.OnClickListener() {
+        btnAddAccountType.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openAddAccountCategoryActivity();
+                    openAddAccountTypeActivity();
                 }
             });
 
@@ -108,7 +108,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
     public void loadSpinnerAccountType() {
         categories = new ArrayList<String>();
-        Cursor res = DB.getAccountCategories();
+        Cursor res = DB.getAccountTypes();
         if (res.getCount() == 0) {
             categories.add("Add Categories");
         } else {
@@ -127,8 +127,8 @@ public class CreateAccountActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openAddAccountCategoryActivity() {
-        Intent i = new Intent(this, AddAccountCategoryActivity.class);
+    public void openAddAccountTypeActivity() {
+        Intent i = new Intent(this, AddAccountTypeActivity.class);
         startActivity(i);
     }
 

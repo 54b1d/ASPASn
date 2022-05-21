@@ -18,8 +18,6 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         // Setup Database
-        DB.execSQL("CREATE TABLE accountGroups (id INTEGER primary key UNIQUE," +
-                "groupName TEXT NOT NULL UNIQUE);");
         DB.execSQL("CREATE TABLE accounts (id INTEGER primary key UNIQUE, name TEXT NOT NULL UNIQUE," +
                    "address	TEXT DEFAULT 'NA', mobile TEXT DEFAULT 0, accountGroup TEXT NOT NULL);");
 
@@ -29,29 +27,52 @@ public class DBHelper extends SQLiteOpenHelper {
                    "quantity	NUMERIC DEFAULT 0, debit	NUMERIC DEFAULT 0, credit	NUMERIC DEFAULT 0);");
         DB.execSQL("CREATE TABLE invoices (id	INTEGER primary key UNIQUE);");
 
+        DB.execSQL("CREATE TABLE [clientEntity] ([clientId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[clientName] TEXT NOT NULL,[clientAddress] TEXT,[clientMobile] TEXT,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+
+        DB.execSQL("CREATE TABLE [accountTypeEntity] ([accountTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[accountTypeName] TEXT NOT NULL);");
+
+        DB.execSQL("CREATE TABLE [purchaseInvoiceEntity] ([purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[invoiceDate] DATE NOT NULL,[clientId] INTEGER NOT NULL,[productId] INTEGER NOT NULL,[quantity] REAL NOT NULL,[rate] REAL NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+
+        DB.execSQL("CREATE TABLE [paymentEntity] ([paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[paymentDate] DATE NOT NULL,[invoiceId] INTEGER,[clientId] INTEGER NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoiceEntity]([purchaseInvoiceId]), FOREIGN KEY([clientId]) REFERENCES [purchaseInvoiceEntity]([clientId]));");
+
+        DB.execSQL("CREATE TABLE [salesInvoiceEntity] ([salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[invoiceDate] DATE NOT NULL,[clientId] INTEGER NOT NULL,[productId] INTEGER NOT NULL,[quantity] REAL NOT NULL,[rate] REAL NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+
+        DB.execSQL("CREATE TABLE [receiptEntity] ([receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[receiptDate] DATE NOT NULL,[invoiceId] INTEGER,[clientId] INTEGER NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoiceEntity]([salesInvoiceId]), FOREIGN KEY([clientId]) REFERENCES [salesInvoiceEntity]([clientId]));");
+
+        DB.execSQL("CREATE TABLE [inventoryEntity] ([productId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[productName] TEXT NOT NULL,[unitName] TEXT NOT NULL);");
+
+        DB.execSQL("CREATE TABLE [expenseEntity] ([expenseId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[expenseTitle] TEXT NOT NULL,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+
+        DB.execSQL("CREATE TABLE [expenseEntryEntity] ([expenseEntryId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[expenseDate] DATE NOT NULL,[expenseId] INTEGER NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([expenseId]) REFERENCES [expenseEntity]([expenseId]));");
+
+        DB.execSQL("CREATE TABLE [cashBankEntity] ([cashBankId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[cashBankTitle] TEXT NOT NULL UNIQUE,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+
+
+
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
     }
 
-    public Boolean insertuserdata(String name, String address, String mobile, int accountGroupId) {
+    public Boolean insertClientData(String name, String address, String mobile, int accountTypeId) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("name", name);
-        contentValues.put("address", address);
-        contentValues.put("mobile", mobile);
-        contentValues.put("accountGroup", accountGroupId);
-        long result = DB.insert("accounts", null, contentValues);
+        contentValues.put("clientName", name);
+        contentValues.put("clientAddress", address);
+        contentValues.put("clientMobile", mobile);
+        contentValues.put("accountTypeId", accountTypeId);
+        long result = DB.insert("clientEntity", null, contentValues);
         return result != -1;
     }
 
-    public Boolean insertAccountCategory(String Categoryname) {
+    public Boolean insertAccountCategory(String accountTypeName) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("groupName", Categoryname);
+        contentValues.put("accountTypeName", accountTypeName);
 
-        long result = DB.insert("accountGroups", null, contentValues);
+        long result = DB.insert("accountTypeEntity", null, contentValues);
         return result != -1;
     }
 
@@ -81,21 +102,21 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public Cursor getAccountCategories() {
+    public Cursor getAccountTypes() { //reformed
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("select * from accountGroups", null);
+        Cursor Cursor = DB.rawQuery("select * from accountTypeEntity", null);
         return Cursor;
     }
 
-    public Cursor getAccounts() {
+    public Cursor getAccounts() { //reformed
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("select * from accounts", null);
+        Cursor Cursor = DB.rawQuery("select * from clientEntity", null);
         return Cursor;
     }
 
-    public Cursor getGroupId(String groupName) {
+    public Cursor getAccountTypeId(String accountTypeName) { //reformed
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[]{groupName});
+        Cursor cursor = DB.rawQuery("Select accountTypeId from accountTypeEntity where accountTypeName=?", new String[]{accountTypeName});
         return cursor;
     }
 

@@ -14,7 +14,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class AccountsActivity extends AppCompatActivity {
-    Button btnActivityCreateAccount;
+    Button btnActivityAddAccount;
     ListView listAccounts;
     ArrayList accounts;
     ArrayAdapter adapter;
@@ -36,15 +36,15 @@ public class AccountsActivity extends AppCompatActivity {
                 }
             });
 
-        btnActivityCreateAccount = findViewById(R.id.btnActivityCreateAccount);
+        btnActivityAddAccount = findViewById(R.id.btnActivityAddAccount);
         listAccounts = findViewById(R.id.listAccounts);
         DB = new DBHelper(this);
         loadListAccounts();
 
-        btnActivityCreateAccount.setOnClickListener(new View.OnClickListener() {
+        btnActivityAddAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    openCreateAccountActivity();
+                    openAddAccountActivity();
                 }
             });
     }
@@ -56,7 +56,7 @@ public class AccountsActivity extends AppCompatActivity {
             accounts.add("No Account Found");
         } else {
             while (res.moveToNext()) {
-
+                // clientId 0, name 1, address 2, mobile 3, accountTypeId 4
                 String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3)+ ", " + res.getString(4);
                 accounts.add(a);
             }
@@ -65,8 +65,8 @@ public class AccountsActivity extends AppCompatActivity {
         listAccounts.setAdapter(adapter);
     }
 
-    public void openCreateAccountActivity() {
-        Intent intent = new Intent(this, CreateAccountActivity.class);
+    public void openAddAccountActivity() {
+        Intent intent = new Intent(this, AddAccountActivity.class);
         startActivity(intent);
     }
 }

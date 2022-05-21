@@ -38,9 +38,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".CalculatorActivity" />
-        <activity android:name=".CreateAccountActivity" />
+        <activity android:name=".AddAccountActivity" />
         <activity android:name=".AddCashTransactionActivity" />
-        <activity android:name=".AddAccountCategoryActivity" />
+        <activity android:name=".AddAccountTypeActivity" />
 
         <meta-data
             android:name="android.max_aspect"

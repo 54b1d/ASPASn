@@ -28,7 +28,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
             });
         
         btnActivityCalc = findViewById(R.id.btnActivityCalc);
-        btnActivityCreateAccount = findViewById(R.id.btnActivityCreateAccount);
+        btnActivityCreateAccount = findViewById(R.id.btnActivityAddAccount);
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
 
         btnActivityCalc.setOnClickListener(new View.OnClickListener(){
@@ -56,7 +56,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
         startActivity(intent);
     }
     public void openCreateAccountActivity(){
-        Intent intent = new Intent(this, CreateAccountActivity.class);
+        Intent intent = new Intent(this, AddAccountActivity.class);
         startActivity(intent);
     }
     public void openActivityAddCashTransaction(){
