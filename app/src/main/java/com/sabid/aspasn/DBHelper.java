@@ -18,14 +18,10 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         // Setup Database
-        DB.execSQL("CREATE TABLE accounts (id INTEGER primary key UNIQUE, name TEXT NOT NULL UNIQUE," +
-                   "address	TEXT DEFAULT 'NA', mobile TEXT DEFAULT 0, accountGroup TEXT NOT NULL);");
-
         DB.execSQL("CREATE TABLE transactions(id INTEGER primary key UNIQUE, date	TEXT NOT NULL," +
                    "accountId	INTEGER NOT NULL, invoiceId INTEGER DEFAULT 0," +
                    "lineItemId	INTEGER DEFAULT 0, purchaseSale TEXT DEFAULT 'NA'," +
                    "quantity	NUMERIC DEFAULT 0, debit	NUMERIC DEFAULT 0, credit	NUMERIC DEFAULT 0);");
-        DB.execSQL("CREATE TABLE invoices (id	INTEGER primary key UNIQUE);");
 
         DB.execSQL("CREATE TABLE [clientEntity] ([clientId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[clientName] TEXT NOT NULL,[clientAddress] TEXT,[clientMobile] TEXT,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
 
