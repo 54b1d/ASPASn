@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class AddAccountActivity extends AppCompatActivity {
+    private String accountTypeName = "Clients"; // literal from database table accountTypesEntity
     EditText name, address, mobile;
     Button confirmAddAccount, viewAccounts, btnAddAccountType;
     Spinner spinnerAccountType;
@@ -28,7 +29,7 @@ public class AddAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account);
         Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("Add New Account");
+        toolbar.setTitle("Add New Client Account");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
@@ -108,7 +109,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
     public void loadSpinnerAccountType() {
         categories = new ArrayList<String>();
-        Cursor res = DB.getAccountTypes();
+        Cursor res = DB.getAccountTypeFor(accountTypeName);
         if (res.getCount() == 0) {
             categories.add("Add Categories");
         } else {

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityCalc, btnActivityCreateAccount, btnActivityAddCashTransaction;
+    Button btnActivityCalc, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +28,9 @@ public class DebugButtonsActivity extends AppCompatActivity {
             });
         
         btnActivityCalc = findViewById(R.id.btnActivityCalc);
-        btnActivityCreateAccount = findViewById(R.id.btnActivityAddAccount);
+        btnActivityAddAccount = findViewById(R.id.btnActivityAddAccount);
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
+        btnActivityAddExpenseAccount = findViewById(R.id.btnActivityAddExpenseAccount);
 
         btnActivityCalc.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -37,7 +38,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
                     openCalculatorActivity();
                 }
             });
-        btnActivityCreateAccount.setOnClickListener(new View.OnClickListener(){
+        btnActivityAddAccount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
                     openCreateAccountActivity();
@@ -49,7 +50,12 @@ public class DebugButtonsActivity extends AppCompatActivity {
                     openActivityAddCashTransaction();
                 }
             });
-        
+        btnActivityAddExpenseAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivityAddExpenseAccount();
+            }
+        });
     }
     public void openCalculatorActivity(){
         Intent intent = new Intent(this, CalculatorActivity.class);
@@ -63,5 +69,9 @@ public class DebugButtonsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, AddCashTransactionActivity.class);
         startActivity(intent);
     }
-    
+
+    public void openActivityAddExpenseAccount() {
+        Intent intent = new Intent(this, AddExpenseAccountActivity.class);
+        startActivity(intent);
+    }
 }
