@@ -18,34 +18,35 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase DB) {
         // Setup Database
-        DB.execSQL("CREATE TABLE transactions(id INTEGER primary key UNIQUE, date	TEXT NOT NULL," +
-                   "accountId	INTEGER NOT NULL, invoiceId INTEGER DEFAULT 0," +
-                   "lineItemId	INTEGER DEFAULT 0, purchaseSale TEXT DEFAULT 'NA'," +
-                   "quantity	NUMERIC DEFAULT 0, debit	NUMERIC DEFAULT 0, credit	NUMERIC DEFAULT 0);");
+        DB.execSQL("CREATE TABLE [clientEntity] ( [clientId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [clientName] TEXT NOT NULL, [clientAddress] TEXT, [clientMobile] TEXT, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
 
-        DB.execSQL("CREATE TABLE [clientEntity] ([clientId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[clientName] TEXT NOT NULL,[clientAddress] TEXT,[clientMobile] TEXT,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+        DB.execSQL("CREATE TABLE [accountTypeEntity] ( [accountTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountTypeName] TEXT NOT NULL);");
 
-        DB.execSQL("CREATE TABLE [accountTypeEntity] ([accountTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[accountTypeName] TEXT NOT NULL);");
+        DB.execSQL("CREATE TABLE [purchaseInvoiceEntity] ( [purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [invoiceDate] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
 
-        DB.execSQL("CREATE TABLE [purchaseInvoiceEntity] ([purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[invoiceDate] DATE NOT NULL,[clientId] INTEGER NOT NULL,[productId] INTEGER NOT NULL,[quantity] REAL NOT NULL,[rate] REAL NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+        DB.execSQL("CREATE TABLE [paymentEntity] ( [paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [paymentDate] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoiceEntity]([purchaseInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [purchaseInvoiceEntity]([clientId]));");
 
-        DB.execSQL("CREATE TABLE [paymentEntity] ([paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[paymentDate] DATE NOT NULL,[invoiceId] INTEGER,[clientId] INTEGER NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoiceEntity]([purchaseInvoiceId]), FOREIGN KEY([clientId]) REFERENCES [purchaseInvoiceEntity]([clientId]));");
+        DB.execSQL("CREATE TABLE [salesInvoiceEntity] ( [salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [invoiceDate] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
 
-        DB.execSQL("CREATE TABLE [salesInvoiceEntity] ([salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[invoiceDate] DATE NOT NULL,[clientId] INTEGER NOT NULL,[productId] INTEGER NOT NULL,[quantity] REAL NOT NULL,[rate] REAL NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+        DB.execSQL("CREATE TABLE [receiptEntity] ( [receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [receiptDate] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoiceEntity]([salesInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [salesInvoiceEntity]([clientId]));");
 
-        DB.execSQL("CREATE TABLE [receiptEntity] ([receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[receiptDate] DATE NOT NULL,[invoiceId] INTEGER,[clientId] INTEGER NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoiceEntity]([salesInvoiceId]), FOREIGN KEY([clientId]) REFERENCES [salesInvoiceEntity]([clientId]));");
+        DB.execSQL("CREATE TABLE [inventoryEntity] ( [productId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productName] TEXT NOT NULL, [unitName] TEXT NOT NULL);");
 
-        DB.execSQL("CREATE TABLE [inventoryEntity] ([productId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[productName] TEXT NOT NULL,[unitName] TEXT NOT NULL);");
+        DB.execSQL("CREATE TABLE [expenseEntity] ( [expenseId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [expenseTitle] TEXT NOT NULL, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
 
-        DB.execSQL("CREATE TABLE [expenseEntity] ([expenseId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,[expenseTitle] TEXT NOT NULL,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+        DB.execSQL("CREATE TABLE [expenseEntryEntity] ( [expenseEntryId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [expenseDate] DATE NOT NULL, [expenseId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([expenseId]) REFERENCES [expenseEntity]([expenseId]));");
 
-        DB.execSQL("CREATE TABLE [expenseEntryEntity] ([expenseEntryId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[expenseDate] DATE NOT NULL,[expenseId] INTEGER NOT NULL,[amount] REAL NOT NULL, FOREIGN KEY([expenseId]) REFERENCES [expenseEntity]([expenseId]));");
+        DB.execSQL("CREATE TABLE [cashBankEntity] ( [cashBankId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [cashBankTitle] TEXT NOT NULL UNIQUE, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
 
-        DB.execSQL("CREATE TABLE [cashBankEntity] ([cashBankId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE,[cashBankTitle] TEXT NOT NULL UNIQUE,[accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+        DB.execSQL("CREATE TABLE [capitalAccountsEntity] ( [capitalAccountId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE);");
 
+        DB.execSQL("CREATE TABLE [accountingPeriods] ( [accountingPeriodId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountingStartDate] DATE NOT NULL UNIQUE, [accountingEndDate] DATE NOT NULL UNIQUE);");
 
-
-
+        //create predefined accounts that are required
+        //Categorixe Accounts for A = L + OE + Revenue - Ecpenses
+        DB.execSQL("INSERT INTO [accountTypeEntity] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('Clients'), ('Incomes'), ('Expenses');");
+        //Create default Cash account inside cashBank table which is always required
+        DB.execSQL("INSERT INTO [cashBankEntity] ('cashBankTitle', 'accountTypeId') VALUES ('Cash', '1');");
     }
 
     @Override
