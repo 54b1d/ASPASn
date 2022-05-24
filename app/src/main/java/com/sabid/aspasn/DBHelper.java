@@ -38,15 +38,17 @@ public class DBHelper extends SQLiteOpenHelper {
 
         DB.execSQL("CREATE TABLE [cashBankEntity] ( [cashBankId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [cashBankTitle] TEXT NOT NULL UNIQUE, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
 
-        DB.execSQL("CREATE TABLE [capitalAccountsEntity] ( [capitalAccountId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE);");
+        DB.execSQL("CREATE TABLE [capitalAccountsEntity] ( [capitalAccountId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [capitalAccountTitle] TEXT NOT NULL, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
 
         DB.execSQL("CREATE TABLE [accountingPeriods] ( [accountingPeriodId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountingStartDate] DATE NOT NULL UNIQUE, [accountingEndDate] DATE NOT NULL UNIQUE);");
 
         //create predefined accounts that are required
-        //Categorixe Accounts for A = L + OE + Revenue - Ecpenses
+        //Categories Accounts for A = L + OE + Revenue - Ecpenses
         DB.execSQL("INSERT INTO [accountTypeEntity] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('Clients'), ('Incomes'), ('Expenses');");
         //Create default Cash account inside cashBank table which is always required
         DB.execSQL("INSERT INTO [cashBankEntity] ('cashBankTitle', 'accountTypeId') VALUES ('Cash', '1');");
+        //Create default Capital accounts required
+        DB.execSQL("INSERT INTO [capitalAccountsEntity] ('capitalAccountTitle', 'accountTypeId') VALUES ('Owners Equity', '3'), ('Retained Earnings', '3');");
     }
 
     @Override
