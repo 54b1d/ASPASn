@@ -23,13 +23,13 @@ public class DBHelper extends SQLiteOpenHelper {
 
         DB.execSQL("CREATE TABLE [accountTypeEntity] ( [accountTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountTypeName] TEXT NOT NULL);");
 
-        DB.execSQL("CREATE TABLE [purchaseInvoiceEntity] ( [purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [invoiceDate] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+        DB.execSQL("CREATE TABLE [purchaseInvoiceEntity] ( [purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
 
-        DB.execSQL("CREATE TABLE [paymentEntity] ( [paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [paymentDate] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoiceEntity]([purchaseInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [purchaseInvoiceEntity]([clientId]));");
+        DB.execSQL("CREATE TABLE [paymentEntity] ( [paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [date] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoiceEntity]([purchaseInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [purchaseInvoiceEntity]([clientId]));");
 
-        DB.execSQL("CREATE TABLE [salesInvoiceEntity] ( [salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [invoiceDate] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+        DB.execSQL("CREATE TABLE [salesInvoiceEntity] ( [salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
 
-        DB.execSQL("CREATE TABLE [receiptEntity] ( [receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [receiptDate] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoiceEntity]([salesInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [salesInvoiceEntity]([clientId]));");
+        DB.execSQL("CREATE TABLE [receiptEntity] ( [receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoiceEntity]([salesInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [salesInvoiceEntity]([clientId]));");
 
         DB.execSQL("CREATE TABLE [inventoryEntity] ( [productId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productName] TEXT NOT NULL, [unitName] TEXT NOT NULL);");
 
@@ -134,6 +134,12 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor Cursor = DB.rawQuery("select * from cashBankEntity", null);
         return Cursor;
     }
+    
+    public Cursor getCashBankAccountIdFor(String cashBankTitle) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select cashBankId from cashBankEntity where cashBankTitle = ?", new String[]{cashBankTitle});
+        return Cursor;
+    }
 
     public Cursor getExpenseAccounts() { //reformed
         SQLiteDatabase DB = this.getWritableDatabase();
@@ -152,13 +158,16 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select clientId from clientEntity where clientName = ?", new String[]{clientName});
         return cursor;
     }
-
+ 
     public boolean insertCashTransaction(String tableName, String date, int invoiceId, int clientId, int cashBankId, int amount) {
+        // todo fix insertcashTransaction query
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("date", date);
-        contentValues.put("accountId", clientId);
         contentValues.put("invoiceId", invoiceId);
+        contentValues.put("clientId", clientId);
+        contentValues.put("cashBankId", cashBankId);
+        contentValues.put("amount", amount);
         
         long result = DB.insert(tableName, null, contentValues);
         return result != -1;

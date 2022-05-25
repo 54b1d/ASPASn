@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 import android.widget.Spinner;
+import android.util.Log;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
     String date, name, cashBankTitle, amountText, tableName;
@@ -138,18 +139,31 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         while (res.moveToNext()) {
             clientId = res.getInt(0);
         }
-        amountText = editAmount.getText().toString(); // todo decide debit credit
+        cashBankTitle = spinnerCashBankList.getSelectedItem().toString();
+        Cursor cursorCashBankAccountId = DB.getCashBankAccountIdFor(cashBankTitle);
+        while (cursorCashBankAccountId.moveToNext()) {
+            cashBankId = cursorCashBankAccountId.getInt(0);
+        }
+		cursorCashBankAccountId.close();
+        invoiceId = 0; //todo addcashtransaction: get invoice id
+        amountText = editAmount.getText().toString();
         amount = Integer.parseInt(amountText);
+        Log.d("AddCashTransaction Confirmed Values",tableName + date + invoiceId + clientId + cashBankId + amount);
         if (isReceipt) {
-            tableName = "recieptEntity";
-            
-            DB.insertCashTransaction(tableName, date, invoiceId=0, clientId, cashBankId, amount);
-            Toast.makeText(this, "Received " + amount + "Tk From " + name, Toast.LENGTH_SHORT).show();
+            tableName = "receiptEntity";
+            if (DB.insertCashTransaction(tableName, date, invoiceId, clientId, cashBankId, amount)){
+                Toast.makeText(this, "Received " + amount + "Tk From " + name, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Cash Transaction failed.", Toast.LENGTH_LONG).show();
+            }
 
         } else {
             tableName = "paymentEntity";
-            DB.insertCashTransaction(tableName, date, invoiceId, clientId, cashBankId, amount);
-            Toast.makeText(this, "Paid " + amount + "Tk To " + name, Toast.LENGTH_SHORT).show();
+            if (DB.insertCashTransaction(tableName, date, invoiceId, clientId, cashBankId, amount)){
+                Toast.makeText(this, "Paid " + amount + "Tk To " + name, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Cash Transaction failed.", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
