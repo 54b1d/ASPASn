@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityCalc, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount;
+    Button btnActivityCalc, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
         btnActivityAddAccount = findViewById(R.id.btnActivityAddAccount);
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
         btnActivityAddExpenseAccount = findViewById(R.id.btnActivityAddExpenseAccount);
-
+		btnActivityAddInventoryItem = findViewById(R.id.btnActivityAddInventoryItem);
         btnActivityCalc.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
@@ -50,12 +50,19 @@ public class DebugButtonsActivity extends AppCompatActivity {
                     openActivityAddCashTransaction();
                 }
             });
-        btnActivityAddExpenseAccount.setOnClickListener(new View.OnClickListener() {
+        btnActivityAddInventoryItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivityAddProduct();
+            }
+        });
+		btnActivityAddExpenseAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openActivityAddExpenseAccount();
             }
         });
+		
     }
     public void openCalculatorActivity(){
         Intent intent = new Intent(this, CalculatorActivity.class);
@@ -72,6 +79,11 @@ public class DebugButtonsActivity extends AppCompatActivity {
 
     public void openActivityAddExpenseAccount() {
         Intent intent = new Intent(this, AddExpenseAccountActivity.class);
+        startActivity(intent);
+    }
+	
+	public void openActivityAddProduct() {
+        Intent intent = new Intent(this, AddProductActivity.class);
         startActivity(intent);
     }
 }
