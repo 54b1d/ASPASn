@@ -2,6 +2,7 @@ package com.sabid.aspasn;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.icu.text.SimpleDateFormat;
 import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
@@ -64,7 +65,9 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
-
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		date = sdf.format(calendar.getTime());
+		editDate.setText(date);
         editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
