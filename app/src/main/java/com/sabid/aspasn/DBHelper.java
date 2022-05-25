@@ -158,9 +158,15 @@ public class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = DB.rawQuery("Select clientId from clientEntity where clientName = ?", new String[]{clientName});
         return cursor;
     }
+
+    public Cursor getUnpaidInvoicesOf(String clientId) {
+        //todo where isPaid != paid
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor cursor = DB.rawQuery("Select salesInvoiceId, date, amount from salesInvoiceEntity where clientId = ?", new String[]{clientId});
+        return cursor;
+    }
  
     public boolean insertCashTransaction(String tableName, String date, int invoiceId, int clientId, int cashBankId, int amount) {
-        // todo fix insertcashTransaction query
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("date", date);

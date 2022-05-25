@@ -4,30 +4,30 @@ import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.icu.util.Calendar;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
-import android.widget.Spinner;
-import android.util.Log;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
-    String date, name, cashBankTitle, amountText, tableName;
+    String date, name, cashBankTitle, amountText, tableName, clientIdText;
     int invoiceId, clientId, cashBankId, quantity, amount;
 
     AutoCompleteTextView editAutoName;
     EditText editDate, editAmount;
     Button btnConfirmCashReceiptTransaction, btnConfirmCashPaymentTransaction;
-    Spinner spinnerCashBankList;
-    ArrayList accounts, cashBankEntity;
+    Spinner spinnerCashBankList, spinnerUnpaidInvoices;
+    ArrayList accounts, cashBankEntity, unpaidInvoices;
     ArrayAdapter adapter;
     Boolean isReceipt, isPayment;
     DBHelper DB;
@@ -50,6 +50,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 
         editAutoName = findViewById(R.id.editAutoName);
         spinnerCashBankList = findViewById(R.id.spinnerCashBankList);
+        spinnerUnpaidInvoices = findViewById(R.id.spinnerUnpaidInvoices);
         editDate = findViewById(R.id.editDate);
         editAmount = findViewById(R.id.editAmount);
         btnConfirmCashReceiptTransaction = findViewById(R.id.btnConfirmCashReceiptTransaction);
@@ -130,7 +131,26 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         spinnerCashBankList.setAdapter(adapter);
         res.close();
     }
-    
+
+    public void loadSpinnerUnpaidInvoices(int clientId) {
+        //todo cashTransaction load unpaid invoices
+        // set default invoice id to 0, meaning its direct cash transaction
+        invoiceId = 0;
+        clientIdText = Integer.toString(clientId);
+        unpaidInvoices = new ArrayList<String>();
+        Cursor cursorUnpaidInvoices = DB.getUnpaidInvoicesOf(clientIdText);
+        if (cursorUnpaidInvoices.getCount() == 0) {
+            unpaidInvoices.add("No unpaid invoice");
+        } else {
+            while (cursorUnpaidInvoices.moveToNext()) {
+                unpaidInvoices.add("ID: " + cursorUnpaidInvoices.getString(0) +
+                        ", Date: " + cursorUnpaidInvoices.getString(1) +
+                        ", Amount: " + cursorUnpaidInvoices.getString(2));
+            }
+        }
+        cursorUnpaidInvoices.close();
+    }
+
     public void cashTransactionConfirmed(Boolean isReceipt) {
         // String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, Double quantity, Double debit, Double credit
         date = editDate.getText().toString();
