@@ -16,15 +16,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
+import android.widget.Spinner;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
-    String date, name, amount, purchaseSale;
-    int invoiceId, accountId, lineItemId, quantity, debit, credit;
+    String date, name, cashBankTitle, amountText, tableName;
+    int invoiceId, clientId, cashBankId, quantity, amount;
 
     AutoCompleteTextView editAutoName;
     EditText editDate, editAmount;
     Button btnConfirmCashReceiptTransaction, btnConfirmCashPaymentTransaction;
-    ArrayList accounts;
+    Spinner spinnerCashBankList;
+    ArrayList accounts, cashBankEntity;
+    ArrayAdapter adapter;
     Boolean isReceipt, isPayment;
     DBHelper DB;
 
@@ -45,6 +48,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         });
 
         editAutoName = findViewById(R.id.editAutoName);
+        spinnerCashBankList = findViewById(R.id.spinnerCashBankList);
         editDate = findViewById(R.id.editDate);
         editAmount = findViewById(R.id.editAmount);
         btnConfirmCashReceiptTransaction = findViewById(R.id.btnConfirmCashReceiptTransaction);
@@ -52,6 +56,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 
         DB = new DBHelper(this);
         loadEditAutoName();
+        loadSpinnerCashBankList();
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
@@ -108,28 +113,42 @@ public class AddCashTransactionActivity extends AppCompatActivity {
         editAutoName.setAdapter(adapter);
         res.close();
     }
-
+    
+    public void loadSpinnerCashBankList() {
+        cashBankEntity = new ArrayList<String>();
+        Cursor res = DB.getCashBankAccounts();
+        if (res.getCount() == 0) {
+            cashBankEntity.add("CashBank Account");
+        } else {
+            while (res.moveToNext()) {
+                //take cashBankTitle only from 2nd(1) column
+                cashBankEntity.add(res.getString(1));
+            }
+        }
+        adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, cashBankEntity);
+        spinnerCashBankList.setAdapter(adapter);
+        res.close();
+    }
+    
     public void cashTransactionConfirmed(Boolean isReceipt) {
         // String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, Double quantity, Double debit, Double credit
         date = editDate.getText().toString();
-        name = editAutoName.getText().toString(); // todo get account id for this name and address
-        Cursor res = DB.getAccountId(name);
+        name = editAutoName.getText().toString();
+        Cursor res = DB.getClientId(name);
         while (res.moveToNext()) {
-            accountId = res.getInt(0);
+            clientId = res.getInt(0);
         }
-        amount = editAmount.getText().toString(); // todo decide debit credit
+        amountText = editAmount.getText().toString(); // todo decide debit credit
+        amount = Integer.parseInt(amountText);
         if (isReceipt) {
-            // todo amount debit if received
-            debit = Integer.parseInt(amount);
-            credit = 0;
-            DB.insertTransaction(date, accountId, invoiceId = 0, lineItemId = 0, purchaseSale = "cash", quantity = 0, debit, credit);
+            tableName = "recieptEntity";
+            
+            DB.insertCashTransaction(tableName, date, invoiceId=0, clientId, cashBankId, amount);
             Toast.makeText(this, "Received " + amount + "Tk From " + name, Toast.LENGTH_SHORT).show();
 
         } else {
-            debit = 0;
-            credit = Integer.parseInt(amount);
-            ;
-            DB.insertTransaction(date, accountId, invoiceId = 0, lineItemId = 0, purchaseSale = "cash", quantity = 0, debit, credit);
+            tableName = "paymentEntity";
+            DB.insertCashTransaction(tableName, date, invoiceId, clientId, cashBankId, amount);
             Toast.makeText(this, "Paid " + amount + "Tk To " + name, Toast.LENGTH_SHORT).show();
         }
     }

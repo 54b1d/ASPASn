@@ -14,6 +14,7 @@ public class DBHelper extends SQLiteOpenHelper {
     public DBHelper(Context context) {
         super(context, "UserData.db", null, 1);
     }
+    String tableName;
 
     @Override
     public void onCreate(SQLiteDatabase DB) {
@@ -122,9 +123,15 @@ public class DBHelper extends SQLiteOpenHelper {
         return Cursor;
     }
 
-    public Cursor getAccounts() { //reformed
+    public Cursor getAccounts() {
         SQLiteDatabase DB = this.getWritableDatabase();
         Cursor Cursor = DB.rawQuery("select * from clientEntity", null);
+        return Cursor;
+    }
+    
+    public Cursor getCashBankAccounts() {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select * from cashBankEntity", null);
         return Cursor;
     }
 
@@ -140,24 +147,20 @@ public class DBHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public Cursor getAccountId(String accountName) {
+    public Cursor getClientId(String clientName) { // reformed
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor cursor = DB.rawQuery("Select id from accountGroups where groupName=?", new String[]{accountName});
+        Cursor cursor = DB.rawQuery("Select clientId from clientEntity where clientName = ?", new String[]{clientName});
         return cursor;
     }
 
-    public boolean insertTransaction(String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, int quantity, int debit, int credit) {
+    public boolean insertCashTransaction(String tableName, String date, int invoiceId, int clientId, int cashBankId, int amount) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("date", date);
-        contentValues.put("accountId", accountId);
+        contentValues.put("accountId", clientId);
         contentValues.put("invoiceId", invoiceId);
-        contentValues.put("lineItemId", lineItemId);
-        contentValues.put("purchaseSale", purchaseSale);
-        contentValues.put("quantity", quantity);
-        contentValues.put("debit", debit);
-        contentValues.put("credit", credit);
-        long result = DB.insert("transactions", null, contentValues);
+        
+        long result = DB.insert(tableName, null, contentValues);
         return result != -1;
     }
 }
