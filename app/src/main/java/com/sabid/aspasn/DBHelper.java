@@ -124,6 +124,20 @@ public class DBHelper extends SQLiteOpenHelper {
 		long result = DB.insert("productTypeEntity", null, contentValues);
 		return result != -1;
 	}
+    
+    public Boolean insertInvoice(String tableName, String date,int clientId, int productId, double quantity, double rate, double amount) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("date", date);
+        contentValues.put("clientId", clientId);
+        contentValues.put("productId", productId);
+        contentValues.put("quantity", quantity);
+        contentValues.put("rate", rate);
+        contentValues.put("amount", amount);
+
+        long result = DB.insert(tableName, null, contentValues);
+        return result != -1;
+	}
 
 	public Boolean updateuserdata(String name, String contact, String dob) {
 		SQLiteDatabase DB = this.getWritableDatabase();
@@ -185,6 +199,12 @@ public class DBHelper extends SQLiteOpenHelper {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		Cursor Cursor = DB.rawQuery("select * from inventoryEntity", null);
 		return Cursor;
+	}
+    
+    public Cursor getProductIdOf(String productName) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select productId from inventoryEntity where productName=?", new String[] {productName});
+        return Cursor;
 	}
 
 	public Cursor getCashBankAccounts() {

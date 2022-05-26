@@ -9,7 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityCalc, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem;
+    Button btnActivityCalc, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
+    , btnActivityAddInventoryItem, btnActivityAddInvoice;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
         btnActivityAddExpenseAccount = findViewById(R.id.btnActivityAddExpenseAccount);
 		btnActivityAddInventoryItem = findViewById(R.id.btnActivityAddInventoryItem);
+        btnActivityAddInvoice = findViewById(R.id.btnActivityAddInvoice);
         btnActivityCalc.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
@@ -62,6 +64,12 @@ public class DebugButtonsActivity extends AppCompatActivity {
                 openActivityAddExpenseAccount();
             }
         });
+        btnActivityAddInvoice.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openActivityAddInvoice();
+                }
+            });
 		
     }
     public void openCalculatorActivity(){
@@ -84,6 +92,11 @@ public class DebugButtonsActivity extends AppCompatActivity {
 	
 	public void openActivityAddProduct() {
         Intent intent = new Intent(this, AddProductActivity.class);
+        startActivity(intent);
+    }
+    
+    public void openActivityAddInvoice() {
+        Intent intent = new Intent(this, AddInvoiceActivity.class);
         startActivity(intent);
     }
 }
