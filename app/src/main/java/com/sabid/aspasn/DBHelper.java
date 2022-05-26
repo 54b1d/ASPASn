@@ -101,13 +101,27 @@ public class DBHelper extends SQLiteOpenHelper {
 		long result = DB.insert("accountTypeEntity", null, contentValues);
 		return result != -1;
 	}
+    
+    public Boolean insertProduct(String productName, int productTypeId, int accountTypeId) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("productName", productName);
+        contentValues.put("productTypeId", productTypeId);
+        contentValues.put("accountTypeId", accountTypeId);
 
-	public Boolean insertProductType(String productTypeName, int productTypeId, int accountTypeId) {
+        long result = DB.insert("inventoryEntity", null, contentValues);
+        return result != -1;
+	}
+
+	public Boolean insertProductType(String productTypeTitle, String baseUnitName, String interpretedUnitName, int minWeightToInterpretUnit) {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
-		contentValues.put("accountTypeName", productTypeName);
+		contentValues.put("productTypeTitle", productTypeTitle);
+        contentValues.put("baseUnitName", baseUnitName);
+        contentValues.put("interpretedUnitName", interpretedUnitName);
+        contentValues.put("minWeightToInterpretUnit", minWeightToInterpretUnit);
 
-		long result = DB.insert("accountTypeEntity", null, contentValues);
+		long result = DB.insert("productTypeEntity", null, contentValues);
 		return result != -1;
 	}
 
@@ -151,13 +165,25 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Cursor getProductTypeFor(String args) {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from accountTypeEntity where accountTypeName = ?", new String[] { args });
+		Cursor Cursor = DB.rawQuery("select * from productTypeEntity where productTypeTitle = ?", new String[] { args });
+		return Cursor;
+	}
+	
+	public Cursor getProductTypes(){
+		SQLiteDatabase DB = this.getWritableDatabase();
+		Cursor Cursor = DB.rawQuery("select * from productTypeEntity", null);
 		return Cursor;
 	}
 
 	public Cursor getAccounts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		Cursor Cursor = DB.rawQuery("select * from clientEntity", null);
+		return Cursor;
+	}
+	
+	public Cursor getProducts() {
+		SQLiteDatabase DB = this.getWritableDatabase();
+		Cursor Cursor = DB.rawQuery("select * from inventoryEntity", null);
 		return Cursor;
 	}
 

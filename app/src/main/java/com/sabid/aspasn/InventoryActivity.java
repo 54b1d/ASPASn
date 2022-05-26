@@ -49,13 +49,13 @@ public class InventoryActivity extends AppCompatActivity {
 
     public void loadListProducts() {
         products = new ArrayList<String>();
-        Cursor res = DB.getAccounts();
+        Cursor res = DB.getProducts();
         if (res.getCount() == 0) {
             products.add("No Product Found");
         } else {
             while (res.moveToNext()) {
                 // clientId 0, name 1, address 2, mobile 3, accountTypeId 4
-                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3)+ ", " + res.getString(4);
+                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3);
                 products.add(a);
             }
         }

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class AddProductActivity extends AppCompatActivity {
     private String accountTypeName = "Inventory"; // literal from database table accountTypesEntity
-    EditText productName, address, mobile;
+    EditText productName;
     Button confirmAddProduct, viewProducts, btnAddProductType;
     Spinner spinnerProductType;
     ArrayList categories;
@@ -60,16 +60,16 @@ public class AddProductActivity extends AppCompatActivity {
                     int accountTypeId = 1;
                     Cursor res = DB.getProductTypeFor(productTypeTitleText);
                     if (res.getCount() == 0) {
-                        Log.v("AddClientData", "No data in getAccountTypeId cursor");
-                        Toast.makeText(getApplicationContext(), "Invalid Group Name Selected", Toast.LENGTH_SHORT).show();
+                        Log.v("AddProductData", "No data in getProductTypeId cursor");
+                        Toast.makeText(getApplicationContext(), "Invalid Product Type Selected", Toast.LENGTH_SHORT).show();
                     } else {
                         res.moveToNext();
                         int productTypeId = res.getInt(0);
                         String productNameText = productName.getText().toString().trim();
                         if (!productNameText.isEmpty()) {
-                            Boolean checkInsertData = DB.insertProductType(productNameText, productTypeId, accountTypeId);
+                            Boolean checkInsertData = DB.insertProduct(productNameText, productTypeId, accountTypeId);
                             if (checkInsertData) {
-                                Toast.makeText(getApplicationContext(), productNameText + " Client Account Created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), productNameText + " product Account Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
                                 productName.setText("");
                             } else {
@@ -91,7 +91,7 @@ public class AddProductActivity extends AppCompatActivity {
         btnAddProductType.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    openAddAccountTypeActivity();
+                    openAddProductTypeActivity();
                 }
             });
 
@@ -105,7 +105,7 @@ public class AddProductActivity extends AppCompatActivity {
 
     public void loadSpinnerProductType() {
         categories = new ArrayList<String>();
-        Cursor res = DB.getAccountTypeFor(accountTypeName);
+        Cursor res = DB.getProductTypes();
         if (res.getCount() == 0) {
             categories.add("Add Categories");
         } else {
@@ -124,8 +124,8 @@ public class AddProductActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void openAddAccountTypeActivity() {
-        Intent i = new Intent(this, AddAccountTypeActivity.class);
+    public void openAddProductTypeActivity() {
+        Intent i = new Intent(this, AddProductTypeActivity.class);
         startActivity(i);
     }
     

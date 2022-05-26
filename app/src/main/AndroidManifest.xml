@@ -13,6 +13,7 @@
         <activity android:name=".ExpenseAccountsActivity" />
         <activity android:name=".AddExpenseAccountActivity" />
         <activity android:name=".AddProductActivity" />
+		<activity android:name=".AddProductTypeActivity" />
         <activity
             android:name=".AddDirectTransactionActivity"
             android:exported="false" />
