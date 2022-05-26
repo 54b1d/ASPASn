@@ -61,13 +61,14 @@
 				android:id="@+id/editAutoName"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@+id/editDate"/>
+				android:layout_below="@+id/editDate"
+				android:hint="Type client name here..."/>
 
 			<Spinner
 				android:id="@+id/spinnerUnpaidInvoices"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editAutoName" />
+				android:layout_below="@id/editAutoName"/>
 
 			<EditText
 				android:id="@+id/editAmount"
@@ -75,7 +76,8 @@
 				android:layout_height="wrap_content"
 				android:layout_below="@id/spinnerUnpaidInvoices"
 				android:ems="10"
-				android:inputType="number" />
+				android:inputType="number"
+				android:hint="Amount"/>
 
 			<Button
 				android:id="@+id/btnConfirmCashReceiptTransaction"

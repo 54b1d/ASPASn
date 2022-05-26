@@ -162,6 +162,11 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		while (res.moveToNext()) {
 			clientId = res.getInt(0);
 		}
+		res.close();
+		if (clientId == 0){
+			editAutoName.setText("");
+			editAutoName.setHint("Invalid Client Name");
+		}
 		cashBankTitle = spinnerCashBankList.getSelectedItem().toString();
 		Cursor cursorCashBankAccountId = DB.getCashBankAccountIdFor(cashBankTitle);
 		while (cursorCashBankAccountId.moveToNext()) {
@@ -170,7 +175,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		cursorCashBankAccountId.close();
 		invoiceId = 0; //todo addcashtransaction: get invoice id
 		amountText = editAmount.getText().toString();
-		if (name.isEmpty() || amountText.isEmpty()) {
+		if (name.isEmpty() || amountText.isEmpty() || clientId == 0) {
 			Toast.makeText(this, "Input Required Fields", Toast.LENGTH_SHORT).show();
 		} else {
 			amount = Integer.parseInt(amountText);
