@@ -68,7 +68,7 @@
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="View Accounts"
+				android:text="View Products"
 				android:layout_below="@id/btnConfirmAddProduct"
 				android:id="@+id/btnViewProducts"
 				android:layout_centerInParent="true"/>
