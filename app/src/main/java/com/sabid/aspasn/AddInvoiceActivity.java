@@ -19,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
+import android.text.TextWatcher;
+import android.text.Editable;
 
 public class AddInvoiceActivity extends AppCompatActivity {
     String date, name, productName, quantityText, rateText, amountText, tableName, clientIdText;
@@ -58,7 +60,36 @@ public class AddInvoiceActivity extends AppCompatActivity {
         editAmount = findViewById(R.id.editAmount);
         btnConfirmPurchase = findViewById(R.id.btnConfirmPurchase);
         btnConfirmSale = findViewById(R.id.btnConfirmSale);
+        
+        editRate.addTextChangedListener(new TextWatcher() {
 
+                @Override
+                public void afterTextChanged(Editable s) {}
+
+                @Override
+                public void beforeTextChanged(CharSequence s, int start,
+                                              int count, int after) {
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    if (editRate.getText().toString().isEmpty()){
+						rate = 0;
+					} else {
+						rate = Double.parseDouble(editRate.getText().toString());
+					}
+					if  (editQuantity.getText().toString().isEmpty()){
+						quantity = 0;
+					} else {
+						quantity = Double.parseDouble(editQuantity.getText().toString());
+					}
+                    if(s.length() != 0 && quantity > 0){
+					amount = quantity * rate;
+                    editAmount.setText(Double.toString(amount));
+					}
+                }
+            });
+        
         DB = new DBHelper(this);
         loadEditAutoName();
         loadSpinnerProducts();
