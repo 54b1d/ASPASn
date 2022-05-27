@@ -25,7 +25,7 @@ import android.text.Editable;
 public class AddInvoiceActivity extends AppCompatActivity {
     String date, name, productName, quantityText, rateText, amountText, tableName, clientIdText;
     int productId, clientId;
-    double quantity, rate, amount;
+    double quantity, rate, amount, tmpQuantity, tmpRate, tmpAmount;
 
     AutoCompleteTextView editAutoName;
     EditText editDate, editQuantity, editRate, editAmount;
@@ -61,6 +61,9 @@ public class AddInvoiceActivity extends AppCompatActivity {
         btnConfirmPurchase = findViewById(R.id.btnConfirmPurchase);
         btnConfirmSale = findViewById(R.id.btnConfirmSale);
         
+		// todo AddInvoice: calculate rate based on amount and quantity
+		
+		// calculate amount based on quantity and rate inserted
         editRate.addTextChangedListener(new TextWatcher() {
 
                 @Override
@@ -74,18 +77,19 @@ public class AddInvoiceActivity extends AppCompatActivity {
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
                     if (editRate.getText().toString().isEmpty()){
-						rate = 0;
+						tmpRate = 0;
 					} else {
-						rate = Double.parseDouble(editRate.getText().toString());
+						tmpRate = Double.parseDouble(editRate.getText().toString());
 					}
 					if  (editQuantity.getText().toString().isEmpty()){
-						quantity = 0;
+						tmpQuantity = 0;
 					} else {
-						quantity = Double.parseDouble(editQuantity.getText().toString());
+						tmpQuantity = Double.parseDouble(editQuantity.getText().toString());
 					}
-                    if(s.length() != 0 && quantity > 0){
-					amount = quantity * rate;
-                    editAmount.setText(Double.toString(amount));
+                    if(s.length() != 0 && tmpQuantity > 0){
+					tmpAmount = tmpQuantity * tmpRate;
+					// todo format editAmout to proper decimal value
+                    editAmount.setText(Double.toString(tmpAmount));
 					}
                 }
             });
