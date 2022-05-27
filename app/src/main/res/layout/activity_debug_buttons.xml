@@ -83,6 +83,12 @@
 				android:text="Add Invoice"
 				android:layout_below="@id/btnActivityAddExpenseAccount"
 				android:id="@+id/btnActivityAddInvoice"/>
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="Accounting Periods"
+				android:layout_below="@id/btnActivityAddInvoice"
+				android:id="@+id/btnActivityAccountingPeriods"/>
 
 		</RelativeLayout>
 

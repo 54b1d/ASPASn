@@ -194,6 +194,12 @@ public class DBHelper extends SQLiteOpenHelper {
 		Cursor Cursor = DB.rawQuery("select * from clientEntity", null);
 		return Cursor;
 	}
+
+	public Cursor getAccountingPeriods() {
+		SQLiteDatabase DB = this.getWritableDatabase();
+		Cursor Cursor = DB.rawQuery("select * from accountingPeriods", null);
+		return Cursor;
+	}
 	
 	public Cursor getProducts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
