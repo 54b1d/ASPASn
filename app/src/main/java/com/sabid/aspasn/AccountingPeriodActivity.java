@@ -98,8 +98,13 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                 if(startDate.isEmpty() || endDate.isEmpty()){
                     Toast.makeText(AccountingPeriodActivity.this, "Select Dates Correctly", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(AccountingPeriodActivity.this, "Implement Insert Logic", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AccountingPeriodActivity.this, "Implement Insert Logic", Toast.LENGTH_SHORT).show();
+					boolean checkInsert = DB.insertAccountingPeriod(startDate, endDate);
+					if (checkInsert){
                     loadListAccountingPeriods(); // Refresh Accounting Period List
+					} else {
+						Toast.makeText(AccountingPeriodActivity.this, "Failed to insert period", Toast.LENGTH_SHORT).show();
+					}
                 }
             }
         });
