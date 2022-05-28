@@ -16,6 +16,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class AccountingPeriodActivity extends AppCompatActivity {
@@ -45,13 +47,14 @@ public class AccountingPeriodActivity extends AppCompatActivity {
         DB = new DBHelper(this);
         loadListAccountingPeriods();
 
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        date = sdf.format(calendar.getTime());
+        DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		LocalDateTime currentDateTime = LocalDateTime.now();
+        date = currentDateTime.format(dateFormat);
         editEndDate.setText(date);
+        final int year = currentDateTime.getYear();
+        final int month = currentDateTime.getMonthValue();
+        final int day = currentDateTime.getDayOfMonth();
+        
 
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +63,11 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                         R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
+						month = month +1;
                         String date = day + "/" + month + "/" + year;
                         editStartDate.setText(date);
                     }
-                }, year, month, day);
+                }, year, month -1, day);
 
                 datePickerDialog.show();
             }
@@ -76,11 +80,11 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                         R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
-                        month = month + 1;
-                        String date = day + "/" + month + "/" + year;
+                        month = month +1;
+						String date = day + "/" + month + "/" + year;
                         editEndDate.setText(date);
                     }
-                }, year, month, day);
+                }, year, month -1, day);
 
                 datePickerDialog.show();
             }
