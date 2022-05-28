@@ -101,6 +101,16 @@ public class DBHelper extends SQLiteOpenHelper {
 		long result = DB.insert("accountTypeEntity", null, contentValues);
 		return result != -1;
 	}
+	
+	public Boolean insertAccountingPeriod(String accountingStartDate, String accountingEndDate) {
+		SQLiteDatabase DB = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put("accountingStartDate", accountingStartDate);
+		contentValues.put("accountingEndDate", accountingEndDate);
+
+		long result = DB.insert("accountingPeriods", null, contentValues);
+		return result != -1;
+	}
     
     public Boolean insertProduct(String productName, int productTypeId, int accountTypeId) {
         SQLiteDatabase DB = this.getWritableDatabase();
@@ -164,6 +174,12 @@ public class DBHelper extends SQLiteOpenHelper {
 			return false;
 		}
 	}
+    
+    public Cursor getTable(String tableName){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select * from " + tableName, null);
+		return Cursor;
+    }
 
 	public Cursor getAccountTypes() { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();

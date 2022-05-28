@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityCalc, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
+    Button btnActivityTransactions, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
     , btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods;
     
     @Override
@@ -28,7 +28,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
                 }
             });
         
-        btnActivityCalc = findViewById(R.id.btnActivityCalc);
+        btnActivityTransactions = findViewById(R.id.btnActivityTransactions);
         btnActivityAddAccount = findViewById(R.id.btnActivityAddAccount);
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
         btnActivityAddExpenseAccount = findViewById(R.id.btnActivityAddExpenseAccount);
@@ -36,10 +36,10 @@ public class DebugButtonsActivity extends AppCompatActivity {
         btnActivityAddInvoice = findViewById(R.id.btnActivityAddInvoice);
         btnActivityAccountingPeriods = findViewById(R.id.btnActivityAccountingPeriods);
 
-        btnActivityCalc.setOnClickListener(new View.OnClickListener(){
+        btnActivityTransactions.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
-                    openCalculatorActivity();
+                    openTransactionsActivity();
                 }
             });
         btnActivityAddAccount.setOnClickListener(new View.OnClickListener() {
@@ -79,8 +79,8 @@ public class DebugButtonsActivity extends AppCompatActivity {
             }
         });
     }
-    public void openCalculatorActivity(){
-        Intent intent = new Intent(this, CalculatorActivity.class);
+    public void openTransactionsActivity(){
+        Intent intent = new Intent(this, TransactionsActivity.class);
         startActivity(intent);
     }
     public void openCreateAccountActivity(){

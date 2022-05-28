@@ -52,15 +52,15 @@
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Calculator"
+				android:text="All Transactions"
 				android:layout_below="@id/btnActivityAddAccount"
-				android:id="@+id/btnActivityCalc"/>
+				android:id="@+id/btnActivityTransactions"/>
 
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Add Cash Transaction"
-				android:layout_below="@id/btnActivityCalc"
+				android:layout_below="@id/btnActivityTransactions"
 				android:id="@+id/btnActivityAddCashTransaction"/>
 
 			<Button
@@ -83,6 +83,7 @@
 				android:text="Add Invoice"
 				android:layout_below="@id/btnActivityAddExpenseAccount"
 				android:id="@+id/btnActivityAddInvoice"/>
+
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
