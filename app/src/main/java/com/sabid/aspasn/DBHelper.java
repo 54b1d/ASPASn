@@ -181,6 +181,19 @@ public class DBHelper extends SQLiteOpenHelper {
 		return Cursor;
     }
 
+	public Cursor getPayments(){
+		SQLiteDatabase DB = this.getWritableDatabase();
+		Cursor Cursor = DB.rawQuery("SELECT \n" +
+				"       [main].[paymentEntity].[date], \n" +
+				"       [main].[clientEntity].[clientName], \n" +
+				"       [main].[clientEntity].[clientAddress], \n" +
+				"       [main].[paymentEntity].[amount]\n" +
+				"FROM   [main].[paymentEntity]\n" +
+				"       INNER JOIN [main].[clientEntity] ON [main].[paymentEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
+				"ORDER  BY [main].[paymentEntity].[date] DESC;", null);
+		return Cursor;
+	}
+
 	public Cursor getAccountTypes() { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
 		Cursor Cursor = DB.rawQuery("select * from accountTypeEntity", null);

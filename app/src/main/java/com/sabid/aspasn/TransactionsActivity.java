@@ -105,14 +105,13 @@ public class TransactionsActivity extends AppCompatActivity {
 	
 	public void loadListPayments() {
         purchases = new ArrayList<String>();
-		String tableName = "paymentEntity";
-        Cursor res = DB.getTable(tableName);
+        Cursor res = DB.getPayments();
         if (res.getCount() == 0) {
             purchases.add("No Cash Paid");
         } else {
             while (res.moveToNext()) {
-                // clientId 0, name 1, address 2, mobile 3, accountTypeId 4
-                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3);
+                // date, Name, Address, Amount
+                String a = res.getString(0) + ": " + res.getString(1) + ", " + res.getString(2) + " =" + res.getString(3)+"Tk";
                 purchases.add(a);
             }
         }
