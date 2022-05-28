@@ -193,6 +193,45 @@ public class DBHelper extends SQLiteOpenHelper {
 				"ORDER  BY [main].[paymentEntity].[date] DESC;", null);
 		return Cursor;
 	}
+    
+    public Cursor getReceipts(){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("SELECT \n" +
+                                    "       [main].[receiptEntity].[date], \n" +
+                                    "       [main].[clientEntity].[clientName], \n" +
+                                    "       [main].[clientEntity].[clientAddress], \n" +
+                                    "       [main].[receiptEntity].[amount]\n" +
+                                    "FROM   [main].[receiptEntity]\n" +
+                                    "       INNER JOIN [main].[clientEntity] ON [main].[receiptEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
+                                    "ORDER  BY [main].[receiptEntity].[date] DESC;", null);
+        return Cursor;
+	}
+    
+    public Cursor getPurchases(){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("SELECT \n" +
+                                    "       [main].[purchaseInvoiceEntity].[date], \n" +
+                                    "       [main].[clientEntity].[clientName], \n" +
+                                    "       [main].[clientEntity].[clientAddress], \n" +
+                                    "       [main].[purchaseInvoiceEntity].[amount]\n" +
+                                    "FROM   [main].[purchaseInvoiceEntity]\n" +
+                                    "       INNER JOIN [main].[clientEntity] ON [main].[purchaseInvoiceEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
+                                    "ORDER  BY [main].[purchaseInvoiceEntity].[date] DESC;", null);
+        return Cursor;
+	}
+    
+    public Cursor getSales(){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("SELECT \n" +
+                                    "       [main].[salesInvoiceEntity].[date], \n" +
+                                    "       [main].[clientEntity].[clientName], \n" +
+                                    "       [main].[clientEntity].[clientAddress], \n" +
+                                    "       [main].[salesInvoiceEntity].[amount]\n" +
+                                    "FROM   [main].[salesInvoiceEntity]\n" +
+                                    "       INNER JOIN [main].[clientEntity] ON [main].[salesInvoiceEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
+                                    "ORDER  BY [main].[salesInvoiceEntity].[date] DESC;", null);
+        return Cursor;
+    }
 
 	public Cursor getAccountTypes() { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();

@@ -54,15 +54,14 @@ public class TransactionsActivity extends AppCompatActivity {
 	
 	public void loadListPurchases() {
         purchases = new ArrayList<String>();
-		String tableName = "purchaseInvoiceEntity";
-        Cursor res = DB.getTable(tableName);
+        Cursor res = DB.getPurchases();
         if (res.getCount() == 0) {
             purchases.add("No Purchase Invoice");
         } else {
             while (res.moveToNext()) {
-                // clientId 0, name 1, address 2, mobile 3, accountTypeId 4
-                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3);
-                purchases.add(a);
+                // date, Name, Address, Amount
+				String a = res.getString(0) + ": " + res.getString(1) + ", " + res.getString(2) + " =" + res.getString(3)+"Tk";
+				purchases.add(a);
             }
         }
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, purchases);
@@ -70,52 +69,50 @@ public class TransactionsActivity extends AppCompatActivity {
     }
 	
 	public void loadListSales() {
-        purchases = new ArrayList<String>();
-		String tableName = "salesInvoiceEntity";
-        Cursor res = DB.getTable(tableName);
+        sales = new ArrayList<String>();
+        Cursor res = DB.getSales();
         if (res.getCount() == 0) {
-            purchases.add("No Sales Invoice");
+            sales.add("No Sales Invoice");
         } else {
             while (res.moveToNext()) {
-                // clientId 0, name 1, address 2, mobile 3, accountTypeId 4
-                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3);
-                purchases.add(a);
+                // date, Name, Address, Amount
+				String a = res.getString(0) + ": " + res.getString(1) + ", " + res.getString(2) + " =" + res.getString(3)+"Tk";
+				sales.add(a);
             }
         }
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, purchases);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, sales);
         listSales.setAdapter(adapter);
     }
 	
 	public void loadListReceipts() {
-        purchases = new ArrayList<String>();
-		String tableName = "receiptEntity";
-        Cursor res = DB.getTable(tableName);
+        receipts = new ArrayList<String>();
+        Cursor res = DB.getReceipts();
         if (res.getCount() == 0) {
-            purchases.add("No Cash Received");
+            receipts.add("No Cash Received");
         } else {
             while (res.moveToNext()) {
-                // clientId 0, name 1, address 2, mobile 3, accountTypeId 4
-                String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2) + ", " + res.getString(3);
-                purchases.add(a);
+                // date, Name, Address, Amount
+				String a = res.getString(0) + ": " + res.getString(1) + ", " + res.getString(2) + " =" + res.getString(3)+"Tk";
+				receipts.add(a);
             }
         }
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, purchases);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, receipts);
         listReceipts.setAdapter(adapter);
     }
 	
 	public void loadListPayments() {
-        purchases = new ArrayList<String>();
+        payments = new ArrayList<String>();
         Cursor res = DB.getPayments();
         if (res.getCount() == 0) {
-            purchases.add("No Cash Paid");
+            payments.add("No Cash Paid");
         } else {
             while (res.moveToNext()) {
                 // date, Name, Address, Amount
                 String a = res.getString(0) + ": " + res.getString(1) + ", " + res.getString(2) + " =" + res.getString(3)+"Tk";
-                purchases.add(a);
+                payments.add(a);
             }
         }
-        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, purchases);
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, payments);
         listPayments.setAdapter(adapter);
     }
 }
