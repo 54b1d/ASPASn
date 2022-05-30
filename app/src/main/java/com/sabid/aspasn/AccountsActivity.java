@@ -4,9 +4,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -21,9 +19,7 @@ import java.util.List;
 
 public class AccountsActivity extends AppCompatActivity {
     Button btnActivityAddAccount;
-    ListView listAccounts;
     ArrayList accounts;
-    ArrayAdapter adapter;
     DBHelper DB;
     ClientsAdapter clientsAdapter;
     RecyclerView rvClients;
@@ -67,7 +63,11 @@ public class AccountsActivity extends AppCompatActivity {
     public List<Clients> getClientsList() {
         Cursor res = DB.getAccounts();
         if (res.getCount() == 0) {
-            accounts.add("No Account Found");
+				String name = "No Account";
+                String address = "-";
+                String mobile = "-";
+                Clients emptyClient = new Clients(name, address, mobile);
+                clientsList.add(emptyClient);
         } else {
             while (res.moveToNext()) {
                 //clientId, clientId, name, address, mobile, accountTypeId
