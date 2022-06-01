@@ -17,7 +17,6 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class AddAccountActivity extends AppCompatActivity {
-    private String accountTypeName = "Clients"; // literal from database table accountTypesEntity
     EditText name, address, mobile;
     Button confirmAddAccount, viewAccounts, btnAddAccountType;
     Spinner spinnerAccountType;
@@ -71,7 +70,7 @@ public class AddAccountActivity extends AppCompatActivity {
                         if (!nameText.isEmpty()) {
                             Boolean checkInsertData = DB.insertAccountData(nameText, addressText, mobileText, accountTypeId);
                             if (checkInsertData) {
-                                Toast.makeText(getApplicationContext(), nameText + " Client Account Created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), accountTypeNameText + ": " + nameText + " Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
                                 name.setText("");
                                 address.setText("");

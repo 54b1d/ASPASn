@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -16,9 +19,6 @@ import com.sabid.aspasn.DataModels.Clients;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.widget.Spinner;
-import android.widget.ArrayAdapter;
-import android.widget.AdapterView;
 
 public class AccountsActivity extends AppCompatActivity {
     String accountTypeName;
@@ -49,20 +49,35 @@ public class AccountsActivity extends AppCompatActivity {
         });
 		
 		DB = new DBHelper(this);
-		layoutManager = new LinearLayoutManager(this);
+
         btnActivityAddAccount = findViewById(R.id.btnActivityAddAccount);
-		spinnerAccountType = findViewById(R.id.spinnerAccountType);
+        //Spinner Account Type
+        spinnerAccountType = findViewById(R.id.spinnerAccountType);
+        loadSpinnerAccountType();
+
+        layoutManager = new LinearLayoutManager(this);
         rvClients = findViewById(R.id.rvClients);
         rvClients.setHasFixedSize(true);
         rvClients.setLayoutManager(layoutManager);
-        //todo get accounttypename from spinner
-        accountTypeName = "Accounts";
-        clientsList = getClientsList(accountTypeName);
-        clientsAdapter = new ClientsAdapter(getApplicationContext(), clientsList, rvClients);
-        rvClients.setAdapter(clientsAdapter);
-        
-		loadSpinnerAccountType();
-        
+        // todo take account type value from intent
+        // take currently selected item as account type filter
+
+
+        spinnerAccountType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                accountTypeName = spinnerAccountType.getSelectedItem().toString();
+                clientsList.clear();
+                clientsList = getClientsList(spinnerAccountType.getSelectedItem().toString());
+                clientsAdapter = new ClientsAdapter(getApplicationContext(), clientsList, rvClients);
+                rvClients.setAdapter(clientsAdapter);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
         
         btnActivityAddAccount.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,8 +87,8 @@ public class AccountsActivity extends AppCompatActivity {
         });
     }
 
-    public List<Clients> getClientsList(String accountTypeName) {
-        Cursor res = DB.getAccountsOf(accountTypeName);
+    public List<Clients> getClientsList(String accountTypeNameText) {
+        Cursor res = DB.getAccountsOf(accountTypeNameText);
         if (res.getCount() == 0) {
 				String name = "No Account";
                 String address = "-";

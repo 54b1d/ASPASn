@@ -52,7 +52,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		
 		
 		DB.execSQL(
-				"INSERT INTO [accountType] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('accounts'), ('Incomes'), ('Expenses');");
+				"INSERT INTO [accountType] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('Accounts'), ('Incomes'), ('Expenses');");
 		//Create default Cash account inside cashBank table which is always required
 		DB.execSQL("INSERT INTO [cashBankAccounts] ('cashBankTitle', 'accountTypeId') VALUES ('Cash', '1');");
 		//Create default Capital accounts required
@@ -258,7 +258,7 @@ public class DBHelper extends SQLiteOpenHelper {
     
     public Cursor getAccountsOf(String accountTypeName) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("select accounts.*, accountType.accountTypeName from accounts INNER JOIN accountType ON accountType.accountTypeId = accounts.accountTypeId where accountTypeName = ?", new String[]{accountTypeName});
+		Cursor Cursor = DB.rawQuery("SELECT [accounts].* FROM [main].[accounts] INNER JOIN [main].[accountType] ON [main].[accountType].[accountTypeId] = [main].[accounts].[accountTypeId] WHERE accountTypeName = ?;", new String[]{accountTypeName});
         return Cursor;
 	}
 
