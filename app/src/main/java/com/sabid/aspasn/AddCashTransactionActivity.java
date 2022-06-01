@@ -158,7 +158,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		// String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, Double quantity, Double debit, Double credit
 		date = editDate.getText().toString();
 		name = editAutoName.getText().toString();
-		Cursor res = DB.getClientId(name);
+		Cursor res = DB.getAccountId(name);
 		while (res.moveToNext()) {
 			clientId = res.getInt(0);
 		}

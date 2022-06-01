@@ -38,6 +38,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Add New Account" />
+			
+			<Spinner
+				android:id="@+id/spinnerAccountType"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvClients"

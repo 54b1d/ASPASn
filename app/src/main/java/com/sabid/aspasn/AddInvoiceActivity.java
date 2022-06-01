@@ -177,7 +177,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
         date = editDate.getText().toString();
         name = editAutoName.getText().toString();
         
-        Cursor res = DB.getClientId(name);
+        Cursor res = DB.getAccountId(name);
         while (res.moveToNext()) {
             clientId = res.getInt(0);
         }

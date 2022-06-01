@@ -69,7 +69,7 @@ public class AddAccountActivity extends AppCompatActivity {
                         String addressText = address.getText().toString().trim();
                         String mobileText = mobile.getText().toString().trim();
                         if (!nameText.isEmpty()) {
-                            Boolean checkInsertData = DB.insertClientData(nameText, addressText, mobileText, accountTypeId);
+                            Boolean checkInsertData = DB.insertAccountData(nameText, addressText, mobileText, accountTypeId);
                             if (checkInsertData) {
                                 Toast.makeText(getApplicationContext(), nameText + " Client Account Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
@@ -109,7 +109,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
     public void loadSpinnerAccountType() {
         categories = new ArrayList<String>();
-        Cursor res = DB.getAccountTypeFor(accountTypeName);
+        Cursor res = DB.getAccountTypes();
         if (res.getCount() == 0) {
             categories.add("Add Categories");
         } else {
