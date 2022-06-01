@@ -45,15 +45,15 @@
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Add Account"
+				android:text="Accounts"
 				android:layout_below="@id/txt_title"
-				android:id="@+id/btnActivityAddAccount"/>
+				android:id="@+id/btnActivityAccounts"/>
 
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="All Transactions"
-				android:layout_below="@id/btnActivityAddAccount"
+				android:layout_below="@id/btnActivityAccounts"
 				android:id="@+id/btnActivityTransactions"/>
 
 			<Button
