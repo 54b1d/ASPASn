@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityTransactions, btnActivityAddAccount, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
+    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
     , btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods;
     
     @Override
@@ -29,7 +29,7 @@ public class DebugButtonsActivity extends AppCompatActivity {
             });
         
         btnActivityTransactions = findViewById(R.id.btnActivityTransactions);
-        btnActivityAddAccount = findViewById(R.id.btnActivityAddAccount);
+        btnActivityAccounts = findViewById(R.id.btnActivityAccounts);
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
         btnActivityAddExpenseAccount = findViewById(R.id.btnActivityAddExpenseAccount);
 		btnActivityAddInventoryItem = findViewById(R.id.btnActivityAddInventoryItem);
@@ -42,10 +42,10 @@ public class DebugButtonsActivity extends AppCompatActivity {
                     openTransactionsActivity();
                 }
             });
-        btnActivityAddAccount.setOnClickListener(new View.OnClickListener() {
+        btnActivityAccounts.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v){
-                    openCreateAccountActivity();
+                    openAccountsActivity();
                 }
             });
         btnActivityAddCashTransaction.setOnClickListener(new View.OnClickListener(){
@@ -83,8 +83,8 @@ public class DebugButtonsActivity extends AppCompatActivity {
         Intent intent = new Intent(this, TransactionsActivity.class);
         startActivity(intent);
     }
-    public void openCreateAccountActivity(){
-        Intent intent = new Intent(this, AddAccountActivity.class);
+    public void openAccountsActivity(){
+        Intent intent = new Intent(this, AccountsActivity.class);
         startActivity(intent);
     }
     public void openActivityAddCashTransaction(){

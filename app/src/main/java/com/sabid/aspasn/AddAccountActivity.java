@@ -88,7 +88,7 @@ public class AddAccountActivity extends AppCompatActivity {
         viewAccounts.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    openActivityAddCashTransaction();
+                    onBackPressed();
                 }
             });
 
@@ -121,11 +121,6 @@ public class AddAccountActivity extends AppCompatActivity {
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categories);
         spinnerAccountType.setAdapter(adapter);
         res.close();
-    }
-
-    public void openActivityAddCashTransaction() {
-        Intent intent = new Intent(this, AccountsActivity.class);
-        startActivity(intent);
     }
 
     public void openAddAccountTypeActivity() {
