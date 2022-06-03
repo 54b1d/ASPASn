@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sabid.aspasn.AddJournalTransactionActivity">
+    tools:context=".AddJournalTransactionActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -29,7 +29,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/txtTitle"
@@ -40,9 +41,62 @@
                 android:text="Please enter the details below"
                 android:textSize="24dp" />
 
+            <Spinner
+                android:id="@+id/spinnerCashBankList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txtTitle" />
+
+            <EditText
+                android:id="@+id/editDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/spinnerCashBankList"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:hint="DD/MM/YY" />
+
+            <AutoCompleteTextView
+                android:id="@+id/editAutoNameFrom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/editDate"
+                android:hint="From Account." />
+
+            <AutoCompleteTextView
+                android:id="@+id/editAutoNameTo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editAutoNameFrom"
+                android:hint="To Account" />
+
+            <EditText
+                android:id="@+id/editAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editAutoNameTo"
+                android:ems="10"
+                android:hint="Amount"
+                android:inputType="number" />
+
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editAmount"
+                android:ems="10"
+                android:hint="Comment"
+                android:inputType="textMultiLine" />
+
+            <Button
+                android:id="@+id/btnConfirmJournalEntry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editDescription"
+                android:text="Confirm Transaction" />
+
         </RelativeLayout>
 
     </ScrollView>
 
 </RelativeLayout>
-

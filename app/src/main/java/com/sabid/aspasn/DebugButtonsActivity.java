@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
-    , btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods;
+    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods, btnAddJournalEntry;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,14 @@ public class DebugButtonsActivity extends AppCompatActivity {
 		btnActivityAddInventoryItem = findViewById(R.id.btnActivityAddInventoryItem);
         btnActivityAddInvoice = findViewById(R.id.btnActivityAddInvoice);
         btnActivityAccountingPeriods = findViewById(R.id.btnActivityAccountingPeriods);
+        btnAddJournalEntry = findViewById(R.id.btnAddJournalEntry);
 
+        btnAddJournalEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivityAddJournalTransaction();
+            }
+        });
         btnActivityTransactions.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
@@ -72,6 +78,12 @@ public class DebugButtonsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void openActivityAddJournalTransaction() {
+        Intent intent = new Intent(this, AddJournalTransactionActivity.class);
+        startActivity(intent);
+    }
+
     public void openTransactionsActivity(){
         Intent intent = new Intent(this, TransactionsActivity.class);
         startActivity(intent);

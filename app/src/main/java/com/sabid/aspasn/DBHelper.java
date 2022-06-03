@@ -328,4 +328,18 @@ public class DBHelper extends SQLiteOpenHelper {
 		long result = DB.insert(tableName, null, contentValues);
 		return result != -1;
 	}
+
+    public boolean insertJournalTransaction(String date, int accountIdFrom, int accountIdTo,
+                                            String description, double amount) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("date", date);
+        contentValues.put("accountIdFrom", accountIdFrom);
+        contentValues.put("accountIdTo", accountIdTo);
+        contentValues.put("description", description);
+        contentValues.put("amount", amount);
+
+        long result = DB.insert("journalEntry", null, contentValues);
+        return result != -1;
+    }
 }
