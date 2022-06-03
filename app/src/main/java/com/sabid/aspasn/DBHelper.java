@@ -46,7 +46,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 		DB.execSQL("CREATE TABLE [productsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([productId]) REFERENCES [products]([productId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
 
-		DB.execSQL("CREATE TABLE [journalEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [fromAccountId] INTEGER NOT NULL, [toAccountId] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([fromAccountId]) REFERENCES [accounts]([accountId]), FOREIGN KEY([toAccountId]) REFERENCES [accounts]([accountId]));");
+		DB.execSQL("CREATE TABLE [journalEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [fromAccountId] INTEGER NOT NULL, [toAccountId] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([fromAccountId]) REFERENCES [accounts]([accountId]), FOREIGN KEY([toAccountId]) REFERENCES [accounts]([accountId]));");
 
 		DB.execSQL("CREATE TABLE [contraEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [fromCashBankAccountId] INTEGER NOT NULL, [toCashBankAccountId] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([fromCashBankAccountId]) REFERENCES [cashBankAccounts]([cashBankId]), FOREIGN KEY([toCashBankAccountId]) REFERENCES [cashBankAccounts]([cashBankId]));");
 		
