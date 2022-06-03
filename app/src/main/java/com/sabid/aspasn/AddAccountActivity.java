@@ -17,6 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class AddAccountActivity extends AppCompatActivity {
+    String accountTypeName;
     EditText name, address, mobile;
     Button confirmAddAccount, viewAccounts, btnAddAccountType;
     Spinner spinnerAccountType;
@@ -36,7 +37,7 @@ public class AddAccountActivity extends AppCompatActivity {
                 @Override public void onClick(View _v) {
                     onBackPressed();
                 }});
-
+        accountTypeName = getIntent().getExtras().getString("accountTypeName");
         name = findViewById(R.id.editName);
         address = findViewById(R.id.editAddress);
         mobile = findViewById(R.id.editMobile);
@@ -50,7 +51,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
 
         loadSpinnerAccountType();
-
+        
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -119,6 +120,7 @@ public class AddAccountActivity extends AppCompatActivity {
         }
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categories);
         spinnerAccountType.setAdapter(adapter);
+        spinnerAccountType.setSelection(((ArrayAdapter<String>)spinnerAccountType.getAdapter()).getPosition(accountTypeName));
         res.close();
     }
 

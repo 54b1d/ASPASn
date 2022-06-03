@@ -1,80 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AddExpenseAccountActivity">
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context=".AddExpenseAccountActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+	<com.google.android.material.appbar.AppBarLayout
+		android:id="@+id/appBar"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:theme="@style/AppTheme.AppBarOverlay">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+		<androidx.appcompat.widget.Toolbar
+			android:id="@+id/toolbar"
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:background="?attr/colorPrimary"
+			app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+	</com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/appBar"
-        android:fillViewport="true">
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_below="@+id/appBar"
+		android:fillViewport="true">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
+		<RelativeLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:padding="10dp">
 
-            <TextView
-                android:id="@+id/txtTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/appBar"
-                android:layout_marginTop="20dp"
-                android:text="Please enter the details below"
-                android:textSize="24dp" />
+			<TextView
+				android:id="@+id/txtTitle"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/appBar"
+				android:layout_marginTop="20dp"
+				android:text="Please enter the details below"
+				android:textSize="24dp"/>
 
-            <Spinner
-                android:id="@+id/spinnerAccountType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtTitle" />
+			<Spinner
+				android:id="@+id/spinnerAccountType"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/txtTitle"
+				style="@style/spinnerTheme"/>
 
-            <EditText
-                android:id="@+id/editExpenseName"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/spinnerAccountType"
-                android:ems="10"
-                android:hint="Expense Name"
-                android:inputType="textPersonName" />
+			<EditText
+				android:id="@+id/editExpenseName"
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/spinnerAccountType"
+				android:ems="10"
+				android:hint="Expense Name"
+				android:inputType="textPersonName"/>
 
-            <Button
-                android:id="@+id/btnConfirmAddExpenseAccount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editExpenseName"
-                android:layout_centerInParent="true"
-                android:text="Submit" />
+			<Button
+				android:id="@+id/btnConfirmAddExpenseAccount"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@+id/editExpenseName"
+				android:layout_centerInParent="true"
+				android:text="Submit"/>
 
-            <Button
-                android:id="@+id/btnViewExpenseAccounts"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btnConfirmAddExpenseAccount"
-                android:layout_centerInParent="true"
-                android:text="View Expense Accounts" />
+			<Button
+				android:id="@+id/btnViewExpenseAccounts"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/btnConfirmAddExpenseAccount"
+				android:layout_centerInParent="true"
+				android:text="View Expense Accounts"/>
 
-        </RelativeLayout>
+		</RelativeLayout>
 
-    </ScrollView>
+	</ScrollView>
 
 </RelativeLayout>
 

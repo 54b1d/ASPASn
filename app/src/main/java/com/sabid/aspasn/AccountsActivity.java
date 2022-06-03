@@ -82,7 +82,8 @@ public class AccountsActivity extends AppCompatActivity {
         btnActivityAddAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openAddAccountActivity();
+                accountTypeName = spinnerAccountType.getSelectedItem().toString();
+                openAddAccountActivity(accountTypeName);
             }
         });
     }
@@ -108,8 +109,10 @@ public class AccountsActivity extends AppCompatActivity {
         return clientsList;
     }
 
-    public void openAddAccountActivity() {
+    public void openAddAccountActivity(String accountTypeName) {
         Intent intent = new Intent(this, AddAccountActivity.class);
+        
+        intent.putExtra("accountTypeName", accountTypeName);
         startActivity(intent);
     }
 	
