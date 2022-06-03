@@ -6,12 +6,12 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class AddDirectTransactionActivity extends AppCompatActivity {
+public class AddJournalTransactionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_direct_transaction);
+        setContentView(R.layout.activity_add_journal_transaction);
         Toolbar toolbar = findViewById(R.id.toolbar);
         toolbar.setTitle("Direct Transaction");
         setSupportActionBar(toolbar);

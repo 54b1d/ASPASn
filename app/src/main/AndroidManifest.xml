@@ -17,7 +17,7 @@
         <activity android:name=".AddProductTypeActivity" />
         <activity android:name=".AddInvoiceActivity" />
         <activity
-            android:name=".AddDirectTransactionActivity"
+            android:name=".AddJournalTransactionActivity"
             android:exported="false" />
         <activity
             android:name=".InventoryActivity"
