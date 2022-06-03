@@ -1,50 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="4dp"
-    android:background="@color/cardview_dark_background"
-    android:orientation="horizontal"
-    android:padding="4dp"
-    android:weightSum="1">
+<LinearLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:layout_margin="4dp"
+	android:orientation="horizontal"
+	android:padding="4dp"
+	android:weightSum="1"
+	android:background="#FFFFBF00">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.3"
-        android:orientation="vertical">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="0.3"
+		android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Name: " />
+		<TextView
+			android:id="@+id/txtName"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Name: "/>
 
-        <TextView
-            android:id="@+id/txtAddress"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Address: " />
+		<TextView
+			android:id="@+id/txtAddress"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Address: "/>
 
-        <TextView
-            android:id="@+id/txtMobile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="#3F51B5"
-            android:text="Mobile: " />
-    </LinearLayout>
+		<TextView
+			android:id="@+id/txtMobile"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Mobile: "/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.7"
-        android:gravity="center_vertical"
-        android:orientation="vertical">
+	</LinearLayout>
 
-        <TextView
-            android:id="@+id/txtBalance"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Balance" />
-    </LinearLayout>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:layout_weight="0.7"
+		android:gravity="center_vertical"
+		android:orientation="vertical">
+
+		<TextView
+			android:id="@+id/txtBalance"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:text="Balance"/>
+
+	</LinearLayout>
+
 </LinearLayout>
+

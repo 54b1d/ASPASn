@@ -23,12 +23,12 @@ import android.text.TextWatcher;
 import android.text.Editable;
 
 public class AddInvoiceActivity extends AppCompatActivity {
-    String date, name, productName, quantityText, rateText, amountText, tableName, clientIdText;
+    String date, name, description, productName, quantityText, rateText, amountText, tableName, clientIdText;
     int productId, clientId;
     double quantity, rate, amount, tmpQuantity, tmpRate, tmpAmount;
 
     AutoCompleteTextView editAutoName;
-    EditText editDate, editQuantity, editRate, editAmount;
+    EditText editDate, editQuantity, editRate, editAmount, editDescription;
     Button btnConfirmPurchase, btnConfirmSale;
     Spinner spinnerProducts;
     ArrayList accounts, products, unpaidInvoices;
@@ -58,6 +58,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
         editQuantity = findViewById(R.id.editQuantity);
         editRate = findViewById(R.id.editRate);
         editAmount = findViewById(R.id.editAmount);
+        editDescription = findViewById(R.id.editDescription);
         btnConfirmPurchase = findViewById(R.id.btnConfirmPurchase);
         btnConfirmSale = findViewById(R.id.btnConfirmSale);
         
@@ -102,7 +103,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
         final int year = calendar.get(Calendar.YEAR);
         final int month = calendar.get(Calendar.MONTH);
         final int day = calendar.get(Calendar.DAY_OF_MONTH);
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
         date = sdf.format(calendar.getTime());
         editDate.setText(date);
         editDate.setOnClickListener(new View.OnClickListener() {
@@ -113,7 +114,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int day) {
                                 month = month + 1;
-                                String date = day + "/" + month + "/" + year;
+                                String date = year + "/" + month + "/" + day;
                                 editDate.setText(date);
                             }
                         }, year, month, day);
@@ -176,7 +177,7 @@ public class AddInvoiceActivity extends AppCompatActivity {
         // String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, Double quantity, Double debit, Double credit
         date = editDate.getText().toString();
         name = editAutoName.getText().toString();
-        
+        description = editDescription.getText().toString().trim();
         Cursor res = DB.getAccountId(name);
         while (res.moveToNext()) {
             clientId = res.getInt(0);
@@ -203,8 +204,8 @@ public class AddInvoiceActivity extends AppCompatActivity {
             amount = Double.parseDouble(amountText);
             Log.d("AddInvoice Confirmed Values", date + productId + clientId + quantityText + amount);
             if (isPurchase) {
-                tableName = "purchaseInvoiceEntity";
-                if (DB.insertInvoice(tableName, date, clientId, productId, quantity, rate, amount)) {
+                tableName = "purchaseInvoice";
+                if (DB.insertInvoice(tableName, date, clientId, productId, quantity, rate, amount, description)) {
                     editAutoName.setText("");
                     editQuantity.setText("");
                     editRate.setText("");
@@ -215,8 +216,8 @@ public class AddInvoiceActivity extends AppCompatActivity {
                 }
 
             } else {
-                tableName = "salesInvoiceEntity";
-                if (DB.insertInvoice(tableName, date, clientId, productId, quantity, rate, amount)) {
+                tableName = "salesInvoice";
+                if (DB.insertInvoice(tableName, date, clientId, productId, quantity, rate, amount, description)) {
                     editAutoName.setText("");
                     editQuantity.setText("");
                     editRate.setText("");
