@@ -175,7 +175,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		return Cursor;
     }
 
-	public Cursor getPayments(){
+    public Cursor getJournalEntries() {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		Cursor Cursor = DB.rawQuery("SELECT \n" +
 				"       [main].[payment].[date], \n" +
@@ -187,6 +187,19 @@ public class DBHelper extends SQLiteOpenHelper {
 				"ORDER  BY [main].[payment].[date] DESC;", null);
 		return Cursor;
 	}
+
+    public Cursor getPayments() {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("SELECT \n" +
+                "       [main].[payment].[date], \n" +
+                "       [main].[accounts].[accountName], \n" +
+                "       [main].[accounts].[accountAddress], \n" +
+                "       [main].[payment].[amount]\n" +
+                "FROM   [main].[payment]\n" +
+                "       INNER JOIN [main].[accounts] ON [main].[payment].[accountId] = [main].[accounts].[accountId]\n" +
+                "ORDER  BY [main].[payment].[date] DESC;", null);
+        return Cursor;
+    }
     
     public Cursor getReceipts(){
         SQLiteDatabase DB = this.getWritableDatabase();

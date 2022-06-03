@@ -36,7 +36,8 @@
                 android:layout_below="@+id/appBar"
                 android:layout_marginTop="20dp"
                 android:text="Purchases:"
-                android:textSize="24dp" />
+                android:textSize="24dp"
+                tools:ignore="NotSibling" />
 
             <ListView
                 android:id="@+id/listPurchases"
@@ -84,10 +85,26 @@
                 android:textSize="24dp" />
 
             <ListView
-                android:id="@+id/listPeyments"
+                android:id="@+id/listPayments"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_below="@id/txtPayments" />
+                android:layout_below="@id/txtPayments">
+
+            </ListView>
+
+            <TextView
+                android:id="@+id/txtJournalEntries"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/listPayments"
+                android:text="Journal Entries" />
+
+            <ListView
+                android:id="@+id/listJournalEntries"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_below="@id/txtJournalEntries" />
+
         </RelativeLayout>
     </ScrollView>
 
