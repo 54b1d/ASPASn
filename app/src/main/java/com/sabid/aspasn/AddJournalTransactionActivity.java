@@ -53,6 +53,8 @@ public class AddJournalTransactionActivity extends AppCompatActivity {
         editAmount = findViewById(R.id.editAmount);
 
         DB = new DBHelper(this);
+        
+        loadEditAutoName();
 
         Calendar calendar = Calendar.getInstance();
         final int year = calendar.get(Calendar.YEAR);
