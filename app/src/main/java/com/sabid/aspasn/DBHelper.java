@@ -20,67 +20,60 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase DB) {
 		// Setup Database
-		DB.execSQL(
-				"CREATE TABLE [clientEntity] ( [clientId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [clientName] TEXT NOT NULL, [clientAddress] TEXT, [clientMobile] TEXT, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+		DB.execSQL("CREATE TABLE [accounts] ( [accountId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [accountName] TEXT NOT NULL, [accountAddress] TEXT, [accountMobile] TEXT, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountType]([accountTypeId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [accountTypeEntity] ( [accountTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountTypeName] TEXT NOT NULL);");
+		DB.execSQL("CREATE TABLE [accountType] ( [accountTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountTypeName] TEXT NOT NULL);");
 
-		DB.execSQL(
-				"CREATE TABLE [purchaseInvoiceEntity] ( [purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+		DB.execSQL("CREATE TABLE [purchaseInvoice] ( [purchaseInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [accountId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [description] TEXT, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]), FOREIGN KEY([productId]) REFERENCES [products]([productId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [paymentEntity] ( [paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [date] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoiceEntity]([purchaseInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [purchaseInvoiceEntity]([clientId]));");
+		DB.execSQL("CREATE TABLE [payment] ( [paymentId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [date] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [accountId] INTEGER NOT NULL, [description] TEXT, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [purchaseInvoice]([purchaseInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankAccounts]([cashBankId]), FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [salesInvoiceEntity] ( [salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [clientId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([clientId]) REFERENCES [clientEntity]([clientId]), FOREIGN KEY([productId]) REFERENCES [inventoryEntity]([productId]));");
+		DB.execSQL("CREATE TABLE [salesInvoice] ( [salesInvoiceId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [accountId] INTEGER NOT NULL, [productId] INTEGER NOT NULL, [description] TEXT, [quantity] REAL NOT NULL, [rate] REAL NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]), FOREIGN KEY([productId]) REFERENCES [products]([productId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [receiptEntity] ( [receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [clientId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoiceEntity]([salesInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankEntity]([cashBankId]), FOREIGN KEY([clientId]) REFERENCES [salesInvoiceEntity]([clientId]));");
+		DB.execSQL("CREATE TABLE [receipt] ( [receiptId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [invoiceId] INTEGER, [cashBankId] INTEGER NOT NULL, [accountId] INTEGER NOT NULL, [description] INTEGER, [amount] REAL NOT NULL, FOREIGN KEY([invoiceId]) REFERENCES [salesInvoice]([salesInvoiceId]), FOREIGN KEY([cashBankId]) REFERENCES [cashBankAccounts]([cashBankId]), FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [inventoryEntity] ( [productId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productName] TEXT NOT NULL, [productTypeId] INTEGER NOT NULL, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([productTypeId]) REFERENCES [productTypeEntity]([productTypeId]), FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+		DB.execSQL("CREATE TABLE [products] ( [productId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productName] TEXT NOT NULL, [productTypeId] INTEGER NOT NULL, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([productTypeId]) REFERENCES [productType]([productTypeId]), FOREIGN KEY([accountTypeId]) REFERENCES [accountType]([accountTypeId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [expenseEntity] ( [expenseId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [expenseTitle] TEXT NOT NULL, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+		DB.execSQL("CREATE TABLE [cashBankAccounts] ( [cashBankId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [cashBankTitle] TEXT NOT NULL UNIQUE, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountType]([accountTypeId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [expenseEntryEntity] ( [expenseEntryId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [expenseDate] DATE NOT NULL, [expenseId] INTEGER NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([expenseId]) REFERENCES [expenseEntity]([expenseId]));");
+		DB.execSQL("CREATE TABLE [accountingPeriod] ( [accountingPeriodId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountingStartDate] DATE NOT NULL UNIQUE, [accountingEndDate] DATE NOT NULL UNIQUE);");
 
-		DB.execSQL(
-				"CREATE TABLE [cashBankEntity] ( [cashBankId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [cashBankTitle] TEXT NOT NULL UNIQUE, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+		DB.execSQL("CREATE TABLE [productType] ( [productTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [productTypeTitle] TEXT NOT NULL UNIQUE, [baseUnitName] TEXT NOT NULL, [interpretedUnitName] TEXT NOT NULL, [minWeightToInterpretUnit] INTEGER NOT NULL);");
 
-		DB.execSQL(
-				"CREATE TABLE [capitalAccountsEntity] ( [capitalAccountId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [capitalAccountTitle] TEXT NOT NULL, [accountTypeId] INTEGER NOT NULL, FOREIGN KEY([accountTypeId]) REFERENCES [accountTypeEntity]([accountTypeId]));");
+		DB.execSQL("CREATE TABLE [cashBankAccountsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [cashBankId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([cashBankId]) REFERENCES [cashBankAccounts]([cashBankId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
 
-		DB.execSQL(
-				"CREATE TABLE [accountingPeriods] ( [accountingPeriodId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountingStartDate] DATE NOT NULL UNIQUE, [accountingEndDate] DATE NOT NULL UNIQUE);");
+		DB.execSQL("CREATE TABLE [accountsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [accountId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
 
+		DB.execSQL("CREATE TABLE [productsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([productId]) REFERENCES [products]([productId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
+
+		DB.execSQL("CREATE TABLE [journalEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [accountIdFrom] INTEGER NOT NULL, [accountIdTo] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([accountIdFrom]) REFERENCES [accounts]([accountId]), FOREIGN KEY([accountIdTo]) REFERENCES [accounts]([accountId]));");
+
+		DB.execSQL("CREATE TABLE [contraEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [fromCashBankAccountId] INTEGER NOT NULL, [toCashBankAccountId] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([fromCashBankAccountId]) REFERENCES [cashBankAccounts]([cashBankId]), FOREIGN KEY([toCashBankAccountId]) REFERENCES [cashBankAccounts]([cashBankId]));");
+		
+		
 		DB.execSQL(
-				"CREATE TABLE [productTypeEntity] ( [productTypeId] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [productTypeTitle] TEXT NOT NULL UNIQUE, [baseUnitName] TEXT NOT NULL, [interpretedUnitName] TEXT NOT NULL, [minWeightToInterpretUnit] INTEGER NOT NULL);");
-		//create predefined accounts that are required
-		//Categories Accounts for A = L + OE + Revenue - Ecpenses
-		DB.execSQL(
-				"INSERT INTO [accountTypeEntity] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('Clients'), ('Incomes'), ('Expenses');");
-		//Create default Cash account inside cashBank table which is always required
-		DB.execSQL("INSERT INTO [cashBankEntity] ('cashBankTitle', 'accountTypeId') VALUES ('Cash', '1');");
+				"INSERT INTO [accountType] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('Accounts'), ('Incomes'), ('Expenses');");
+		//Create default Cash accounts inside cashBankAccounts table which is always required
+		DB.execSQL("INSERT INTO [cashBankAccounts] ('cashBankTitle', 'accountTypeId') VALUES ('Cash', '1');");
 		//Create default Capital accounts required
+		/*
 		DB.execSQL(
-				"INSERT INTO [capitalAccountsEntity] ('capitalAccountTitle', 'accountTypeId') VALUES ('Owners Equity', '3'), ('Retained Earnings', '3');");
+				"INSERT INTO [capitalAccounts] ('capitalAccountTitle', 'accountTypeId') VALUES ('Owners Equity', '3'), ('Retained Earnings', '3');");
+		*/
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase DB, int i, int i1) {
 	}
 
-	public Boolean insertClientData(String name, String address, String mobile, int accountTypeId) {
+	public Boolean insertAccountData(String name, String address, String mobile, int accountTypeId) {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
-		contentValues.put("clientName", name);
-		contentValues.put("clientAddress", address);
-		contentValues.put("clientMobile", mobile);
+		contentValues.put("accountName", name);
+		contentValues.put("accountAddress", address);
+		contentValues.put("accountMobile", mobile);
 		contentValues.put("accountTypeId", accountTypeId);
-		long result = DB.insert("clientEntity", null, contentValues);
+		long result = DB.insert("accounts", null, contentValues);
 		return result != -1;
 	}
 
@@ -89,7 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put("expenseTitle", expenseName);
 		contentValues.put("accountTypeId", accountTypeId);
-		long result = DB.insert("expenseEntity", null, contentValues);
+		long result = DB.insert("expense", null, contentValues);
 		return result != -1;
 	}
 
@@ -98,7 +91,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		ContentValues contentValues = new ContentValues();
 		contentValues.put("accountTypeName", accountTypeName);
 
-		long result = DB.insert("accountTypeEntity", null, contentValues);
+		long result = DB.insert("accountType", null, contentValues);
 		return result != -1;
 	}
 	
@@ -108,7 +101,7 @@ public class DBHelper extends SQLiteOpenHelper {
 		contentValues.put("accountingStartDate", accountingStartDate);
 		contentValues.put("accountingEndDate", accountingEndDate);
 
-		long result = DB.insert("accountingPeriods", null, contentValues);
+		long result = DB.insert("accountingPeriod", null, contentValues);
 		return result != -1;
 	}
     
@@ -119,7 +112,7 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("productTypeId", productTypeId);
         contentValues.put("accountTypeId", accountTypeId);
 
-        long result = DB.insert("inventoryEntity", null, contentValues);
+        long result = DB.insert("products", null, contentValues);
         return result != -1;
 	}
 
@@ -131,33 +124,34 @@ public class DBHelper extends SQLiteOpenHelper {
         contentValues.put("interpretedUnitName", interpretedUnitName);
         contentValues.put("minWeightToInterpretUnit", minWeightToInterpretUnit);
 
-		long result = DB.insert("productTypeEntity", null, contentValues);
+		long result = DB.insert("productType", null, contentValues);
 		return result != -1;
 	}
     
-    public Boolean insertInvoice(String tableName, String date,int clientId, int productId, double quantity, double rate, double amount) {
+    public Boolean insertInvoice(String tableName, String date,int accountId, int productId, double quantity, double rate, double amount, String description) {
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("date", date);
-        contentValues.put("clientId", clientId);
+        contentValues.put("accountId", accountId);
         contentValues.put("productId", productId);
         contentValues.put("quantity", quantity);
         contentValues.put("rate", rate);
         contentValues.put("amount", amount);
+        contentValues.put("description", description);
 
         long result = DB.insert(tableName, null, contentValues);
         return result != -1;
 	}
 
-	public Boolean updateuserdata(String name, String contact, String dob) {
+	public Boolean updateAccount(String name, String address, String mobile) {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put("name", name);
-		contentValues.put("contact", contact);
-		contentValues.put("dob", dob);
-		Cursor cursor = DB.rawQuery("Select * from Userdetails where name=?", new String[] { name });
+		contentValues.put("address", address);
+		contentValues.put("mobile", mobile);
+		Cursor cursor = DB.rawQuery("Select * from accounts where name=?", new String[] { name });
 		if (cursor.getCount() > 0) {
-			long result = DB.update("Userdetails", contentValues, "name=?", new String[] { name });
+			long result = DB.update("accounts", contentValues, "name=?", new String[] { name });
 			return result != -1;
 		} else {
 			return false;
@@ -181,158 +175,171 @@ public class DBHelper extends SQLiteOpenHelper {
 		return Cursor;
     }
 
-	public Cursor getPayments(){
+    public Cursor getJournalEntries() {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		Cursor Cursor = DB.rawQuery("SELECT \n" +
-				"       [main].[paymentEntity].[date], \n" +
-				"       [main].[clientEntity].[clientName], \n" +
-				"       [main].[clientEntity].[clientAddress], \n" +
-				"       [main].[paymentEntity].[amount]\n" +
-				"FROM   [main].[paymentEntity]\n" +
-				"       INNER JOIN [main].[clientEntity] ON [main].[paymentEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
-				"ORDER  BY [main].[paymentEntity].[date] DESC;", null);
+				"       [main].[payment].[date], \n" +
+				"       [main].[accounts].[accountName], \n" +
+				"       [main].[accounts].[accountAddress], \n" +
+				"       [main].[payment].[amount]\n" +
+				"FROM   [main].[payment]\n" +
+				"       INNER JOIN [main].[accounts] ON [main].[payment].[accountId] = [main].[accounts].[accountId]\n" +
+				"ORDER  BY [main].[payment].[date] DESC;", null);
 		return Cursor;
 	}
+
+    public Cursor getPayments() {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("SELECT \n" +
+                "       [main].[payment].[date], \n" +
+                "       [main].[accounts].[accountName], \n" +
+                "       [main].[accounts].[accountAddress], \n" +
+                "       [main].[payment].[amount]\n" +
+                "FROM   [main].[payment]\n" +
+                "       INNER JOIN [main].[accounts] ON [main].[payment].[accountId] = [main].[accounts].[accountId]\n" +
+                "ORDER  BY [main].[payment].[date] DESC;", null);
+        return Cursor;
+    }
     
     public Cursor getReceipts(){
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("SELECT \n" +
-                                    "       [main].[receiptEntity].[date], \n" +
-                                    "       [main].[clientEntity].[clientName], \n" +
-                                    "       [main].[clientEntity].[clientAddress], \n" +
-                                    "       [main].[receiptEntity].[amount]\n" +
-                                    "FROM   [main].[receiptEntity]\n" +
-                                    "       INNER JOIN [main].[clientEntity] ON [main].[receiptEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
-                                    "ORDER  BY [main].[receiptEntity].[date] DESC;", null);
+        Cursor Cursor = DB.rawQuery("SELECT [receipt].[date], [accounts].[accountName], [accounts].[accountAddress], [receipt].[amount] FROM   [main].[receipt]        INNER JOIN [main].[accounts] ON [main].[receipt].[accountId] = [main].[accounts].[accountId] ORDER  BY [main].[receipt].[date] DESC;", null);
         return Cursor;
 	}
     
     public Cursor getPurchases(){
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("SELECT \n" +
-                                    "       [main].[purchaseInvoiceEntity].[date], \n" +
-                                    "       [main].[clientEntity].[clientName], \n" +
-                                    "       [main].[clientEntity].[clientAddress], \n" +
-                                    "       [main].[purchaseInvoiceEntity].[amount]\n" +
-                                    "FROM   [main].[purchaseInvoiceEntity]\n" +
-                                    "       INNER JOIN [main].[clientEntity] ON [main].[purchaseInvoiceEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
-                                    "ORDER  BY [main].[purchaseInvoiceEntity].[date] DESC;", null);
+        Cursor Cursor = DB.rawQuery("SELECT [purchaseInvoice].[date], [accounts].[accountName], [accounts].[accountAddress], [purchaseInvoice].[amount] FROM   [main].[purchaseInvoice]        INNER JOIN [main].[accounts] ON [main].[purchaseInvoice].[accountId] = [main].[accounts].[accountId] ORDER  BY [main].[purchaseInvoice].[date] DESC;", null);
         return Cursor;
 	}
     
     public Cursor getSales(){
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("SELECT \n" +
-                                    "       [main].[salesInvoiceEntity].[date], \n" +
-                                    "       [main].[clientEntity].[clientName], \n" +
-                                    "       [main].[clientEntity].[clientAddress], \n" +
-                                    "       [main].[salesInvoiceEntity].[amount]\n" +
-                                    "FROM   [main].[salesInvoiceEntity]\n" +
-                                    "       INNER JOIN [main].[clientEntity] ON [main].[salesInvoiceEntity].[clientId] = [main].[clientEntity].[clientId]\n" +
-                                    "ORDER  BY [main].[salesInvoiceEntity].[date] DESC;", null);
+        Cursor Cursor = DB.rawQuery("SELECT [salesInvoice].[date], [accounts].[accountName], [accounts].[accountAddress], [salesInvoice].[amount] FROM   [main].[salesInvoice]        INNER JOIN [main].[accounts] ON [main].[salesInvoice].[accountId] = [main].[accounts].[accountId] ORDER  BY [main].[salesInvoice].[date] DESC;", null);
         return Cursor;
     }
 
 	public Cursor getAccountTypes() { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from accountTypeEntity", null);
+		Cursor Cursor = DB.rawQuery("select * from accountType", null);
 		return Cursor;
 	}
 
 	public Cursor getAccountTypeFor(String args) { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from accountTypeEntity where accountTypeName = ?", new String[] { args });
+		Cursor Cursor = DB.rawQuery("select * from accountType where accountTypeName = ?", new String[] { args });
 		return Cursor;
 	}
 
 	public Cursor getProductTypeFor(String args) {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from productTypeEntity where productTypeTitle = ?", new String[] { args });
+		Cursor Cursor = DB.rawQuery("select * from productType where productTypeTitle = ?", new String[] { args });
 		return Cursor;
 	}
 	
 	public Cursor getProductTypes(){
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from productTypeEntity", null);
+		Cursor Cursor = DB.rawQuery("select * from productType", null);
 		return Cursor;
 	}
 
 	public Cursor getAccounts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from clientEntity", null);
+		Cursor Cursor = DB.rawQuery("select * from accounts", null);
 		return Cursor;
+	}
+    
+    public Cursor getAccountsOf(String accountTypeName) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+		Cursor Cursor = DB.rawQuery("SELECT [accounts].* FROM [main].[accounts] INNER JOIN [main].[accountType] ON [main].[accountType].[accountTypeId] = [main].[accounts].[accountTypeId] WHERE accountTypeName = ?;", new String[]{accountTypeName});
+        return Cursor;
 	}
 
 	public Cursor getAccountingPeriods() {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from accountingPeriods", null);
+		Cursor Cursor = DB.rawQuery("select * from accountingPeriod", null);
 		return Cursor;
 	}
 	
 	public Cursor getProducts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from inventoryEntity", null);
+		Cursor Cursor = DB.rawQuery("select * from products", null);
 		return Cursor;
 	}
     
     public Cursor getProductIdOf(String productName) {
         SQLiteDatabase DB = this.getWritableDatabase();
-        Cursor Cursor = DB.rawQuery("select productId from inventoryEntity where productName=?", new String[] {productName});
+        Cursor Cursor = DB.rawQuery("select productId from products where productName=?", new String[] {productName});
         return Cursor;
 	}
 
 	public Cursor getCashBankAccounts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from cashBankEntity", null);
+		Cursor Cursor = DB.rawQuery("select * from cashBankAccounts", null);
 		return Cursor;
 	}
 
 	public Cursor getCashBankAccountIdFor(String cashBankTitle) {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select cashBankId from cashBankEntity where cashBankTitle = ?",
+		Cursor Cursor = DB.rawQuery("select cashBankId from cashBankAccounts where cashBankTitle = ?",
 				new String[] { cashBankTitle });
 		return Cursor;
 	}
 
 	public Cursor getExpenseAccounts() { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from expenseEntity", null);
+		Cursor Cursor = DB.rawQuery("select * from expense", null);
 		return Cursor;
 	}
 
 	public Cursor getAccountTypeId(String accountTypeName) { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor cursor = DB.rawQuery("Select accountTypeId from accountTypeEntity where accountTypeName=?",
+		Cursor cursor = DB.rawQuery("Select accountTypeId from accountType where accountTypeName=?",
 				new String[] { accountTypeName });
 		return cursor;
 	}
 
-	public Cursor getClientId(String clientName) { // reformed
+	public Cursor getAccountId(String accountName) { // reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor cursor = DB.rawQuery("Select clientId from clientEntity where clientName = ?",
-				new String[] { clientName });
+		Cursor cursor = DB.rawQuery("Select accountId from accounts where accountName = ?",
+				new String[] { accountName });
 		return cursor;
 	}
 
-	public Cursor getUnpaidInvoicesOf(String clientId) {
+	public Cursor getUnpaidInvoicesOf(String accountId) {
 		//todo where isPaid != paid
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor cursor = DB.rawQuery("Select salesInvoiceId, date, amount from salesInvoiceEntity where clientId = ?",
-				new String[] { clientId });
+		Cursor cursor = DB.rawQuery("Select salesInvoiceId, date, amount from salesInvoice where accountId = ?",
+				new String[] { accountId });
 		return cursor;
 	}
 
-	public boolean insertCashTransaction(String tableName, String date, int invoiceId, int clientId, int cashBankId,
-			int amount) {
+	public boolean insertCashTransaction(String tableName, String date, int invoiceId, int accountId, int cashBankId,
+                                         String description, int amount) {
 		SQLiteDatabase DB = this.getWritableDatabase();
 		ContentValues contentValues = new ContentValues();
 		contentValues.put("date", date);
 		contentValues.put("invoiceId", invoiceId);
-		contentValues.put("clientId", clientId);
+		contentValues.put("accountId", accountId);
 		contentValues.put("cashBankId", cashBankId);
+        contentValues.put("description", description);
 		contentValues.put("amount", amount);
 
 		long result = DB.insert(tableName, null, contentValues);
 		return result != -1;
 	}
+
+    public boolean insertJournalTransaction(String date, int accountIdFrom, int accountIdTo,
+                                            String description, double amount) {
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("date", date);
+        contentValues.put("accountIdFrom", accountIdFrom);
+        contentValues.put("accountIdTo", accountIdTo);
+        contentValues.put("description", description);
+        contentValues.put("amount", amount);
+
+        long result = DB.insert("journalEntry", null, contentValues);
+        return result != -1;
+    }
 }

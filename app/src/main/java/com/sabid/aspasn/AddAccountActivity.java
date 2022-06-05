@@ -17,7 +17,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class AddAccountActivity extends AppCompatActivity {
-    private String accountTypeName = "Clients"; // literal from database table accountTypesEntity
+    String accountTypeName;
     EditText name, address, mobile;
     Button confirmAddAccount, viewAccounts, btnAddAccountType;
     Spinner spinnerAccountType;
@@ -37,7 +37,7 @@ public class AddAccountActivity extends AppCompatActivity {
                 @Override public void onClick(View _v) {
                     onBackPressed();
                 }});
-
+        accountTypeName = getIntent().getExtras().getString("accountTypeName");
         name = findViewById(R.id.editName);
         address = findViewById(R.id.editAddress);
         mobile = findViewById(R.id.editMobile);
@@ -51,7 +51,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
 
         loadSpinnerAccountType();
-
+        
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -69,9 +69,9 @@ public class AddAccountActivity extends AppCompatActivity {
                         String addressText = address.getText().toString().trim();
                         String mobileText = mobile.getText().toString().trim();
                         if (!nameText.isEmpty()) {
-                            Boolean checkInsertData = DB.insertClientData(nameText, addressText, mobileText, accountTypeId);
+                            Boolean checkInsertData = DB.insertAccountData(nameText, addressText, mobileText, accountTypeId);
                             if (checkInsertData) {
-                                Toast.makeText(getApplicationContext(), nameText + " Client Account Created", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), accountTypeNameText + ": " + nameText + " Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
                                 name.setText("");
                                 address.setText("");
@@ -109,7 +109,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
     public void loadSpinnerAccountType() {
         categories = new ArrayList<String>();
-        Cursor res = DB.getAccountTypeFor(accountTypeName);
+        Cursor res = DB.getAccountTypes();
         if (res.getCount() == 0) {
             categories.add("Add Categories");
         } else {
@@ -120,6 +120,7 @@ public class AddAccountActivity extends AppCompatActivity {
         }
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, categories);
         spinnerAccountType.setAdapter(adapter);
+        spinnerAccountType.setSelection(((ArrayAdapter<String>)spinnerAccountType.getAdapter()).getPosition(accountTypeName));
         res.close();
     }
 

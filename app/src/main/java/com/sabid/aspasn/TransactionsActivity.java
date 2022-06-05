@@ -1,18 +1,19 @@
 package com.sabid.aspasn;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
-import android.database.Cursor;
 
 public class TransactionsActivity extends AppCompatActivity {
-	ListView listPurchases, listSales, listReceipts, listPayments;
-	ArrayList purchases, sales, receipts, payments;
+    ListView listPurchases, listSales, listReceipts, listPayments, listJournalEntries;
+    ArrayList purchases, sales, receipts, payments, journalEntries;
 	ArrayAdapter adapter;
 	DBHelper DB;
 	
@@ -34,16 +35,18 @@ public class TransactionsActivity extends AppCompatActivity {
 		listPurchases = findViewById(R.id.listPurchases);
 		listSales = findViewById(R.id.listSales);
 		listReceipts = findViewById(R.id.listReceipts);
-		listPayments = findViewById(R.id.listPeyments);
+        listPayments = findViewById(R.id.listPayments);
+        listJournalEntries = findViewById(R.id.listJournalEntries);
+
 		DB = new DBHelper(this);
         loadListPurchases();
 		loadListSales();
 		loadListReceipts();
 		loadListPayments();
-		
+        loadListJournalEntries();
     }
-	
-	@Override
+
+    @Override
 	protected void onResume() {
 		super.onResume();
 		loadListPurchases();
@@ -113,6 +116,22 @@ public class TransactionsActivity extends AppCompatActivity {
             }
         }
         adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, payments);
+        listPayments.setAdapter(adapter);
+    }
+
+    public void loadListJournalEntries() {
+        journalEntries = new ArrayList<String>();
+        Cursor res = DB.getPayments();
+        if (res.getCount() == 0) {
+            journalEntries.add("No Jounal Entry");
+        } else {
+            while (res.moveToNext()) {
+                // date, Name, Address, Amount
+                String a = res.getString(0) + ": " + res.getString(1) + ", " + res.getString(2) + " =" + res.getString(3) + "Tk";
+                journalEntries.add(a);
+            }
+        }
+        adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, journalEntries);
         listPayments.setAdapter(adapter);
     }
 }

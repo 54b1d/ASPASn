@@ -11,13 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity android:name=".AccountingPeriodActivity"></activity>
-        <activity android:name=".ExpenseAccountsActivity" />
-        <activity android:name=".AddExpenseAccountActivity" />
         <activity android:name=".AddProductActivity" />
         <activity android:name=".AddProductTypeActivity" />
         <activity android:name=".AddInvoiceActivity" />
         <activity
-            android:name=".AddDirectTransactionActivity"
+            android:name=".AddJournalTransactionActivity"
             android:exported="false" />
         <activity
             android:name=".InventoryActivity"

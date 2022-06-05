@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="colorControlHighlight">#FFCCBC</color>
-   	<color name="colorControlNormal">#FF5722</color>
+    <color name="colorPrimary">#C62828</color>
+    <color name="colorPrimaryDark">#B71C1C</color>
+    <color name="colorAccent">#FF000000</color>
+    <color name="colorControlHighlight">#FFCDD2</color>
+   	<color name="colorControlNormal">#EF5350</color>
+    <color name="colorCardText">#FFEBEE</color>
+    <color name="colorCardBackground">#B71C1C</color>
+    <color name="colorSpinnerBackground">#B71C1C</color>
+    <color name="colorSpinnerText">#FFEBEE</color>
 </resources>

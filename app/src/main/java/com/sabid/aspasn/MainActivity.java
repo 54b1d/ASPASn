@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends AppCompatActivity {
+	DBHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,27 +23,18 @@ public class MainActivity extends AppCompatActivity {
                 @Override public void onClick(View _v) {
                     onBackPressed();
                 }});*/
-
-
+		DB = new DBHelper(this);
         btnActivityDebugButtons = findViewById(R.id.btnActivityDebugButtons);
-        
         btnActivityDebugButtons.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
                     openDebugButtonsActivity();
                 }
             });
-        
-        
-
-        
-
     }
     
     public void openDebugButtonsActivity(){
         Intent intent = new Intent(this, DebugButtonsActivity.class);
         startActivity(intent);
     }
-    
-
 }

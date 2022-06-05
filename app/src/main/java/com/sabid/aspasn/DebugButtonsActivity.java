@@ -9,8 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount
-    , btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods;
+    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods, btnAddJournalEntry;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,11 +30,17 @@ public class DebugButtonsActivity extends AppCompatActivity {
         btnActivityTransactions = findViewById(R.id.btnActivityTransactions);
         btnActivityAccounts = findViewById(R.id.btnActivityAccounts);
         btnActivityAddCashTransaction = findViewById(R.id.btnActivityAddCashTransaction);
-        btnActivityAddExpenseAccount = findViewById(R.id.btnActivityAddExpenseAccount);
 		btnActivityAddInventoryItem = findViewById(R.id.btnActivityAddInventoryItem);
         btnActivityAddInvoice = findViewById(R.id.btnActivityAddInvoice);
         btnActivityAccountingPeriods = findViewById(R.id.btnActivityAccountingPeriods);
+        btnAddJournalEntry = findViewById(R.id.btnAddJournalEntry);
 
+        btnAddJournalEntry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                openActivityAddJournalTransaction();
+            }
+        });
         btnActivityTransactions.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v){
@@ -60,12 +65,6 @@ public class DebugButtonsActivity extends AppCompatActivity {
                 openActivityAddProduct();
             }
         });
-		btnActivityAddExpenseAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openActivityAddExpenseAccount();
-            }
-        });
         btnActivityAddInvoice.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -79,6 +78,12 @@ public class DebugButtonsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void openActivityAddJournalTransaction() {
+        Intent intent = new Intent(this, AddJournalTransactionActivity.class);
+        startActivity(intent);
+    }
+
     public void openTransactionsActivity(){
         Intent intent = new Intent(this, TransactionsActivity.class);
         startActivity(intent);
@@ -89,11 +94,6 @@ public class DebugButtonsActivity extends AppCompatActivity {
     }
     public void openActivityAddCashTransaction(){
         Intent intent = new Intent(this, AddCashTransactionActivity.class);
-        startActivity(intent);
-    }
-
-    public void openActivityAddExpenseAccount() {
-        Intent intent = new Intent(this, AddExpenseAccountActivity.class);
         startActivity(intent);
     }
 	

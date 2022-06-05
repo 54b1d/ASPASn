@@ -71,17 +71,10 @@
 				android:id="@+id/btnActivityAddInventoryItem"/>
 
 			<Button
-				android:id="@+id/btnActivityAddExpenseAccount"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@+id/btnActivityAddInventoryItem"
-				android:text="Add Expense Account"/>
-
-			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Add Invoice"
-				android:layout_below="@id/btnActivityAddExpenseAccount"
+                android:layout_below="@id/btnActivityAddInventoryItem"
 				android:id="@+id/btnActivityAddInvoice"/>
 
 			<Button
@@ -90,6 +83,13 @@
 				android:text="Accounting Periods"
 				android:layout_below="@id/btnActivityAddInvoice"
 				android:id="@+id/btnActivityAccountingPeriods"/>
+
+			<Button
+				android:id="@+id/btnAddJournalEntry"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/btnActivityAccountingPeriods"
+				android:text="Add Journal Entry" />
 
 		</RelativeLayout>
 

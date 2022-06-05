@@ -21,11 +21,11 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
-	String date, name, cashBankTitle, amountText, tableName, clientIdText;
-	int invoiceId, clientId, cashBankId, quantity, amount;
+	String date, name, cashBankTitle, amountText, description, tableName, clientIdText;
+	int invoiceId, accountId, cashBankId, quantity, amount;
 
 	AutoCompleteTextView editAutoName;
-	EditText editDate, editAmount;
+	EditText editDate, editAmount, editDescription;
 	Button btnConfirmCashReceiptTransaction, btnConfirmCashPaymentTransaction;
 	Spinner spinnerCashBankList, spinnerUnpaidInvoices;
 	ArrayList accounts, cashBankEntity, unpaidInvoices;
@@ -54,6 +54,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		spinnerUnpaidInvoices = findViewById(R.id.spinnerUnpaidInvoices);
 		editDate = findViewById(R.id.editDate);
 		editAmount = findViewById(R.id.editAmount);
+        editDescription = findViewById(R.id.editDescription);
 		btnConfirmCashReceiptTransaction = findViewById(R.id.btnConfirmCashReceiptTransaction);
 		btnConfirmCashPaymentTransaction = findViewById(R.id.btnConfirmPaymentTransaction);
 
@@ -65,7 +66,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		final int year = calendar.get(Calendar.YEAR);
 		final int month = calendar.get(Calendar.MONTH);
 		final int day = calendar.get(Calendar.DAY_OF_MONTH);
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
 		date = sdf.format(calendar.getTime());
 		editDate.setText(date);
 		editDate.setOnClickListener(new View.OnClickListener() {
@@ -76,7 +77,7 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 							@Override
 							public void onDateSet(DatePicker view, int year, int month, int day) {
 								month = month + 1;
-								String date = day + "/" + month + "/" + year;
+								String date = year + "/" + month + "/" + day;
 								editDate.setText(date);
 							}
 						}, year, month, day);
@@ -158,12 +159,14 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		// String date, int accountId, int invoiceId, int lineItemId, String purchaseSale, Double quantity, Double debit, Double credit
 		date = editDate.getText().toString();
 		name = editAutoName.getText().toString();
-		Cursor res = DB.getClientId(name);
+        description = editDescription.getText().toString().trim();
+        
+		Cursor res = DB.getAccountId(name);
 		while (res.moveToNext()) {
-			clientId = res.getInt(0);
+			accountId = res.getInt(0);
 		}
 		res.close();
-		if (clientId == 0){
+		if (accountId == 0){
 			editAutoName.setText("");
 			editAutoName.setHint("Invalid Client Name");
 		}
@@ -175,26 +178,28 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 		cursorCashBankAccountId.close();
 		invoiceId = 0; //todo addcashtransaction: get invoice id
 		amountText = editAmount.getText().toString();
-		if (name.isEmpty() || amountText.isEmpty() || clientId == 0) {
+		if (name.isEmpty() || amountText.isEmpty() || accountId == 0) {
 			Toast.makeText(this, "Input Required Fields", Toast.LENGTH_SHORT).show();
 		} else {
 			amount = Integer.parseInt(amountText);
-			Log.d("AddCashTransaction Confirmed Values", tableName + date + invoiceId + clientId + cashBankId + amount);
+			Log.d("AddCashTransaction Confirmed Values", tableName + date + invoiceId + accountId + cashBankId + amount);
 			if (isReceipt) {
-				tableName = "receiptEntity";
-				if (DB.insertCashTransaction(tableName, date, invoiceId, clientId, cashBankId, amount)) {
+				tableName = "receipt";
+				if (DB.insertCashTransaction(tableName, date, invoiceId, accountId, cashBankId, description, amount)) {
 					editAutoName.setText("");
 					editAmount.setText("");
+                    editDescription.setText("");
 					Toast.makeText(this, "Received " + amount + "Tk From " + name, Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(this, "Cash Transaction failed.", Toast.LENGTH_LONG).show();
 				}
 
 			} else {
-				tableName = "paymentEntity";
-				if (DB.insertCashTransaction(tableName, date, invoiceId, clientId, cashBankId, amount)) {
+				tableName = "payment";
+				if (DB.insertCashTransaction(tableName, date, invoiceId, accountId, cashBankId, description, amount)) {
 					editAutoName.setText("");
 					editAmount.setText("");
+                    editDescription.setText("");
 					Toast.makeText(this, "Paid " + amount + "Tk To " + name, Toast.LENGTH_SHORT).show();
 				} else {
 					Toast.makeText(this, "Cash Transaction failed.", Toast.LENGTH_LONG).show();

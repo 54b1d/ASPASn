@@ -47,7 +47,7 @@ public class AccountingPeriodActivity extends AppCompatActivity {
         DB = new DBHelper(this);
         loadListAccountingPeriods();
 
-        DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("yyyy/MM/dd");
 		LocalDateTime currentDateTime = LocalDateTime.now();
         date = currentDateTime.format(dateFormat);
         editEndDate.setText(date);
@@ -64,7 +64,7 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
 						month = month +1;
-                        String date = day + "/" + month + "/" + year;
+                        String date = year + "/" + month + "/" + day;
                         editStartDate.setText(date);
                     }
                 }, year, month -1, day);
@@ -81,7 +81,7 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month +1;
-						String date = day + "/" + month + "/" + year;
+						String date = year + "/" + month + "/" + day;
                         editEndDate.setText(date);
                     }
                 }, year, month -1, day);

@@ -5,7 +5,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-    tools:context="com.sabid.aspasn.AddAccountActivity">
+	tools:context="com.sabid.aspasn.AddAccountActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/appBar"
@@ -75,11 +75,20 @@
 				android:hint="Mobile"
 				android:id="@+id/editMobile"/>
 
+			<EditText
+				android:layout_width="wrap_content"
+				android:inputType="numberDecimal"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:layout_below="@id/editMobile"
+				android:id="@+id/editPayable"
+				android:hint="Payable"/>
+
 			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Submit"
-				android:layout_below="@id/editMobile"
+				android:layout_below="@id/editPayable"
 				android:id="@+id/btnConfirmAddAccount"
 				android:layout_centerInParent="true"/>
 
@@ -97,7 +106,17 @@
 				android:text="Add Category"
 				android:layout_toRightOf="@id/spinnerAccountType"
 				android:layout_below="@id/txtTitle"
-                android:id="@+id/btnAddAccountType" />
+				android:id="@+id/btnAddAccountType"/>
+
+			<EditText
+				android:layout_width="wrap_content"
+				android:inputType="numberDecimal"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:layout_toRightOf="@id/editPayable"
+				android:layout_below="@+id/editMobile"
+				android:hint="Recievable"
+				android:id="@+id/editRecievable"/>
 
 		</RelativeLayout>
 

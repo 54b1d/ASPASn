@@ -91,18 +91,27 @@
 				android:inputType="numberDecimal"
 				android:hint="Amount"/>
 
+			<EditText
+				android:layout_width="match_parent"
+				android:inputType="textMultiLine"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:layout_below="@id/editAmount"
+				android:id="@+id/editDescription"
+				android:hint="Comment"/>
+
 			<Button
 				android:id="@+id/btnConfirmPurchase"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editAmount"
+				android:layout_below="@id/editDescription"
 				android:text="Purchase"/>
 
 			<Button
 				android:id="@+id/btnConfirmSale"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editAmount"
+				android:layout_below="@id/editDescription"
 				android:layout_toRightOf="@id/btnConfirmPurchase"
 				android:text="Sale"/>
 

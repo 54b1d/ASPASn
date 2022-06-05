@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="com.sabid.aspasn.AddPurchaseSaleTransactionActivity">
+	tools:context=".AddJournalTransactionActivity">
 
 	<com.google.android.material.appbar.AppBarLayout
 		android:id="@+id/appBar"
@@ -17,7 +18,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
 			android:background="?attr/colorPrimary"
-			app:popupTheme="@style/AppTheme.PopupOverlay" />
+			app:popupTheme="@style/AppTheme.PopupOverlay"/>
 
 	</com.google.android.material.appbar.AppBarLayout>
 
@@ -39,87 +40,55 @@
 				android:layout_below="@+id/appBar"
 				android:layout_marginTop="20dp"
 				android:text="Please enter the details below"
-				android:textSize="24dp" />
+				android:textSize="24dp"/>
 
 			<EditText
 				android:id="@+id/editDate"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/txtTitle"
-				android:hint="Date" />
-
-			<RadioGroup
-				android:id="@+id/radioGroupInventoryItems"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/editDate">
-
-				<RadioButton
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="Radio 1" />
-
-			</RadioGroup>
+				android:layout_below="@+id/txtTitle"
+				android:cursorVisible="false"
+				android:focusable="false"
+				android:hint="DD/MM/YY"/>
 
 			<AutoCompleteTextView
-				android:id="@+id/editAutoName"
+				android:id="@+id/editAutoNameFrom"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/radioGroupInventoryItems"
-				android:hint="Search Names" />
+				android:layout_below="@+id/editDate"
+				android:hint="From Account."/>
 
-			<EditText
-				android:id="@+id/editQuantity"
+			<AutoCompleteTextView
+				android:id="@+id/editAutoNameTo"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editAutoName"
-				android:ems="10"
-				android:hint="Quantity"
-				android:inputType="numberDecimal" />
-
-			<EditText
-				android:id="@+id/editRateAmount"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/editQuantity"
-				android:ems="10"
-				android:hint="Rate"
-				android:inputType="numberDecimal" />
+				android:layout_below="@id/editAutoNameFrom"
+				android:hint="To Account"/>
 
 			<EditText
 				android:id="@+id/editAmount"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editRateAmount"
+				android:layout_below="@id/editAutoNameTo"
 				android:ems="10"
 				android:hint="Amount"
-				android:inputType="number" />
+				android:inputType="number"/>
 
 			<EditText
-				android:id="@+id/editComment"
+				android:id="@+id/editDescription"
 				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/editAmount"
 				android:ems="10"
 				android:hint="Comment"
-				android:inputType="textMultiLine" />
+				android:inputType="textMultiLine"/>
 
 			<Button
-				android:id="@+id/btnConfirmCashReceiptTransaction"
+				android:id="@+id/btnConfirmJournalEntry"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editComment"
-				android:background="#FF45CA54"
-				android:text="Purchase" />
-
-			<Button
-				android:id="@+id/btnConfirmPaymentTransaction"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_below="@id/editComment"
-				android:layout_toEndOf="@id/btnConfirmCashReceiptTransaction"
-				android:background="#FFFF5050"
-				android:text="Sale" />
+				android:layout_below="@id/editDescription"
+				android:text="Confirm Transaction"/>
 
 		</RelativeLayout>
 

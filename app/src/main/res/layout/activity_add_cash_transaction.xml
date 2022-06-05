@@ -72,25 +72,34 @@
 
 			<EditText
 				android:id="@+id/editAmount"
-				android:layout_width="wrap_content"
+				android:layout_width="match_parent"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/spinnerUnpaidInvoices"
 				android:ems="10"
 				android:inputType="number"
 				android:hint="Amount"/>
 
+			<EditText
+				android:layout_width="match_parent"
+				android:inputType="textMultiLine"
+				android:layout_height="wrap_content"
+				android:ems="10"
+				android:layout_below="@id/editAmount"
+				android:id="@+id/editDescription"
+				android:hint="Comment"/>
+
 			<Button
 				android:id="@+id/btnConfirmCashReceiptTransaction"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editAmount"
+				android:layout_below="@id/editDescription"
 				android:text="Receipt"/>
 
 			<Button
 				android:id="@+id/btnConfirmPaymentTransaction"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:layout_below="@id/editAmount"
+				android:layout_below="@id/editDescription"
 				android:layout_toRightOf="@id/btnConfirmCashReceiptTransaction"
 				android:text="Payment"/>
 
