@@ -19,10 +19,13 @@ import androidx.appcompat.widget.Toolbar;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import android.net.ParseException;
+import java.time.LocalDate;
 
 public class AccountingPeriodActivity extends AppCompatActivity {
-    String date, startDate, endDate;
+    String date, startDate, endDate, previousStartDate, previousEndDate;
     EditText editStartDate, editEndDate;
+    boolean noPeriod;
     ListView listAccountingPeriods;
     Button btnConfirmAddAccountingPeriod;
     ArrayList accountingPeriods;
@@ -47,13 +50,13 @@ public class AccountingPeriodActivity extends AppCompatActivity {
         DB = new DBHelper(this);
         loadListAccountingPeriods();
 
-        DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("yyyy/MM/dd");
-		LocalDateTime currentDateTime = LocalDateTime.now();
-        date = currentDateTime.format(dateFormat);
+        final DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("yyyy-M-d");
+		LocalDate currentDate = LocalDate.now();
+        date = currentDate.format(dateFormat);
         editEndDate.setText(date);
-        final int year = currentDateTime.getYear();
-        final int month = currentDateTime.getMonthValue();
-        final int day = currentDateTime.getDayOfMonth();
+        final int year = currentDate.getYear();
+        final int month = currentDate.getMonthValue();
+        final int day = currentDate.getDayOfMonth();
         
 
         editStartDate.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +67,7 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
 						month = month +1;
-                        String date = year + "/" + month + "/" + day;
+                        String date = year + "-" + month + "-" + day;
                         editStartDate.setText(date);
                     }
                 }, year, month -1, day);
@@ -81,7 +84,7 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         month = month +1;
-						String date = year + "/" + month + "/" + day;
+						String date = year + "-" + month + "-" + day;
                         editEndDate.setText(date);
                     }
                 }, year, month -1, day);
@@ -98,7 +101,15 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                 if(startDate.isEmpty() || endDate.isEmpty()){
                     Toast.makeText(AccountingPeriodActivity.this, "Select Dates Correctly", Toast.LENGTH_SHORT).show();
                 } else {
-                    //Toast.makeText(AccountingPeriodActivity.this, "Implement Insert Logic", Toast.LENGTH_SHORT).show();
+                    if(noPeriod==true){
+                    previousStartDate = calculateDate(startDate, dateFormat, 30);
+                    previousEndDate = calculateDate(startDate, dateFormat, 1);
+                    Toast.makeText(getApplicationContext(), previousStartDate +" To "+ previousEndDate, Toast.LENGTH_SHORT).show();
+                        if (DB.insertAccountingPeriod(previousStartDate, previousEndDate)){
+                            noPeriod = false;
+                        }
+                    }
+                    //todo make sure new period is not between older periods
 					boolean checkInsert = DB.insertAccountingPeriod(startDate, endDate);
 					if (checkInsert){
                     loadListAccountingPeriods(); // Refresh Accounting Period List
@@ -109,12 +120,20 @@ public class AccountingPeriodActivity extends AppCompatActivity {
             }
         });
     }
+    
+    private String calculateDate(String date, DateTimeFormatter dateFormat, long days){
+        LocalDate d = LocalDate.parse(date, dateFormat).minusDays(days);
+        String dateString = d.format(dateFormat);
+        return dateString;
+    }
 
-    public void loadListAccountingPeriods(){
+    private void loadListAccountingPeriods(){
         accountingPeriods = new ArrayList<String>();
         Cursor res = DB.getAccountingPeriods();
         if (res.getCount() == 0) {
             accountingPeriods.add("No Periods Created");
+            // set noPeriod true for previous period creation
+            noPeriod = true;
         } else {
             while (res.moveToNext()) {
                 String a = res.getString(0) + ", " + res.getString(1) + ", " + res.getString(2);
