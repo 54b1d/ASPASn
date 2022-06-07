@@ -2,8 +2,6 @@ package com.sabid.aspasn;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +19,8 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 import android.text.TextWatcher;
 import android.text.Editable;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDate;
 
 public class AddInvoiceActivity extends AppCompatActivity {
     String date, name, description, productName, quantityText, rateText, amountText, tableName, clientIdText;
@@ -99,13 +99,13 @@ public class AddInvoiceActivity extends AppCompatActivity {
         loadEditAutoName();
         loadSpinnerProducts();
 
-        Calendar calendar = Calendar.getInstance();
-        final int year = calendar.get(Calendar.YEAR);
-        final int month = calendar.get(Calendar.MONTH);
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
-        date = sdf.format(calendar.getTime());
+        final DateTimeFormatter dateFormat =  DateTimeFormatter.ofPattern("yyyy-M-d");
+        LocalDate currentDate = LocalDate.now();
+        date = currentDate.format(dateFormat);
         editDate.setText(date);
+        final int year = currentDate.getYear();
+        final int month = currentDate.getMonthValue();
+        final int day = currentDate.getDayOfMonth();
         editDate.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -114,10 +114,10 @@ public class AddInvoiceActivity extends AppCompatActivity {
                             @Override
                             public void onDateSet(DatePicker view, int year, int month, int day) {
                                 month = month + 1;
-                                String date = year + "/" + month + "/" + day;
+                                String date = year + "-" + month + "-" + day;
                                 editDate.setText(date);
                             }
-                        }, year, month, day);
+                        }, year, month -1, day);
 
                     datePickerDialog.show();
                 }

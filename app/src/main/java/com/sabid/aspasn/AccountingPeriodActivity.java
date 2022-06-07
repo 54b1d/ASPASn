@@ -19,7 +19,6 @@ import androidx.appcompat.widget.Toolbar;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import android.net.ParseException;
 import java.time.LocalDate;
 
 public class AccountingPeriodActivity extends AppCompatActivity {
@@ -57,7 +56,6 @@ public class AccountingPeriodActivity extends AppCompatActivity {
         final int year = currentDate.getYear();
         final int month = currentDate.getMonthValue();
         final int day = currentDate.getDayOfMonth();
-        
 
         editStartDate.setOnClickListener(new View.OnClickListener() {
             @Override
