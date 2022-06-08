@@ -56,23 +56,34 @@ public class AccountingPeriodActivity extends AppCompatActivity {
         final int year = currentDate.getYear();
         final int month = currentDate.getMonthValue();
         final int day = currentDate.getDayOfMonth();
-
-        editStartDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatePickerDialog datePickerDialog = new DatePickerDialog(AccountingPeriodActivity.this,
-                        R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+        
+        Cursor res = DB.getLastAccountingClosingDate();
+        if(res.getCount()==0){ // no period found
+            editStartDate.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int day) {
-						month = month +1;
-                        String date = year + "-" + month + "-" + day;
-                        editStartDate.setText(date);
-                    }
-                }, year, month -1, day);
+                    public void onClick(View view) {
+                        DatePickerDialog datePickerDialog = new DatePickerDialog(AccountingPeriodActivity.this,
+                            R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
+                                @Override
+                                public void onDateSet(DatePicker view, int year, int month, int day) {
+                                    month = month +1;
+                                    String date = year + "-" + month + "-" + day;
+                                    editStartDate.setText(date);
+                                }
+                            }, year, month -1, day);
 
-                datePickerDialog.show();
+                        datePickerDialog.show();
+                    }
+                });
+        } else{
+            while(res.moveToNext()){
+                // get last date plus 1 day
+                editStartDate.setText(LocalDate.parse(res.getString(0),dateFormat).plusDays(1).format(dateFormat));
+                
             }
-        });
+        }
+        
+        
 
         editEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,15 +110,16 @@ public class AccountingPeriodActivity extends AppCompatActivity {
                 if(startDate.isEmpty() || endDate.isEmpty()){
                     Toast.makeText(AccountingPeriodActivity.this, "Select Dates Correctly", Toast.LENGTH_SHORT).show();
                 } else {
-                    if(noPeriod==true){
+                    /*if(noPeriod==true){
                     previousStartDate = calculateDate(startDate, dateFormat, 30);
                     previousEndDate = calculateDate(startDate, dateFormat, 1);
                     Toast.makeText(getApplicationContext(), previousStartDate +" To "+ previousEndDate, Toast.LENGTH_SHORT).show();
                         if (DB.insertAccountingPeriod(previousStartDate, previousEndDate)){
                             noPeriod = false;
                         }
-                    }
+                    }*/
                     //todo make sure new period is not between older periods
+                    
 					boolean checkInsert = DB.insertAccountingPeriod(startDate, endDate);
 					if (checkInsert){
                     loadListAccountingPeriods(); // Refresh Accounting Period List

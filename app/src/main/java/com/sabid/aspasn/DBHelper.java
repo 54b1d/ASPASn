@@ -260,6 +260,12 @@ public class DBHelper extends SQLiteOpenHelper {
 		Cursor Cursor = DB.rawQuery("select * from accountingPeriod", null);
 		return Cursor;
 	}
+    
+    public Cursor getLastAccountingClosingDate(){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        Cursor Cursor = DB.rawQuery("select accountingEndDate from accountingPeriod order by accountingPeriodId desc limit 1", null);
+        return Cursor;
+    }
 	
 	public Cursor getProducts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
