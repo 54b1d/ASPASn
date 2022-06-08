@@ -18,7 +18,8 @@ import java.util.ArrayList;
 
 public class AddAccountActivity extends AppCompatActivity {
     String accountTypeName;
-    EditText name, address, mobile;
+    double openingBalance, openingAssetAmount, openingLiabilityAmount;
+    EditText editName, editAddress, editMobile, editOpeningLiability, editOpeningAsset;
     Button confirmAddAccount, viewAccounts, btnAddAccountType;
     Spinner spinnerAccountType;
     ArrayList categories;
@@ -38,9 +39,11 @@ public class AddAccountActivity extends AppCompatActivity {
                     onBackPressed();
                 }});
         accountTypeName = getIntent().getExtras().getString("accountTypeName");
-        name = findViewById(R.id.editName);
-        address = findViewById(R.id.editAddress);
-        mobile = findViewById(R.id.editMobile);
+        editName = findViewById(R.id.editName);
+        editAddress = findViewById(R.id.editAddress);
+        editMobile = findViewById(R.id.editMobile);
+        editOpeningLiability = findViewById(R.id.editOpeningLiability);
+        editOpeningAsset = findViewById(R.id.editOpeningAsset);
         spinnerAccountType = findViewById(R.id.spinnerAccountType);
 
         confirmAddAccount = findViewById(R.id.btnConfirmAddAccount);
@@ -51,7 +54,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
 
         loadSpinnerAccountType();
-        
+
         confirmAddAccount.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
@@ -65,23 +68,49 @@ public class AddAccountActivity extends AppCompatActivity {
                     } else {
                         res.moveToNext();
                         int accountTypeId = res.getInt(0);
-                        String nameText = name.getText().toString().trim();
-                        String addressText = address.getText().toString().trim();
-                        String mobileText = mobile.getText().toString().trim();
+                        String nameText = editName.getText().toString().trim();
+                        String addressText = editAddress.getText().toString().trim();
+                        String mobileText = editMobile.getText().toString().trim();
+                        
+                        //parse opening balance from ui & set negative or positive
+                        String a = editOpeningAsset.getText().toString().trim();
+                        String b = editOpeningLiability.getText().toString().trim();
+                        if (a.isEmpty() && b.isEmpty()) {
+                            openingBalance = 0;
+                        } else if (b.isEmpty()) {
+                            openingBalance = Double.parseDouble(a) - 0;
+                        } else if (a.isEmpty()) {
+                            openingBalance = 0 - Double.parseDouble(b);
+                        }
+                        //Toast.makeText(getApplicationContext(), Double.toString(openingBalance), Toast.LENGTH_LONG).show();
+
                         if (!nameText.isEmpty()) {
                             Boolean checkInsertData = DB.insertAccountData(nameText, addressText, mobileText, accountTypeId);
                             if (checkInsertData) {
                                 Toast.makeText(getApplicationContext(), accountTypeNameText + ": " + nameText + " Created", Toast.LENGTH_SHORT).show();
+                                // get newly created account id
+                                res = DB.getAccountId(nameText);
+                                res.moveToNext();
+                                int accountId = res.getInt(0);
+                                res.close();
+                                //get first accounting period id which should be 1
+                                int accountingPeriodId = 1;
+                                //db insert opening balance
+                                checkInsertData = DB.insertAccountsBalance(accountId, accountingPeriodId, openingBalance, 0);
+
                                 // clear editText fields
-                                name.setText("");
-                                address.setText("");
-                                mobile.setText("");
+                                editName.setText("");
+                                editAddress.setText("");
+                                editMobile.setText("");
+                                editOpeningLiability.setText("");
+                                editOpeningAsset.setText("");
                             } else {
                                 Toast.makeText(getApplicationContext(), "Not Inserted", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             Toast.makeText(getApplicationContext(), "Enter Name", Toast.LENGTH_SHORT).show();
-                        }}
+                        }
+                    }
                     res.close();
                 }
             });
