@@ -10,10 +10,15 @@
         android:resizeableActivity="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
-        <activity android:name=".AccountingPeriodActivity"></activity>
-        <activity android:name=".AddProductActivity" />
-        <activity android:name=".AddProductTypeActivity" />
-        <activity android:name=".AddInvoiceActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".AddJournalTransactionActivity"
             android:exported="false" />
@@ -30,20 +35,15 @@
             android:name=".AccountsActivity"
             android:exported="false" />
         <activity android:name=".DebugButtonsActivity" />
-        <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity android:name=".CalculatorActivity" />
         <activity android:name=".AddAccountActivity" />
         <activity android:name=".AddCashTransactionActivity" />
         <activity android:name=".AddAccountTypeActivity" />
-
+        <activity android:name=".AccountingPeriodActivity" />
+        <activity android:name=".AddProductActivity" />
+        <activity android:name=".AddProductTypeActivity" />
+        <activity android:name=".AddInvoiceActivity" />
+        <activity android:name=".AddOwnerActivity" />
         <meta-data
             android:name="android.max_aspect"
             android:value="4.0" />

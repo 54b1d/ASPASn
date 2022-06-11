@@ -74,7 +74,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="Add Invoice"
-                android:layout_below="@id/btnActivityAddInventoryItem"
+				android:layout_below="@id/btnActivityAddInventoryItem"
 				android:id="@+id/btnActivityAddInvoice"/>
 
 			<Button
@@ -89,7 +89,14 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:layout_below="@id/btnActivityAccountingPeriods"
-				android:text="Add Journal Entry" />
+				android:text="Add Journal Entry"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="AddAsOwner"
+				android:layout_below="@id/btnAddJournalEntry"
+				android:id="@+id/btnAddOwner"/>
 
 		</RelativeLayout>
 

@@ -50,6 +50,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 		DB.execSQL("CREATE TABLE [contraEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [fromCashBankAccountId] INTEGER NOT NULL, [toCashBankAccountId] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([fromCashBankAccountId]) REFERENCES [cashBankAccounts]([cashBankId]), FOREIGN KEY([toCashBankAccountId]) REFERENCES [cashBankAccounts]([cashBankId]));");
 		
+        DB.execSQL("CREATE TABLE [owners] ([id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [accountId] INTEGER NOT NULL UNIQUE, FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]));");
 		
 		DB.execSQL(
 				"INSERT INTO [accountType] ('accountTypeName') VALUES ('Assets'), ('Liabilities'), ('Capital'), ('Accounts'), ('Incomes'), ('Expenses');");
@@ -153,6 +154,15 @@ public class DBHelper extends SQLiteOpenHelper {
         long result = DB.insert(tableName, null, contentValues);
         return result != -1;
 	}
+    
+    public Boolean insertOwner(int accountId){
+        SQLiteDatabase DB = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("accountId", accountId);
+
+        long result = DB.insert("owners", null, contentValues);
+        return result != -1;
+    }
 
 	public Boolean updateAccount(String name, String address, String mobile) {
 		SQLiteDatabase DB = this.getWritableDatabase();

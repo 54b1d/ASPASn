@@ -4,12 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
-    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods, btnAddJournalEntry;
+    Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction
+    , btnActivityAddExpenseAccount, btnActivityAddInventoryItem, btnActivityAddInvoice
+    , btnActivityAccountingPeriods, btnAddJournalEntry, btnAddOwner;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +35,8 @@ public class DebugButtonsActivity extends AppCompatActivity {
         btnActivityAddInvoice = findViewById(R.id.btnActivityAddInvoice);
         btnActivityAccountingPeriods = findViewById(R.id.btnActivityAccountingPeriods);
         btnAddJournalEntry = findViewById(R.id.btnAddJournalEntry);
-
+        btnAddOwner = findViewById(R.id.btnAddOwner);
+        
         btnAddJournalEntry.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +79,17 @@ public class DebugButtonsActivity extends AppCompatActivity {
                 openAccountingPeriods();
             }
         });
+        btnAddOwner.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openAddOwner();
+                }
+        });
+    }
+    
+    private void openAddOwner(){
+        Intent Intent = new Intent(this, AddOwnerActivity.class);
+        startActivity(Intent);
     }
 
     private void openActivityAddJournalTransaction() {
