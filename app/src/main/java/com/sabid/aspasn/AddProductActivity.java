@@ -11,16 +11,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import android.app.Activity;
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
 import java.util.ArrayList;
 
 public class AddProductActivity extends AppCompatActivity {
-    private String accountTypeName = "Inventory"; // literal from database table accountTypesEntity
-    EditText productName;
+    double openingBalance, openingWeight;
+    EditText productName, editOpeningWeight, editOpeningBalance;
     Button confirmAddProduct, viewProducts, btnAddProductType;
     Spinner spinnerProductType;
     ArrayList categories;
@@ -41,6 +39,8 @@ public class AddProductActivity extends AppCompatActivity {
                 }});
 
         productName = findViewById(R.id.editProductName);
+        editOpeningWeight = findViewById(R.id.editOpenigWeight);
+        editOpeningBalance = findViewById(R.id.editOpeningBalance);
         spinnerProductType = findViewById(R.id.spinnerProductType);
 
         confirmAddProduct = findViewById(R.id.btnConfirmAddProduct);
@@ -66,9 +66,23 @@ public class AddProductActivity extends AppCompatActivity {
                         res.moveToNext();
                         int productTypeId = res.getInt(0);
                         String productNameText = productName.getText().toString().trim();
+                        String a = editOpeningBalance.getText().toString().trim();
+                        String b = editOpeningWeight.getText().toString().trim();
+                        if (a.isEmpty() && b.isEmpty()) {
+                            openingWeight = 0;
+                            openingBalance = 0;
+                        } else {
+                            openingBalance = Double.parseDouble(a);
+                            openingWeight = Double.parseDouble(b);
+                        }
                         if (!productNameText.isEmpty()) {
                             Boolean checkInsertData = DB.insertProduct(productNameText, productTypeId, accountTypeId);
                             if (checkInsertData) {
+                                res = DB.getProductIdOf(productNameText);
+                                res.moveToNext();
+                                int productId = res.getInt(0);
+                                res.close();
+                                DB.insertProductsBalance("productsBalance", productId, 1, openingWeight, 0, openingBalance, 0);
                                 Toast.makeText(getApplicationContext(), productNameText + " product Account Created", Toast.LENGTH_SHORT).show();
                                 // clear editText fields
                                 productName.setText("");

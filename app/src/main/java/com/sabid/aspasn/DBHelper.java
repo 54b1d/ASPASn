@@ -44,7 +44,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 		DB.execSQL("CREATE TABLE [accountsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, [accountId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([accountId]) REFERENCES [accounts]([accountId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
 
-		DB.execSQL("CREATE TABLE [productsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([productId]) REFERENCES [products]([productId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
+		DB.execSQL("CREATE TABLE [productsBalance] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [productId] INTEGER NOT NULL, [accountingPeriodId] INTEGER NOT NULL, [openingWeight] REAL NOT NULL, [closingWeight] REAL NOT NULL, [openingBalance] REAL NOT NULL, [closingBalance] REAL NOT NULL, FOREIGN KEY([productId]) REFERENCES [products]([productId]), FOREIGN KEY([accountingPeriodId]) REFERENCES [accountingPeriod]([accountingPeriodId]));");
 
 		DB.execSQL("CREATE TABLE [journalEntry] ( [_id] INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL UNIQUE, [date] DATE NOT NULL, [accountIdFrom] INTEGER NOT NULL, [accountIdTo] INTEGER NOT NULL, [description] TEXT NOT NULL, [amount] REAL NOT NULL, FOREIGN KEY([accountIdFrom]) REFERENCES [accounts]([accountId]), FOREIGN KEY([accountIdTo]) REFERENCES [accounts]([accountId]));");
 
@@ -77,6 +77,15 @@ public class DBHelper extends SQLiteOpenHelper {
 		long result = DB.insert("accounts", null, contentValues);
 		return result != -1;
 	}
+
+	public Boolean insertCashBankAccount(String cashBankTitle, int accountTypeId) {
+		SQLiteDatabase DB = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put("cashBankTitle", cashBankTitle);
+		contentValues.put("accountTypeId", accountTypeId);
+		long result = DB.insert("cashBankAccounts", null, contentValues);
+		return result != -1;
+	}
     
     public Boolean insertAccountsBalance(String tableName, String columnName, int accountId, int accountingPeriodId, double openingBalance, double closingBalance){
         SQLiteDatabase DB = this.getWritableDatabase();
@@ -88,6 +97,17 @@ public class DBHelper extends SQLiteOpenHelper {
         long result =DB.insert(tableName, null, contentValues);
         return result != -1;
     }
+
+	public Boolean insertProductsBalance(String tableName, int productId, int accountingPeriodId, double openingWeight, double closingWeight, double openingBalance, double closingBalance) {
+		SQLiteDatabase DB = this.getWritableDatabase();
+		ContentValues contentValues = new ContentValues();
+		contentValues.put("productId", productId);
+		contentValues.put("accountingPeriodId", accountingPeriodId);
+		contentValues.put("openingBalance", openingBalance);
+		contentValues.put("closingBalance", closingBalance);
+		long result = DB.insert(tableName, null, contentValues);
+		return result != -1;
+	}
 
 	public Boolean insertExpenseAccount(String expenseName, int accountTypeId) {
 		SQLiteDatabase DB = this.getWritableDatabase();

@@ -57,13 +57,32 @@
 				android:id="@+id/editProductName"
 				android:hint="Product Name"/>
 
-			<Button
+			<EditText
+				android:id="@+id/editOpenigWeight"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
-				android:text="Submit"
 				android:layout_below="@id/editProductName"
+				android:ems="10"
+				android:hint="Opening Weight"
+				android:inputType="numberDecimal" />
+
+			<EditText
+				android:id="@+id/editOpeningBalance"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/editProductName"
+				android:layout_toEndOf="@id/editOpenigWeight"
+				android:ems="10"
+				android:hint="Opening Balance"
+				android:inputType="numberDecimal" />
+
+			<Button
 				android:id="@+id/btnConfirmAddProduct"
-				android:layout_centerInParent="true"/>
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_below="@id/editOpenigWeight"
+				android:layout_centerInParent="true"
+				android:text="Submit" />
 
 			<Button
 				android:layout_width="wrap_content"

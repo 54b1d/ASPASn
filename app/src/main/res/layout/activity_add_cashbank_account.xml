@@ -42,89 +42,32 @@
                 android:layout_marginTop="20dp"
                 android:layout_below="@+id/appBar"/>
 
-            <Spinner
-                android:id="@+id/spinnerAccountType"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtTitle"/>
-
             <EditText
-                android:layout_width="match_parent"
-                android:inputType="textPersonName"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_below="@+id/spinnerAccountType"
                 android:id="@+id/editName"
-                android:hint="Name"/>
-
-            <EditText
                 android:layout_width="match_parent"
-                android:inputType="textPostalAddress"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_below="@id/editName"
-                android:id="@+id/editAddress"
-                android:hint="Address"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:inputType="phone"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:layout_below="@id/editAddress"
-                android:hint="Mobile"
-                android:id="@+id/editMobile"/>
-
-            <LinearLayout
-                android:id="@+id/linearOpeningBalance"
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/editMobile"
-                android:weightSum="2">
-
-                <EditText
-                    android:layout_width="150dp"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:id="@+id/editOpeningLiability"
-                    android:hint="Liability"/>
-
-                <EditText
-                    android:layout_width="150dp"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:layout_toRightOf="@id/editOpeningLiability"
-                    android:hint="Asset"
-                    android:id="@+id/editOpeningAsset"/>
-
-            </LinearLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Submit"
-                android:layout_below="@id/linearOpeningBalance"
-                android:id="@+id/btnConfirmAddAccount"
-                android:layout_centerInParent="true"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Go Back"
-                android:layout_below="@id/btnConfirmAddAccount"
-                android:id="@+id/btnViewAccounts"
-                android:layout_centerInParent="true"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Add Category"
-                android:layout_toRightOf="@id/spinnerAccountType"
                 android:layout_below="@id/txtTitle"
-                android:id="@+id/btnAddAccountType"/>
+                android:ems="10"
+                android:hint="CashBank Account Name"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/editOpeningBalance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/editName"
+                android:layout_toRightOf="@id/editOpeningLiability"
+                android:ems="10"
+                android:hint="Opening Balance"
+                android:inputType="numberDecimal|numberSigned" />
+
+            <Button
+                android:id="@+id/btnConfirmAddCashBankAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/linearOpeningBalance"
+                android:layout_centerInParent="true"
+                android:text="Add Account" />
 
         </RelativeLayout>
 
