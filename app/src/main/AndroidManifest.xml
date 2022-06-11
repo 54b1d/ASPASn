@@ -44,6 +44,7 @@
         <activity android:name=".AddProductTypeActivity" />
         <activity android:name=".AddInvoiceActivity" />
         <activity android:name=".AddOwnerActivity" />
+        <activity android:name=".AddCashBankAccountActivity" />
         <meta-data
             android:name="android.max_aspect"
             android:value="4.0" />
