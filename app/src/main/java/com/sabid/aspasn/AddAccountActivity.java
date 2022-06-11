@@ -96,7 +96,7 @@ public class AddAccountActivity extends AppCompatActivity {
                                 //get first accounting period id which should be 1
                                 int accountingPeriodId = 1;
                                 //db insert opening balance
-                                checkInsertData = DB.insertAccountsBalance(accountId, accountingPeriodId, openingBalance, 0);
+                                checkInsertData = DB.insertAccountsBalance("accountsBalance", "accountId", accountId, accountingPeriodId, openingBalance, 0);
 
                                 // clear editText fields
                                 editName.setText("");

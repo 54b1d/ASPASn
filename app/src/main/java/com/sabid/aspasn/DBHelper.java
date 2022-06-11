@@ -78,14 +78,14 @@ public class DBHelper extends SQLiteOpenHelper {
 		return result != -1;
 	}
     
-    public Boolean insertAccountsBalance(int accountId, int accountingPeriodId, double openingBalance, double closingBalance){
+    public Boolean insertAccountsBalance(String tableName, String columnName, int accountId, int accountingPeriodId, double openingBalance, double closingBalance){
         SQLiteDatabase DB = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-		contentValues.put("accountId", accountId);
+		contentValues.put(columnName, accountId);
         contentValues.put("accountingPeriodId", accountingPeriodId);
         contentValues.put("openingBalance", openingBalance);
         contentValues.put("closingBalance", closingBalance);
-        long result =DB.insert("accountsBalance", null, contentValues);
+        long result =DB.insert(tableName, null, contentValues);
         return result != -1;
     }
 
