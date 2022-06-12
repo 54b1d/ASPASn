@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 public class AddCashBankAccountActivity extends AppCompatActivity {
+    String cashBankTitle;
     int cashBankId;
     double openingBalance;
     EditText editName, editOpeningBalance;
@@ -38,10 +39,12 @@ public class AddCashBankAccountActivity extends AppCompatActivity {
         editOpeningBalance = findViewById(R.id.editOpeningBalance);
         btnConfirmAddCashBankAccount = findViewById(R.id.btnConfirmAddCashBankAccount);
 
+        DB = new DBHelper(this);
+        
         btnConfirmAddCashBankAccount.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String cashBankTitle = editName.getText().toString().trim();
+                cashBankTitle = editName.getText().toString().trim();
 
 
                 if (cashBankTitle.isEmpty()) {
@@ -53,14 +56,17 @@ public class AddCashBankAccountActivity extends AppCompatActivity {
                     } else {
                         openingBalance = Double.parseDouble(a);
                     }
-                    if (DB.insertCashBankAccount(cashBankTitle, 1)) { // 1 is static for assets accountType
+                    boolean checkinsert = DB.insertCashBankAccount(cashBankTitle, 1);
+                    if (checkinsert) { // 1 is static for assets accountType
                         // get id for CashBank name
                         Cursor res = DB.getCashBankAccountIdFor(cashBankTitle);
                         res.moveToNext();
                         cashBankId = res.getInt(0);
                         res.close();
-                        DB.insertAccountsBalance("cashBankBalance", "cashBankId", cashBankId, 1, openingBalance, 0);
+                        DB.insertAccountsBalance("cashBankAccountsBalance", "cashBankId", cashBankId, 1, openingBalance, 0);
                         Toast.makeText(getApplicationContext(), "Cash Bank Account: " + cashBankTitle + " Created with balance " + openingBalance, Toast.LENGTH_SHORT).show();
+                    } else{
+                        Toast.makeText(getApplicationContext(), "Failed To add Account", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
