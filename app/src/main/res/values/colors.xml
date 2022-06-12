@@ -6,7 +6,7 @@
     <color name="colorControlHighlight">#FFCDD2</color>
    	<color name="colorControlNormal">#EF5350</color>
     <color name="colorCardText">#FFEBEE</color>
-    <color name="colorCardBackground">#B71C1C</color>
-    <color name="colorSpinnerBackground">#B71C1C</color>
-    <color name="colorSpinnerText">#FFEBEE</color>
+    <color name="colorCardBackground">#FFEBEE</color>
+    <color name="colorSpinnerBackground">#FFEBEE</color>
+    <color name="colorSpinnerText">#FF000000</color>
 </resources>
