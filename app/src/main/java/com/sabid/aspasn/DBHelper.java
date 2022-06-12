@@ -292,7 +292,7 @@ public class DBHelper extends SQLiteOpenHelper {
     
     public Cursor getAccountsOf(String accountTypeName) {
         SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("SELECT [accounts].* FROM [main].[accounts] INNER JOIN [main].[accountType] ON [main].[accountType].[accountTypeId] = [main].[accounts].[accountTypeId] WHERE accountTypeName = ?;", new String[]{accountTypeName});
+		Cursor Cursor = DB.rawQuery("SELECT [accounts].* FROM [main].[accounts] INNER JOIN [main].[accountType] ON [main].[accountType].[accountTypeId] = [main].[accounts].[accountTypeId] WHERE accountTypeName = ? ORDER BY [main].[accounts].[accountName];", new String[]{accountTypeName});
         return Cursor;
 	}
 
