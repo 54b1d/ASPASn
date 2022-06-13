@@ -262,7 +262,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Cursor getAccountTypes() { //reformed
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from accountType", null);
+		Cursor Cursor = DB.rawQuery("select * from accountType ORDER BY [accountType].[accountTypeName]", null);
 		return Cursor;
 	}
 
@@ -280,7 +280,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	public Cursor getProductTypes(){
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from productType", null);
+		Cursor Cursor = DB.rawQuery("select * from productType ORDER BY [productType].[productTypeTitle]", null);
 		return Cursor;
 	}
 
@@ -310,7 +310,7 @@ public class DBHelper extends SQLiteOpenHelper {
 	
 	public Cursor getProducts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from products", null);
+		Cursor Cursor = DB.rawQuery("select * from products ORDER BY [products].[productName]", null);
 		return Cursor;
 	}
     
@@ -322,7 +322,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 	public Cursor getCashBankAccounts() {
 		SQLiteDatabase DB = this.getWritableDatabase();
-		Cursor Cursor = DB.rawQuery("select * from cashBankAccounts", null);
+		Cursor Cursor = DB.rawQuery("select * from cashBankAccounts ORDER BY [cashBankAccounts].[cashBankTitle]", null);
 		return Cursor;
 	}
 
