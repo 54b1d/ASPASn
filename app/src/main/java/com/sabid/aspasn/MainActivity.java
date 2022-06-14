@@ -5,17 +5,18 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.ActionBar;
 
 
 public class MainActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;
     public ActionBarDrawerToggle actionBarDrawerToggle;
-    
+
     Button btnDebugButtonsActivity;
     ActionBar actionBar;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         // to make the Navigation drawer icon always appear on the action bar
         actionBar = getSupportActionBar();
+        assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setTitle("Home");
 
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
             });
     }
 
-
     // override the onOptionsItemSelected()
 
     // function to implement 
@@ -72,17 +73,18 @@ public class MainActivity extends AppCompatActivity {
     // drawer when the icon is clicked
 
     @Override
-
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
-
-            return true;
-
+            int id = item.getItemId();
+            if (id == R.id.nav_debug) {
+                startActivity(new Intent(this, DebugButtonsActivity.class));
+                return true;
+            } else if (id == R.id.nav_exit) {
+                finishAffinity();
+                return true;
+            }
+            return(false);
         }
-
-        return super.onOptionsItemSelected(item);
-
+        return(super.onOptionsItemSelected(item));
     }
 }

@@ -9,10 +9,15 @@
 
     <item
 
-        android:id="@+id/nav_account"
+        android:id="@+id/nav_accounts"
 
-        android:title="My Account" />
+        android:title="Accounts" />
+    
+    <item
 
+        android:id="@+id/nav_debug"
+
+        android:title="Debug Buttons" />
 
     <item
 
@@ -23,9 +28,9 @@
 
     <item
 
-        android:id="@+id/nav_logout"
+        android:id="@+id/nav_exit"
 
-        android:title="Logout" />
+        android:title="Exit" />
 
 
 </menu>
