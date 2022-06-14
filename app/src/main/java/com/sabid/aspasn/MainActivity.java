@@ -1,7 +1,10 @@
 package com.sabid.aspasn;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,12 +12,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 
 public class MainActivity extends AppCompatActivity {
-
-
     public DrawerLayout drawerLayout;
-
     public ActionBarDrawerToggle actionBarDrawerToggle;
-
+    
+    Button btnDebugButtonsActivity;
 
     @Override
 
@@ -47,6 +48,13 @@ public class MainActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        btnDebugButtonsActivity = findViewById(R.id.btnDebugButtonsActivity);
+        btnDebugButtonsActivity.setOnClickListener(new View.OnClickListener() {
+                @Override public void onClick(View view) {
+                    Intent intent = new Intent(getApplicationContext(), DebugButtonsActivity.class);
+                    startActivity(intent);
+                }
+            });
     }
 
 
