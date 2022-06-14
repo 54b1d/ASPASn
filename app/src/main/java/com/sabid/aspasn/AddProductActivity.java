@@ -10,10 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import java.util.ArrayList;
 
 public class AddProductActivity extends AppCompatActivity {
@@ -28,15 +26,8 @@ public class AddProductActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product);
-        Toolbar toolbar=findViewById(R.id.toolbar);
-        toolbar.setTitle("Add New Product");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override public void onClick(View _v) {
-                    onBackPressed();
-                }});
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Product");
 
         productName = findViewById(R.id.editProductName);
         editOpeningWeight = findViewById(R.id.editOpenigWeight);

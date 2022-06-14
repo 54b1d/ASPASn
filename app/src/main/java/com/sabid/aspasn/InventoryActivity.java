@@ -1,16 +1,15 @@
 package com.sabid.aspasn;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
-import android.widget.ArrayAdapter;
-import android.database.Cursor;
-import android.content.Intent;
 
 public class InventoryActivity extends AppCompatActivity {
     Button btnActivityAddProduct;
@@ -23,17 +22,9 @@ public class InventoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inventory);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Inventory");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Inventory");
+        
         btnActivityAddProduct = findViewById(R.id.btnActivityAddProduct);
         listProducts = findViewById(R.id.listProducts);
         DB = new DBHelper(this);

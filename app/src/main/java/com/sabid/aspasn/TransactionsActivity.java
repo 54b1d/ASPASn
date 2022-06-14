@@ -2,13 +2,10 @@ package com.sabid.aspasn;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import java.util.ArrayList;
 
 public class TransactionsActivity extends AppCompatActivity {
@@ -21,17 +18,9 @@ public class TransactionsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transactions);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Transactions");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Transactions");
+        
 		listPurchases = findViewById(R.id.listPurchases);
 		listSales = findViewById(R.id.listSales);
 		listReceipts = findViewById(R.id.listReceipts);

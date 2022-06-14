@@ -1,16 +1,15 @@
 package com.sabid.aspasn;
 
-import android.view.View;
-
-import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
-import java.util.ArrayList;
 import android.database.Cursor;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.Toast;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import java.util.ArrayList;
 
 public class AddOwnerActivity extends AppCompatActivity {
     String name;
@@ -23,17 +22,8 @@ public class AddOwnerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_owner);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Add Owner");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View _v) {
-                    onBackPressed();
-                }
-            });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Owner");
 
         editAutoName = findViewById(R.id.editAutoName);
         btnConfirmAddOwner = findViewById(R.id.btnConfirmAddOwner);

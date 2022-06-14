@@ -8,15 +8,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.sabid.aspasn.Adapters.ClientsAdapter;
 import com.sabid.aspasn.DataModels.Clients;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,22 +28,13 @@ public class AccountsActivity extends AppCompatActivity {
     RecyclerView rvClients;
     RecyclerView.LayoutManager layoutManager;
     List<Clients> clientsList = new ArrayList<>();
-
+    ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounts);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Accounts");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Accounts");
 		
 		DB = new DBHelper(this);
 

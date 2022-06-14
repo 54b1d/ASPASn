@@ -12,14 +12,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class AddCashTransactionActivity extends AppCompatActivity {
 	String date, name, cashBankTitle, amountText, description, tableName, clientIdText;
@@ -38,17 +35,8 @@ public class AddCashTransactionActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_add_cash_transaction);
-		Toolbar toolbar = findViewById(R.id.toolbar);
-		toolbar.setTitle("New Cash Transaction");
-		setSupportActionBar(toolbar);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setHomeButtonEnabled(true);
-		toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View _v) {
-				onBackPressed();
-			}
-		});
+		ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add CashBank Transaction");
 
 		editAutoName = findViewById(R.id.editAutoName);
 		spinnerCashBankList = findViewById(R.id.spinnerCashBankList);

@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import java.util.ArrayList;
 
 public class AddAccountTypeActivity extends AppCompatActivity {
@@ -26,16 +24,9 @@ public class AddAccountTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_account_category);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Account Type");
+        
         editAccountTypeName = findViewById(R.id.editCategoryName);
         btnConfirmAddAccountType = findViewById(R.id.btnConfirmAddAccountType);
         listAccountTypes = findViewById(R.id.listAccountCategory);

@@ -2,8 +2,6 @@ package com.sabid.aspasn;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
-import android.icu.text.SimpleDateFormat;
-import android.icu.util.Calendar;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,14 +10,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class AccountingPeriodActivity extends AppCompatActivity {
     String date, startDate, endDate, previousStartDate, previousEndDate;
@@ -30,16 +25,14 @@ public class AccountingPeriodActivity extends AppCompatActivity {
     ArrayList accountingPeriods;
     ArrayAdapter adapter;
     DBHelper DB;
-
+    ActionBar actionBar;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_accounting_period);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Accounting Period");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Accounting Period");
 
         editStartDate = findViewById(R.id.editStartDate);
         editEndDate = findViewById(R.id.editEndDate);

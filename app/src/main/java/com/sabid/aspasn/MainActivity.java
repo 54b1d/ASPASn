@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.ActionBar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     public ActionBarDrawerToggle actionBarDrawerToggle;
     
     Button btnDebugButtonsActivity;
+    ActionBar actionBar;
 
     @Override
 
@@ -45,8 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // to make the Navigation drawer icon always appear on the action bar
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setTitle("Home");
 
         btnDebugButtonsActivity = findViewById(R.id.btnDebugButtonsActivity);
         btnDebugButtonsActivity.setOnClickListener(new View.OnClickListener() {
