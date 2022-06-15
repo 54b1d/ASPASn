@@ -1,0 +1,13 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+<Button
+android:id="@+id/customButton"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:background="#00f"
+android:text="Included Layout's Button"
+android:textColor="#fff"
+android:textSize="18sp"
+android:textStyle="bold" />
+
+</merge>

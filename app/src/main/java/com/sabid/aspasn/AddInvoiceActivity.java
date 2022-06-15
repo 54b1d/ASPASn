@@ -3,6 +3,8 @@ package com.sabid.aspasn;
 import android.app.DatePickerDialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -12,15 +14,11 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import java.util.ArrayList;
-import android.text.TextWatcher;
-import android.text.Editable;
-import java.time.format.DateTimeFormatter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 
 public class AddInvoiceActivity extends AppCompatActivity {
     String date, name, description, productName, quantityText, rateText, amountText, tableName, clientIdText;
@@ -40,17 +38,8 @@ public class AddInvoiceActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_invoice);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("New Invoice");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View _v) {
-                    onBackPressed();
-                }
-            });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Invoice");
 
         editAutoName = findViewById(R.id.editAutoName);
         spinnerProducts = findViewById(R.id.spinnerProducts);

@@ -8,10 +8,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import java.util.ArrayList;
 
 public class AddProductTypeActivity extends AppCompatActivity {
@@ -28,17 +26,9 @@ public class AddProductTypeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_product_type);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Add Product Category");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View _v) {
-                    onBackPressed();
-                }
-            });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Product Type");
+        
         editProductTypeTitle = findViewById(R.id.editProductTypeTitle);
         editBaseUnitName = findViewById(R.id.editBaseUnitName);
         editInterpretedUnitName = findViewById(R.id.editInterpretedUnitName);

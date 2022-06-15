@@ -11,14 +11,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.time.LocalDate;
 
 public class AddJournalTransactionActivity extends AppCompatActivity {
     String date, nameFrom, nameTo, amountText, description, clientIdText;
@@ -35,17 +32,9 @@ public class AddJournalTransactionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_journal_transaction);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Direct Transaction");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Add Journal");
+        
         btnConfirmJournalEntry = findViewById(R.id.btnConfirmJournalEntry);
         editDate = findViewById(R.id.editDate);
         editAutoNameFrom = findViewById(R.id.editAutoNameFrom);

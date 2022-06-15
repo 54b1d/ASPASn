@@ -7,25 +7,18 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.appcompat.app.ActionBar;
 
 public class DebugButtonsActivity extends AppCompatActivity {
     Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods, btnAddJournalEntry, btnAddOwner, btnAddCashBankAccountActivity;
-    
+    ActionBar actionBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug_buttons);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        toolbar.setTitle("Debug Buttons");
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View _v) {
-                onBackPressed();
-            }
-        });
+        actionBar = getSupportActionBar();
+        actionBar.setTitle("Debug Buttons");
+        //actionBar.setDisplayHomeAsUpEnabled(true);
 
         btnAddCashBankAccountActivity = findViewById(R.id.btnAddCashBankAccountActivity);
         btnActivityTransactions = findViewById(R.id.btnActivityTransactions);
