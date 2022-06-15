@@ -11,7 +11,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.ArrayList;
 
-public class InventoryActivity extends AppCompatActivity {
+public class ProductsActivity extends AppCompatActivity {
     Button btnActivityAddProduct;
     ListView listProducts;
     ArrayList products;

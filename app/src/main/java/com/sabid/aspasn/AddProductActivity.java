@@ -125,7 +125,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     public void openActivityInventory() {
-        Intent intent = new Intent(this, InventoryActivity.class);
+        Intent intent = new Intent(this, ProductsActivity.class);
         startActivity(intent);
     }
 

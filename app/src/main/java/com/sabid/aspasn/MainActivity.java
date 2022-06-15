@@ -3,7 +3,7 @@ package com.sabid.aspasn;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
                     } else if (id == R.id.nav_transactions) {
                         startActivity(new Intent(getApplicationContext(), TransactionsActivity.class));
                     } else if (id == R.id.nav_products) {
-                        startActivity(new Intent(getApplicationContext(), InventoryActivity.class));
+                        startActivity(new Intent(getApplicationContext(), ProductsActivity.class));
                     } else if (id == R.id.nav_settings) {
                         startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                     } else if (id == R.id.nav_debug) {

@@ -23,7 +23,7 @@
             android:name=".AddJournalTransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".InventoryActivity"
+            android:name=".ProductsActivity"
             android:exported="false" />
         <activity
             android:name=".SettingsActivity"
