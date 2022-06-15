@@ -40,6 +40,10 @@ public class MainActivity extends AppCompatActivity {
                     int id = item.getItemId();
                     if (id == R.id.nav_accounts) {
                         startActivity(new Intent(getApplicationContext(), AccountsActivity.class));
+                    } else if (id == R.id.nav_transactions) {
+                        startActivity(new Intent(getApplicationContext(), TransactionsActivity.class));
+                    } else if (id == R.id.nav_products) {
+                        startActivity(new Intent(getApplicationContext(), InventoryActivity.class));
                     } else if (id == R.id.nav_settings) {
                         startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
                     } else if (id == R.id.nav_debug) {
