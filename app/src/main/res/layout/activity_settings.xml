@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sabid.aspasn.SettingsActivity">
+    tools:context="com.sabid.aspasn.Activities.SettingsActivity">
 
     <ScrollView
         android:layout_width="match_parent"

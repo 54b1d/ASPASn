@@ -1,4 +1,4 @@
-package com.sabid.aspasn;
+package com.sabid.aspasn.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.ListView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.sabid.aspasn.DBHelper;
+import com.sabid.aspasn.R;
+
 import java.util.ArrayList;
 
 public class ProductsActivity extends AppCompatActivity {

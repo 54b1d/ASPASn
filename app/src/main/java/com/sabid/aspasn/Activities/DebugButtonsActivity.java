@@ -1,4 +1,4 @@
-package com.sabid.aspasn;
+package com.sabid.aspasn.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.ActionBar;
+
+import com.sabid.aspasn.R;
 
 public class DebugButtonsActivity extends AppCompatActivity {
     Button btnActivityTransactions, btnActivityAccounts, btnActivityAddCashTransaction, btnActivityAddExpenseAccount, btnActivityAddInventoryItem, btnActivityAddInvoice, btnActivityAccountingPeriods, btnAddJournalEntry, btnAddOwner, btnAddCashBankAccountActivity;

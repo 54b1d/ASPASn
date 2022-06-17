@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,31 +20,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddJournalTransactionActivity"
+            android:name=".Activities.AddJournalTransactionActivity"
             android:exported="false" />
         <activity
-            android:name=".ProductsActivity"
+            android:name=".Activities.ProductsActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".Activities.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".TransactionsActivity"
+            android:name=".Activities.TransactionsActivity"
             android:exported="false" />
         <activity
-            android:name=".AccountsActivity"
+            android:name=".Activities.AccountsActivity"
             android:exported="false" />
-        <activity android:name=".DebugButtonsActivity" />
-        <activity android:name=".CalculatorActivity" />
-        <activity android:name=".AddAccountActivity" />
-        <activity android:name=".AddCashTransactionActivity" />
-        <activity android:name=".AddAccountTypeActivity" />
-        <activity android:name=".AccountingPeriodActivity" />
-        <activity android:name=".AddProductActivity" />
-        <activity android:name=".AddProductTypeActivity" />
-        <activity android:name=".AddInvoiceActivity" />
-        <activity android:name=".AddOwnerActivity" />
-        <activity android:name=".AddCashBankAccountActivity" />
+        <activity android:name=".Activities.DebugButtonsActivity" />
+        <activity android:name=".Activities.CalculatorActivity" />
+        <activity android:name=".Activities.AddAccountActivity" />
+        <activity android:name=".Activities.AddCashTransactionActivity" />
+        <activity android:name=".Activities.AddAccountTypeActivity" />
+        <activity android:name=".Activities.AccountingPeriodActivity" />
+        <activity android:name=".Activities.AddProductActivity" />
+        <activity android:name=".Activities.AddProductTypeActivity" />
+        <activity android:name=".Activities.AddInvoiceActivity" />
+        <activity android:name=".Activities.AddOwnerActivity" />
+        <activity android:name=".Activities.AddCashBankAccountActivity" />
         <meta-data
             android:name="android.max_aspect"
             android:value="4.0" />

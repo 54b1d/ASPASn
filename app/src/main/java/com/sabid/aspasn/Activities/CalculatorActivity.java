@@ -1,16 +1,20 @@
-package com.sabid.aspasn;
+package com.sabid.aspasn.Activities;
 
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
-public class SettingsActivity extends AppCompatActivity {
+import com.sabid.aspasn.R;
+
+public class CalculatorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
+        setContentView(R.layout.activity_calculator);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Settings");
+        actionBar.setTitle("Calculator");
+
     }
+    
 }

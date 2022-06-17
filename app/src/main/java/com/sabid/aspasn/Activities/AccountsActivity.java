@@ -1,4 +1,4 @@
-package com.sabid.aspasn;
+package com.sabid.aspasn.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,7 +13,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.sabid.aspasn.Adapters.ClientsAdapter;
+import com.sabid.aspasn.DBHelper;
 import com.sabid.aspasn.DataModels.Clients;
+import com.sabid.aspasn.R;
+
 import java.util.ArrayList;
 import java.util.List;
 

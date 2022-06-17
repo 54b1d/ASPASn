@@ -1,4 +1,4 @@
-package com.sabid.aspasn;
+package com.sabid.aspasn.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
+import com.sabid.aspasn.R;
 
 public class MainActivity extends AppCompatActivity {
     public DrawerLayout drawerLayout;

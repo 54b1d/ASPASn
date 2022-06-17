@@ -1,4 +1,4 @@
-package com.sabid.aspasn;
+package com.sabid.aspasn.Activities;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.sabid.aspasn.DBHelper;
+import com.sabid.aspasn.R;
+
 import java.util.ArrayList;
 
 public class AddOwnerActivity extends AppCompatActivity {
